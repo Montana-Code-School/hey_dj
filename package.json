@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "ava": "^0.23.0",
     "react-scripts": "1.0.17"
   },
   "dependencies": {
@@ -12,7 +13,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom && ava",
     "eject": "react-scripts eject"
   }
 }
