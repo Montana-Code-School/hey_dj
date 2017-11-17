@@ -23,6 +23,13 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+# build directory
+build
+
+
+# annoying os x files
+.DS_Store
+
 # Bower dependency directory (https://bower.io/)
 bower_components
 
