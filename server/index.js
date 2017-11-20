@@ -8,6 +8,7 @@ mongoose.connect(config.db);
 const { createUser, loginUser } = require("./controllers/userHandling");
 const { protectionRoute } = require("./controllers/protected");
 const path = require("path");
+const routifyPromise = require("./controllers/util").routifyPromise;
 
 app.set("key", config.key);
 
@@ -19,7 +20,7 @@ protectedRoute.use(protectedRoute);
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
-app.post("/user", createUser);
+app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
 

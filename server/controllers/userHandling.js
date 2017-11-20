@@ -3,20 +3,16 @@ var jwt = require("jsonwebtoken");
 var passwordHash = require("password-hash");
 
 module.exports = {
-  createUser: (req, res) => {
-    new Users({
+  createUser: async (req, res) => {
+    const user = await Users.create({
       username: req.body.username,
-      password: passwordHash.generate(req.body.password)
-    }).save((err, result) => {
-      if (err) {
-        res.status(500).json(err);
-      } else {
-        result.success = true;
-        res.json(result);
-      }
+      password: req.body.password
     });
+    user.success = true;
+    return user;
   },
   loginUser: app => (req, res) => {
+    console.log(req.headers["authorization"]);
     var auth = req.headers["authorization"];
     var tmp = auth.split(" ");
     var buf = new Buffer(tmp[1], "base64");
