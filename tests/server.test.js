@@ -37,16 +37,14 @@ test("playlist test 1", async t => {
   };
   const mockRes = await playlist.createPlaylist(mockReq);
   const songs = mockRes.songs;
-  console.log("playlist is ", playlist);
-  console.log("mockRes.songs is ", mockRes.songs);
-  console.log("the length of mockRes.songs is ", mockRes.songs.length);
   t.is(mockRes.success, true);
   t.is(mockRes.owner, "hotBrocolli69");
   t.deepEqual(mockRes.songs, ["12", "13", "14", "15", "10978"]);
 });
 
 test("playlist test 2", async t => {
-  const mockReq = {
+  var mockReqs = new Array(3);
+  mockReqs[0] = {
     body: {
       songs: [
         "help i'm alive",
@@ -58,14 +56,36 @@ test("playlist test 2", async t => {
       owner: "purple poision"
     }
   };
-  const mockRes = await playlist.createPlaylist(mockReq);
-  t.is(mockRes.success, true);
-  t.is(mockRes.owner, "purple poision");
-  t.deepEqual(mockRes.songs, [
-    "help i'm alive",
-    "highway to hell",
-    "rat",
-    "the jams",
-    "fallout boy"
-  ]);
+  mockReqs[1] = {
+    body: {
+      songs: [
+        "help i'm alive",
+        "highway to hell",
+        "rat",
+        "the jams",
+        "fallout boy"
+      ],
+      musicSet: "the crazy number songs"
+    }
+  };
+  mockReqs[2] = {
+    body: {
+      songs: [
+        "help i'm alive",
+        "highway to hell",
+        "rat",
+        "the jams",
+        "fallout boy"
+      ]
+    }
+  };
+
+  for (let i = 0; i < mockReqs.length; i++) {
+    try {
+      const mockRes = await playlist.createPlaylist(mockReqs[i]);
+    } catch (e) {
+      t.is(e._message, "playlist validation failed");
+    }
+    t.is(mockReqs.length, 3);
+  }
 });
