@@ -2,12 +2,16 @@ const Users = require("../models/user");
 
 module.exports = {
   createUser: async (req, res) => {
-    const user = await Users.create({
-      username: req.body.username,
-      password: req.body.password
-    });
-    user.success = true;
-    return user;
+    try {
+      const user = await Users.create({
+        username: req.body.username,
+        password: req.body.password
+      });
+      user.success = true;
+      return user;
+    } catch (e) {
+      throw new Error(e.message);
+    }
   },
   loginUser: app => async (req, res) => {
     const parseUserInfo = str =>
