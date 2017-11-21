@@ -6,11 +6,26 @@ const config = require("../config");
 const mongoose = require("mongoose");
 mongoose.connect(config.db);
 const path = require("path");
-
+const createPlaylist = require("./controllers/createPlaylist");
+const routifyPromise = require("./controllers/util").routifyPromise;
 app.use(morgan("dev"));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
+var db = mongoose.connection;
+var msaMongoDb =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/playlist";
+mongoose.connect(msaMongoDb, {
+  useMongoClient: true
+});
+
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(express.static("build"));
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));
-//not sure if this route should go here
+// console.log("Create playlist is ", createPlaylist);
+// console.log(
+//   "Create createPlaylist.createPlaylist is ",
+//   createPlaylist.createPlaylist
+// );
+app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
 app.listen(config.port);
