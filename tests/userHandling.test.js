@@ -18,6 +18,18 @@ const createUser = async (username, password) => {
   });
 };
 
+async function checkPassword(t, user, password) {
+  const mockReq = { body: { username: user, password: password } };
+  try {
+    const userResponse = await userHandling.createUser(mockReq);
+  } catch (e) {
+    t.is(
+      e.message,
+      `User validation failed: password: Validator failed for path \`password\` with value \`${password}\``
+    );
+  }
+}
+
 test("create user (success) - user creation", async t => {
   const mockReq = { body: { username: "default1", password: "Default1$" } };
   const userResponse = await userHandling.createUser(mockReq);
@@ -39,41 +51,21 @@ test("create user (fail) - username is not unique", async t => {
   }
 });
 
-test("create user (fail) - short password", async t => {
-  const mockReq = { body: { username: "default3", password: "Def1$" } };
-  try {
-    const userResponse = await userHandling.createUser(mockReq);
-  } catch (e) {
-    t.is(
-      e.message,
-      "User validation failed: password: Validator failed for path `password` with value `Def1$`"
-    );
-  }
-});
+test("create user (fail) - short password", checkPassword, "default3", "Def1$");
 
-test("create user (fail) - no special character", async t => {
-  const mockReq = { body: { username: "default4", password: "Default11" } };
-  try {
-    const userResponse = await userHandling.createUser(mockReq);
-  } catch (e) {
-    t.is(
-      e.message,
-      "User validation failed: password: Validator failed for path `password` with value `Default11`"
-    );
-  }
-});
+test(
+  "create user (fail) - no special character",
+  checkPassword,
+  "default4",
+  "Default11"
+);
 
-test("create user (fail) - no number(s)", async t => {
-  const mockReq = { body: { username: "default4", password: "$Default$" } };
-  try {
-    const userResponse = await userHandling.createUser(mockReq);
-  } catch (e) {
-    t.is(
-      e.message,
-      "User validation failed: password: Validator failed for path `password` with value `$Default$`"
-    );
-  }
-});
+test(
+  "create user (fail) - no number(s)",
+  checkPassword,
+  "default4",
+  "$Default$"
+);
 
 test("login user - successful login", async t => {
   const user = await createUser("default5", "Default1$");
