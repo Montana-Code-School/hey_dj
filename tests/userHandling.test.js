@@ -2,7 +2,6 @@ import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
 import User from "../server/models/user";
-import fakeController from "../server/controllers/fake";
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
 var base64 = require("base-64");
@@ -19,19 +18,68 @@ const createUser = async (username, password) => {
   });
 };
 
-test("create user - successful creation", async t => {
-  const mockReq = { body: { username: "default2", password: "default" } };
+test("create user (success) - user creation", async t => {
+  const mockReq = { body: { username: "default1", password: "Default1$" } };
   const userResponse = await userHandling.createUser(mockReq);
   t.is(userResponse.success, true);
-  t.is(userResponse.username, "default2");
-  t.is(passwordHash.verify("default", userResponse.password), true);
+  t.is(userResponse.username, "default1");
+  t.is(passwordHash.verify("Default1$", userResponse.password), true);
+});
+
+test("create user (fail) - username is not unique", async t => {
+  const mockReq = { body: { username: "default2", password: "Default1$" } };
+  const userResponse = await userHandling.createUser(mockReq);
+  try {
+    const userResponse = await userHandling.createUser(mockReq);
+  } catch (e) {
+    t.is(
+      e.message,
+      'E11000 duplicate key error collection: heydj.users index: username_1 dup key: { : "default2" }'
+    );
+  }
+});
+
+test("create user (fail) - short password", async t => {
+  const mockReq = { body: { username: "default3", password: "Def1$" } };
+  try {
+    const userResponse = await userHandling.createUser(mockReq);
+  } catch (e) {
+    t.is(
+      e.message,
+      "User validation failed: password: Validator failed for path `password` with value `Def1$`"
+    );
+  }
+});
+
+test("create user (fail) - no special character", async t => {
+  const mockReq = { body: { username: "default4", password: "Default11" } };
+  try {
+    const userResponse = await userHandling.createUser(mockReq);
+  } catch (e) {
+    t.is(
+      e.message,
+      "User validation failed: password: Validator failed for path `password` with value `Default11`"
+    );
+  }
+});
+
+test("create user (fail) - no number(s)", async t => {
+  const mockReq = { body: { username: "default4", password: "$Default$" } };
+  try {
+    const userResponse = await userHandling.createUser(mockReq);
+  } catch (e) {
+    t.is(
+      e.message,
+      "User validation failed: password: Validator failed for path `password` with value `$Default$`"
+    );
+  }
 });
 
 test("login user - successful login", async t => {
-  const user = await createUser("default", "default");
+  const user = await createUser("default5", "Default1$");
   const mockReq = {
     headers: {
-      authorization: "Basic " + base64.encode("default" + ":" + "default")
+      authorization: "Basic " + base64.encode("default5" + ":" + "Default1$")
     }
   };
   const mockApp = {
@@ -45,7 +93,8 @@ test("login user - successful login", async t => {
 test("login user - bad username", async t => {
   const mockReq = {
     headers: {
-      authorization: "Basic " + base64.encode("bad_username" + ":" + "default")
+      authorization:
+        "Basic " + base64.encode("bad_username" + ":" + "Default1$")
     }
   };
   const mockApp = {
@@ -61,10 +110,10 @@ test("login user - bad username", async t => {
 });
 
 test("login user - bad password", async t => {
-  const user = await createUser("default3", "default");
+  const user = await createUser("default6", "Default1$");
   const mockReq = {
     headers: {
-      authorization: "Basic " + base64.encode("default3" + ":" + "bad_password")
+      authorization: "Basic " + base64.encode("default6" + ":" + "bad_password")
     }
   };
   const mockApp = {
@@ -80,7 +129,5 @@ test("login user - bad password", async t => {
 });
 
 test.after.always(() => {
-  User.remove({ username: "default" }).exec();
-  User.remove({ username: "default2" }).exec();
-  User.remove({ username: "default3" }).exec();
+  User.remove({ username: { $regex: "default." } }).exec();
 });
