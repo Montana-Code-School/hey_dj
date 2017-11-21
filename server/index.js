@@ -22,10 +22,6 @@ mongoose.connect(msaMongoDb, {
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 app.use(express.static("build"));
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));
-// console.log("Create playlist is ", createPlaylist);
-// console.log(
-//   "Create createPlaylist.createPlaylist is ",
-//   createPlaylist.createPlaylist
-// );
+
 app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
 app.listen(config.port);
