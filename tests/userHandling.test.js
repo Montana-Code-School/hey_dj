@@ -82,7 +82,7 @@ test("login user - successful login", async t => {
   t.truthy(loginResp.token);
 });
 
-test("login user - bad username", async t => {
+test("login user (fail) - bad username", async t => {
   const mockReq = {
     headers: {
       authorization:
@@ -101,7 +101,7 @@ test("login user - bad username", async t => {
   }
 });
 
-test("login user - bad password", async t => {
+test("login user (fail) - bad password", async t => {
   const user = await createUser("default6", "Default1$");
   const mockReq = {
     headers: {

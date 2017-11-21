@@ -14,7 +14,7 @@ const userSchema = new Schema({
     validate: {
       validator: function(password) {
         return password.match(
-          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
+          /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/
         );
       }
     },
