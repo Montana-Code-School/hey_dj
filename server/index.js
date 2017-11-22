@@ -7,7 +7,9 @@ const mongoose = require("mongoose");
 const musicSet = require("./models/musicSet");
 const { createMusicSet } = require("./controllers/createMusicSet");
 mongoose.connect(config.db);
+const createPlaylist = require("./controllers/createPlaylist");
 const { createUser, loginUser } = require("./controllers/userHandling");
+const { postSong } = require("./controllers/songHandling");
 const { protectionRoute } = require("./controllers/protected");
 const path = require("path");
 const routifyPromise = require("./controllers/util").routifyPromise;
@@ -19,14 +21,20 @@ app.use("/api", protectedRoute);
 
 protectedRoute.use(protectedRoute);
 
+<<<<<<< HEAD
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 app.post("/musicSet", routifyPromise(createMusicSet));
 
+=======
+app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
+>>>>>>> 4595356d858067c401b1c2ceb1739c24b2039d81
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
+
+app.post("/songs", routifyPromise(postSong));
 
 app.use(express.static("build"));
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));

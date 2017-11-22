@@ -1,9 +1,13 @@
 import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
+<<<<<<< HEAD
 import fakeController from "../server/controllers/fake";
 <<<<<<< HEAD
 =======
+=======
+import playlist from "../server/controllers/createPlaylist";
+>>>>>>> 4595356d858067c401b1c2ceb1739c24b2039d81
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
 
