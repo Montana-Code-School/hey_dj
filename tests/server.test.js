@@ -2,6 +2,8 @@ import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
 import playlist from "../server/controllers/createPlaylist";
+import userHandling from "../server/controllers/userHandling";
+import util from "../server/controllers/util";
 
 test.before(() => {
   mongoose.connect(config.db);
@@ -70,10 +72,7 @@ test("playlist test 2", async t => {
       t.is(e._message, "playlist validation failed");
     }
   }
-
-import fakeController from "../server/controllers/fake";
-import userHandling from "../server/controllers/userHandling";
-import util from "../server/controllers/util";
+});
 
 test.cb("routifyPromise should return the results of a promise as json", t => {
   const fn = (req, res) => Promise.resolve({ result: true });
