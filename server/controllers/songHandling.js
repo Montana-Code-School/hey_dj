@@ -11,7 +11,6 @@ module.exports = {
       song.success = true;
       return song;
     } catch (e) {
-      console.log(e.message);
       throw new Error(e.message);
     }
   }
