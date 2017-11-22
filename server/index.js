@@ -6,6 +6,7 @@ const config = require("../config");
 const mongoose = require("mongoose");
 mongoose.connect(config.db);
 const { createUser, loginUser } = require("./controllers/userHandling");
+const { postSong } = require("./controllers/songHandling");
 const { protectionRoute } = require("./controllers/protected");
 const path = require("path");
 const routifyPromise = require("./controllers/util").routifyPromise;
@@ -23,6 +24,8 @@ app.use(bodyParser.json());
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
+
+app.post("/songs", routifyPromise(postSong));
 
 app.use(express.static("build"));
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));
