@@ -1,14 +1,34 @@
 import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
+<<<<<<< HEAD
+import fakeController from "../server/controllers/fake";
+<<<<<<< HEAD
+=======
+=======
 import playlist from "../server/controllers/createPlaylist";
+>>>>>>> 4595356d858067c401b1c2ceb1739c24b2039d81
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
 
+>>>>>>> 138cc9d7c244f0921a4f8291035339b5f7830834
 test.before(() => {
   mongoose.connect(config.db);
 });
 
+<<<<<<< HEAD
+test("test tests", t => t.pass());
+
+test.cb("example test for", t => {
+  const mockReq = { body: { data: 13 } };
+  const mockRes = {
+    json: data => {
+      t.deepEqual(data, { route: "fake" });
+      t.end();
+    }
+  };
+  fakeController.fakeRoute(mockReq, mockRes);
+=======
 test.cb("routifyPromise should return the results of a promise as json", t => {
   const fn = (req, res) => Promise.resolve({ result: true });
   const req = {};
@@ -35,4 +55,5 @@ test.cb("routifyPromise should return 500 status if the promise rejects", t => {
     }
   };
   util.routifyPromise(fn)(req, res);
+>>>>>>> 138cc9d7c244f0921a4f8291035339b5f7830834
 });
