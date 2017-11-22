@@ -8,6 +8,7 @@ mongoose.connect(config.db);
 
 const createPlaylist = require("./controllers/createPlaylist");
 const { createUser, loginUser } = require("./controllers/userHandling");
+const { postSong } = require("./controllers/songHandling");
 const { protectionRoute } = require("./controllers/protected");
 const path = require("path");
 const routifyPromise = require("./controllers/util").routifyPromise;
@@ -37,6 +38,8 @@ app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
+
+app.post("/songs", routifyPromise(postSong));
 
 app.use(express.static("build"));
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));
