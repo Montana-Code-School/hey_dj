@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
-  spotifyData: Object,
+  spotifyData: { required: true, type: Object },
   customValues: Object,
-  musicSetId: Schema.ObjectId
+  musicSetId: { required: true, type: Schema.ObjectId }
 });
 
 module.exports = mongoose.model("Song", userSchema);
