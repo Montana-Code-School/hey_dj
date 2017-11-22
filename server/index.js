@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const config = require("../config");
 const mongoose = require("mongoose");
-const musicSet = require("../models/musicSet");
+const musicSet = require("./models/musicSet");
 const { createMusicSet } = require("./controllers/createMusicSet");
 mongoose.connect(config.db);
 const { createUser, loginUser } = require("./controllers/userHandling");
