@@ -1,7 +1,7 @@
 import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
-import playlist from "../server/controllers/createPlaylist";
+import playlist from "../server/controllers/playlistController";
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
 

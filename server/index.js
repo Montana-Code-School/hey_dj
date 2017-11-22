@@ -5,7 +5,10 @@ const bodyParser = require("body-parser");
 const config = require("../config");
 const mongoose = require("mongoose");
 mongoose.connect(config.db);
-const createPlaylist = require("./controllers/createPlaylist");
+const {
+  createPlaylist,
+  addSongs
+} = require("./controllers/playlistController");
 const { createUser, loginUser } = require("./controllers/userHandling");
 const { postSong } = require("./controllers/songHandling");
 const { protectionRoute } = require("./controllers/protected");
@@ -15,11 +18,13 @@ const routifyPromise = require("./controllers/util").routifyPromise;
 app.set("key", config.key);
 
 var protectedRoute = express.Router();
+app.use(morgan("dev"));
+app.use(bodyParser.json());
 app.use("/api", protectedRoute);
 
 protectedRoute.use(protectedRoute);
-
-app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
+app.post("/create/playlist", routifyPromise(createPlaylist));
+app.put("/update/playlist", routifyPromise(addSongs));
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
