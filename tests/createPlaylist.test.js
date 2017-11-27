@@ -4,9 +4,13 @@ import mongoose from "mongoose";
 import playlist from "../server/controllers/playlistController";
 import util from "../server/controllers/util";
 
+var playlistModel = require("../server/models/playlist.js");
+
 test.before(() => {
   mongoose.connect(config.db);
 });
+
+let playlistsToRemove = [];
 
 const mockPlaylist = async (songs, musicSet, owner) => {
   return playlist.create({
@@ -15,10 +19,7 @@ const mockPlaylist = async (songs, musicSet, owner) => {
     owner
   });
 };
-
-test("test tests", t => t.pass());
-
-test("create playlist test 1", async t => {
+test("playlist test 1", async t => {
   const songArr = [
     require("mongoose").Types.ObjectId(),
     require("mongoose").Types.ObjectId(),
@@ -34,14 +35,14 @@ test("create playlist test 1", async t => {
     }
   };
   const mockRes = await playlist.createPlaylist(mockReq);
-
+  playlistsToRemove.push(mockRes._id);
   t.is(mockRes.success, true);
   t.is(mockRes.owner.id, maker.id); //This is the same as t.deepEqual(mockRes.owner, maker);
 
   t.deepEqual(mockRes.songs.toObject(), songArr);
 });
 
-test("create playlist test 2", async t => {
+test("playlist test 2", async t => {
   var mockReqs = new Array(3);
   mockReqs[0] = {
     body: {
