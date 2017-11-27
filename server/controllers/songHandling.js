@@ -6,7 +6,7 @@ module.exports = {
       const song = await Song.create({
         spotifyData: req.body.spotifyData,
         customValues: req.body.customValues,
-        musicSetId: req.body.musicSetId
+        musicSetId: req.body._id
       });
       song.success = true;
       return song;

@@ -21,6 +21,8 @@ app.use("/api", protectedRoute);
 
 protectedRoute.use(protectedRoute);
 
+app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
+
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
