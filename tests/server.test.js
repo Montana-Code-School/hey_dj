@@ -6,9 +6,13 @@ import fakeController from "../server/controllers/fake";
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
 
+var playlistModel = require("../server/models/playlist.js");
+
 test.before(() => {
   mongoose.connect(config.db);
 });
+
+let playlistsToRemove = [];
 
 const mockPlaylist = async (songs, musicSet, owner) => {
   return playlist.create({
@@ -36,7 +40,7 @@ test("playlist test 1", async t => {
     }
   };
   const mockRes = await playlist.createPlaylist(mockReq);
-
+  playlistsToRemove.push(mockRes._id);
   t.is(mockRes.success, true);
   t.is(mockRes.owner.id, maker.id); //This is the same as t.deepEqual(mockRes.owner, maker);
 
@@ -114,4 +118,8 @@ test.cb("routifyPromise should return 500 status if the promise rejects", t => {
     }
   };
   util.routifyPromise(fn)(req, res);
+});
+
+test.after.always(() => {
+  playlistsToRemove.map(index => playlistModel.remove({ _id: index }).exec());
 });
