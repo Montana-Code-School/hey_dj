@@ -1,7 +1,7 @@
 import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
-import playlist from "../server/controllers/createPlaylist";
+import playlist from "../server/controllers/playlistController";
 import util from "../server/controllers/util";
 
 test.before(() => {
@@ -18,7 +18,7 @@ const mockPlaylist = async (songs, musicSet, owner) => {
 
 test("test tests", t => t.pass());
 
-test("playlist test 1", async t => {
+test("create playlist test 1", async t => {
   const songArr = [
     require("mongoose").Types.ObjectId(),
     require("mongoose").Types.ObjectId(),
@@ -38,10 +38,10 @@ test("playlist test 1", async t => {
   t.is(mockRes.success, true);
   t.is(mockRes.owner.id, maker.id); //This is the same as t.deepEqual(mockRes.owner, maker);
 
-  t.deepEqual(mockRes.songs, songArr);
+  t.deepEqual(mockRes.songs.toObject(), songArr);
 });
 
-test("playlist test 2", async t => {
+test("create playlist test 2", async t => {
   var mockReqs = new Array(3);
   mockReqs[0] = {
     body: {
@@ -68,7 +68,7 @@ test("playlist test 2", async t => {
     try {
       const mockRes = await playlist.createPlaylist(mockReqs[i]);
     } catch (e) {
-      t.is(e._message, "playlist validation failed");
+      t.is(e._message, "Playlist validation failed");
     }
   }
 });

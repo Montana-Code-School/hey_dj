@@ -1,7 +1,7 @@
 import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
-import playlist from "../server/controllers/createPlaylist";
+import playlist from "../server/controllers/playlistController";
 import fakeController from "../server/controllers/fake";
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
@@ -107,7 +107,7 @@ test.cb("routifyPromise should return 500 status if the promise rejects", t => {
   const fn = (req, res) => Promise.reject({ result: false });
   const req = {};
   const json = response => {
-    t.is(response.result, false);
+    t.is(response.success, false);
     t.end();
   };
   const res = {
