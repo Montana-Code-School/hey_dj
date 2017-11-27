@@ -21,15 +21,12 @@ app.use("/api", protectedRoute);
 
 protectedRoute.use(protectedRoute);
 
-<<<<<<< HEAD
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 app.post("/musicSet", routifyPromise(createMusicSet));
 
-=======
 app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
->>>>>>> 4595356d858067c401b1c2ceb1739c24b2039d81
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
