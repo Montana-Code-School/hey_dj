@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const config = require("../config");
 const mongoose = require("mongoose");
+const musicSet = require("./models/musicSet");
+const { createMusicSet } = require("./controllers/createMusicSet");
 mongoose.connect(config.db);
 const createPlaylist = require("./controllers/createPlaylist");
 const { createUser, loginUser } = require("./controllers/userHandling");
@@ -20,6 +22,12 @@ app.use("/api", protectedRoute);
 protectedRoute.use(protectedRoute);
 
 app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
+
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+
+app.post("/musicSet", routifyPromise(createMusicSet));
+
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
