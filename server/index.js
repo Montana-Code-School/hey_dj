@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 
 app.post("/musicSet", routifyPromise(createMusicSet));
 
+app.post("/create/playlist", routifyPromise(createPlaylist.createPlaylist));
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
