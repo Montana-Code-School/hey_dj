@@ -6,13 +6,26 @@ module.exports = {
       songs: req.body.songs,
       musicSet: req.body.musicSet,
       owner: req.body.owner
-    }).toObject();
-    console.log("jams is ", jams);
+    });
     jams.success = true;
     return jams;
   },
 
   addSongs: async (req, res) => {
+    let jams;
+    try {
+      jams = await Playlist.findOne({ _id: req.body._id }).exec();
+      jams.songs = jams.songs.concat(req.body.songs);
+      await jams.save();
+    } catch (e) {
+      console.log("err", e);
+      throw new Error(e.message);
+    }
+    jams.success = true;
+    return jams;
+  },
+
+  editPlaylist: async (req, res) => {
     const jams = await Playlist.findOneAndUpdate(
       { _id: req.body._id },
       { songs: req.body.songs },
@@ -21,6 +34,4 @@ module.exports = {
     jams.success = true;
     return jams;
   }
-
-  //removeSongs: {}
 };

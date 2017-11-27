@@ -25,7 +25,7 @@ test.cb("routifyPromise should return 500 status if the promise rejects", t => {
   const fn = (req, res) => Promise.reject({ result: false });
   const req = {};
   const json = response => {
-    t.is(response.result, false);
+    t.is(response.success, false);
     t.end();
   };
   const res = {

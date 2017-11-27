@@ -38,7 +38,7 @@ test("create playlist test 1", async t => {
   t.is(mockRes.success, true);
   t.is(mockRes.owner.id, maker.id); //This is the same as t.deepEqual(mockRes.owner, maker);
 
-  t.deepEqual(mockRes.songs, songArr);
+  t.deepEqual(mockRes.songs.toObject(), songArr);
 });
 
 test("create playlist test 2", async t => {
@@ -68,7 +68,7 @@ test("create playlist test 2", async t => {
     try {
       const mockRes = await playlist.createPlaylist(mockReqs[i]);
     } catch (e) {
-      t.is(e._message, "playlist validation failed");
+      t.is(e._message, "Playlist validation failed");
     }
   }
 });

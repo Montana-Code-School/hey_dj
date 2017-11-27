@@ -7,7 +7,8 @@ const mongoose = require("mongoose");
 mongoose.connect(config.db);
 const {
   createPlaylist,
-  addSongs
+  addSongs,
+  editPlaylist
 } = require("./controllers/playlistController");
 const { createUser, loginUser } = require("./controllers/userHandling");
 const { postSong } = require("./controllers/songHandling");
@@ -23,8 +24,9 @@ app.use(bodyParser.json());
 app.use("/api", protectedRoute);
 
 protectedRoute.use(protectedRoute);
-app.post("/create/playlist", routifyPromise(createPlaylist));
-app.put("/update/playlist", routifyPromise(addSongs));
+app.post("/createPlaylist", routifyPromise(createPlaylist));
+app.put("/songs", routifyPromise(addSongs));
+app.post("/editPlaylist", routifyPromise(editPlaylist));
 app.post("/user", routifyPromise(createUser));
 
 app.post("/authenticate", loginUser(app));
