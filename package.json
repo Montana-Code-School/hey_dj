@@ -7,7 +7,6 @@
     "react-scripts": "1.0.17"
   },
   "dependencies": {
-    "path": "^0.12.7",
     "base-64": "^0.1.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
@@ -15,8 +14,11 @@
     "mongoose": "^4.13.4",
     "morgan": "^1.9.0",
     "password-hash": "^1.2.2",
+    "path": "^0.12.7",
     "react": "^16.1.1",
-    "react-dom": "^16.1.1"
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
