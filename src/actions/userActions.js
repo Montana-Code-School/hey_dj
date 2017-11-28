@@ -9,10 +9,9 @@ export function heyDjLogin(username) {
   };
 }
 
-export function spotifyLogin(username, spotifyToken) {
+export function spotifyLogin(spotifyToken) {
   return {
     type: "Spotify Login",
-    username,
     spotifyToken
   };
 }

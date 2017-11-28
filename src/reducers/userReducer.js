@@ -14,7 +14,6 @@ const reducer = (state, action) => {
     case "Spotify Login":
       return {
         ...state,
-        username: action.username,
         spotifyToken: action.spotifyToken
       };
     default:
