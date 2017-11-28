@@ -9,4 +9,4 @@ var playlistSchema = mongoose.Schema({
   createdDate: { type: Date, default: Date.now }
 });
 
-module.exports = mongoose.model("playlist", playlistSchema);
+module.exports = mongoose.model("Playlist", playlistSchema);

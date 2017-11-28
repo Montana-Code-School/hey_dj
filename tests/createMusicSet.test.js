@@ -79,11 +79,23 @@ test("create music set (fail) - no userId passed", async t => {
   try {
     const newDoc = await createMusicSet.createMusicSet(mockReq);
   } catch (e) {
-    console.log("This is a console log", e.message);
     t.is(
       e.message,
       "musicSet validation failed: userId: Path `userId` is required."
     );
+  }
+});
+
+test("Test should reject the document when the music set name is already used by a user", async t => {
+  const mockReq = {
+    body: { title: "test title", userId: "5a14bccf6353c82692a33741" }
+  };
+  const newDoc1 = await createMusicSet.createMusicSet(mockReq);
+  musicSetToRemove.push(newDoc1._id);
+  try {
+    const newDoc2 = await createMusicSet.createMusicSet(mockReq);
+  } catch (e) {
+    t.is(e.message, "musicSet validation failed: title: title must be unique");
   }
 });
 
