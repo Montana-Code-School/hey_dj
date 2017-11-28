@@ -1,32 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-//https://accounts.spotify.com/authorize?
-var client_id = "aba9ab535c464ffb82414772c566057f";
-var scope = [
-  "user-read-private",
-  "user-read-email",
-  "playlist-read-private",
-  "playlist-read-collaborative",
-  "playlist-modify-public",
-  "playlist-modify-private",
-  "user-follow-modify",
-  "user-follow-read",
-  "user-library-read",
-  "user-library-modify"
-].join(" ");
-var encodedScope = encodeURIComponent(scope);
-var spoturl = encodeURIComponent(
-    "https://accounts.spotify.com/authorize?client_id="
-  ),
-  scopeText = encodeURIComponent("&scope="),
-  responseText = encodeURIComponent(
-    "&response_type=token&redirect_uri=http://localhost:3000/callback"
-  );
-var encodedURI = spoturl + client_id + scopeText + encodedScope + responseText;
-console.log(encodedURI);
-console.log(decodeURIComponent(encodedURI));
-
+import { scope, redirectUri, clientId } from "./frontEndConfig";
 class App extends Component {
   state = {
     token: ""
@@ -42,23 +16,15 @@ class App extends Component {
     }
 
     if (!hashParams.access_token) {
-      var client_id = "aba9ab535c464ffb82414772c566057f";
-      var scope = [
-        "user-read-private",
-        "user-read-email",
-        "playlist-read-private",
-        "playlist-read-collaborative",
-        "playlist-modify-public",
-        "playlist-modify-private",
-        "user-follow-modify",
-        "user-follow-read",
-        "user-library-read",
-        "user-library-modify"
-      ].join(" ");
-      var encodedScope = encodeURIComponent(scope);
+      const uri = `https://accounts.spotify.com/authorize?client_id=${
+        clientId
+      }&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
 
-      window.location.href =
-        "https://accounts.spotify.com/authorize?client_id=230be2f46909426b8b80cac36446b52a&scope=playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20user-read-recently-played%20playlist-modify-private%20ugc-image-upload%20user-follow-modify%20user-follow-read%20user-library-read%20user-library-modify%20user-read-private%20user-read-email%20user-top-read%20user-read-playback-state&response_type=token&redirect_uri=http://localhost:3000/callback";
+      const encodedURI = encodeURIComponent(uri);
+      console.log(encodedURI);
+      console.log(decodeURIComponent(encodedURI));
+
+      window.location.href = uri;
     } else {
       this.setState({ token: hashParams.access_token });
     }
@@ -70,7 +36,15 @@ class App extends Component {
         <div>
           Your token is {this.state.token}
           <Route exact path="*" component={Home} />
-          <Route path="/callback" component={() => <div>Hello</div>} />
+          <Route
+            path="/callback"
+            component={() => (
+              <div>
+                Hello This is the page that spotify redirects the app to once
+                the token is authorized!
+              </div>
+            )}
+          />
         </div>
       </Router>
     );
