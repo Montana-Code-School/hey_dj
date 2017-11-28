@@ -1,22 +1,29 @@
 import test from "ava";
 import config from "../config";
 import mongoose from "mongoose";
-<<<<<<< HEAD
+import playlist from "../server/controllers/playlistController";
 import fakeController from "../server/controllers/fake";
-<<<<<<< HEAD
-=======
-=======
-import playlist from "../server/controllers/createPlaylist";
->>>>>>> 4595356d858067c401b1c2ceb1739c24b2039d81
 import userHandling from "../server/controllers/userHandling";
 import util from "../server/controllers/util";
 
->>>>>>> 138cc9d7c244f0921a4f8291035339b5f7830834
+var playlistModel = require("../server/models/playlist.js");
+
 test.before(() => {
   mongoose.connect(config.db);
 });
 
-<<<<<<< HEAD
+let playlistsToRemove = [];
+
+const mockPlaylist = async (songs, musicSet, owner) => {
+  return playlist.create({
+    songs,
+    musicSet,
+    owner
+  });
+};
+
+test("test tests", t => t.pass());
+
 test("test tests", t => t.pass());
 
 test.cb("example test for", t => {
@@ -28,7 +35,8 @@ test.cb("example test for", t => {
     }
   };
   fakeController.fakeRoute(mockReq, mockRes);
-=======
+});
+
 test.cb("routifyPromise should return the results of a promise as json", t => {
   const fn = (req, res) => Promise.resolve({ result: true });
   const req = {};
@@ -45,7 +53,7 @@ test.cb("routifyPromise should return 500 status if the promise rejects", t => {
   const fn = (req, res) => Promise.reject({ result: false });
   const req = {};
   const json = response => {
-    t.is(response.result, false);
+    t.is(response.success, false);
     t.end();
   };
   const res = {
@@ -55,5 +63,8 @@ test.cb("routifyPromise should return 500 status if the promise rejects", t => {
     }
   };
   util.routifyPromise(fn)(req, res);
->>>>>>> 138cc9d7c244f0921a4f8291035339b5f7830834
+});
+
+test.after.always(() => {
+  playlistsToRemove.map(index => playlistModel.remove({ _id: index }).exec());
 });

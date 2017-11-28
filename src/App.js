@@ -1,6 +1,14 @@
 import React, { Component } from "react";
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { scope, redirectUri, clientId } from "./frontEndConfig";
+
+import logo from "./logo.svg";
+import "./App.css";
+import { connect } from "react-redux";
+import { increment, decrement } from "./actions/exampleActions";
+import Login from "./Login";
+
 class App extends Component {
   state = {
     token: ""
@@ -32,6 +40,7 @@ class App extends Component {
 
   render() {
     return (
+
       <Router>
         <div>
           Your token is {this.state.token}
@@ -46,10 +55,25 @@ class App extends Component {
             )}
           />
         </div>
+
+
+      <div className="App">
+        {this.props.username ? "Hello " + this.props.username : <Login />}
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Counter!!!</h1>
+        </header>
+        <p className="App-intro">
+          {this.props.count}
+          <button onClick={this.props.incr}>+1</button>
+          <button onClick={this.props.decr}>-1</button>
+        </p>
+      </div>
       </Router>
     );
   }
 }
+
 
 const Home = () => (
   <div>
@@ -65,3 +89,15 @@ const CallBack = () => (
 
 /*"https://accounts.spotify.com/authorize?client_id=230be2f46909426b8b80cac36446b52a&scope=playlist-read-private%20playlist-read-collaborative%20playlist-modify-public%20user-read-recently-played%20playlist-modify-private%20ugc-image-upload%20user-follow-modify%20user-follow-read%20user-library-read%20user-library-modify%20user-read-private%20user-read-email%20user-top-read%20user-read-playback-state&response_type=token&redirect_uri=http://localhost:3000/callback";*/
 export default App;
+
+const mapStateToProps = state => ({
+  username: state.username,
+  count: state.count
+});
+
+const mapDispatchToProps = dispatch => ({
+  incr: () => dispatch(increment()),
+  decr: () => dispatch(decrement())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

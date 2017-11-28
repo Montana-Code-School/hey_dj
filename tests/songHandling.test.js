@@ -15,13 +15,22 @@ test.before(() => {
 });
 
 test("post song (success) - song creation", async t => {
-  const customValues = {};
-  customValues["Test value!"] = "Good";
+  const mockSet = {
+    customValues: {
+      releaseDate: new Date(),
+      physiological: { type: "Your mom", required: true },
+      genre: "hot moms",
+      emotion: "mgmgfrt"
+    },
+    title: { type: "Generic set Title", required: true },
+    userId: { type: "5a14b423fdf946604f017a91", required: true },
+    _id: "5a14b423fdf945604f017a91"
+  };
   const mockReq = {
     body: {
       spotifyData: TestSong,
-      customValues: customValues,
-      musicSetId: "5a14b423fdf946604f017a91"
+      customValues: mockSet.customValues,
+      _id: mockSet._id
     }
   };
   const songResponse = await songHandling.postSong(mockReq);
@@ -30,12 +39,21 @@ test("post song (success) - song creation", async t => {
 });
 
 test("post song (fail) - no spotify data passed", async t => {
-  const customValues = {};
-  customValues["Test value!"] = "Good";
+  const mockSet = {
+    customValues: {
+      releaseDate: new Date(),
+      physiological: { type: "Your mom", required: true },
+      genre: "hot moms",
+      emotion: "mgmgfrt"
+    },
+    title: { type: "Generic set Title", required: true },
+    userId: { type: "5a14b423fdf946604f017a91", required: true },
+    _id: "5a14b423fdf946604f017a91"
+  };
   const mockReq = {
     body: {
-      customValues: customValues,
-      musicSetId: "5a14b423fdf946604f017a91"
+      customValues: mockSet.customValues,
+      musicSetId: mockSet._id
     }
   };
   try {
@@ -44,18 +62,28 @@ test("post song (fail) - no spotify data passed", async t => {
   } catch (e) {
     t.is(
       e.message,
-      "Song validation failed: spotifyData: Path `spotifyData` is required."
+      "Song validation failed: musicSetId: Path `musicSetId` is required., spotifyData: Path `spotifyData` is required."
     );
   }
 });
 
 test("post song (fail) - no music set passed", async t => {
-  const customValues = {};
-  customValues["Test value!"] = "Good";
+  const mockSet = {
+    customValues: {
+      releaseDate: new Date(),
+      physiological: { type: "Your mom", required: true },
+      genre: "hot moms",
+      emotion: "mgmgfrt"
+    },
+    title: { type: "Generic set Title", required: true },
+    userId: { type: "5a14b423fdf946604f017a91", required: true },
+    _id: "5a14b423fdf946604f017a91"
+  };
   const mockReq = {
     body: {
       spotifyData: TestSong,
-      customValues: customValues
+      customValues: mockSet.customValues,
+      musicSetId: mockSet._id
     }
   };
   try {
