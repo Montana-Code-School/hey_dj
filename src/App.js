@@ -7,15 +7,13 @@ import { connect } from "react-redux";
 import { increment, decrement } from "./actions/exampleActions";
 import {
   editMusicSetCustomFields,
-  editMusicSetCustomFieldValue
+  editMusicSetCustomFieldValue,
+  loadMusicSetFromSpotify
 } from "./actions/musicSetActions";
+import { setTokenToState } from "./actions/tokenActions";
 import Login from "./Login";
 
 class App extends Component {
-  state = {
-    token: ""
-  };
-
   componentDidMount() {
     let hashParams = {};
     let e,
@@ -24,17 +22,15 @@ class App extends Component {
     while ((e = r.exec(q))) {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
-
+    this.props.getPlaylist();
     if (!hashParams.access_token) {
       const uri = `https://accounts.spotify.com/authorize?client_id=${clientId}&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
-
       const encodedURI = encodeURIComponent(uri);
       console.log(encodedURI);
       console.log(decodeURIComponent(encodedURI));
-
       window.location.href = uri;
     } else {
-      this.setState({ token: hashParams.access_token });
+      this.props.setToken(hashParams.access_token);
     }
   }
 
@@ -44,10 +40,12 @@ class App extends Component {
         <Router>
           <div>
             <div>
-              Music Set custom value 1 is{" "}
+              Music Set custom value 1 is
               {this.props.musicSet.customValues.emotion}
+              Music Set custom value 2 is
+              {this.props.musicSet.customValues.physiological}
             </div>
-            Your token is {this.state.token}
+            Your token is {this.props.spotifyToken}
             <Route exact path="*" component={Home} />
             <Route
               path="/callback"
@@ -73,7 +71,12 @@ class App extends Component {
             <button onClick={this.props.updateMusicSetFields}>
               Update Music Set
             </button>
-            <button onClick={this.props.editMusicSetFieldValue}>
+            <button
+              onClick={() =>
+                this.props.editMusicSetFieldValue(
+                  this.props.musicSet.customValues
+                )}
+            >
               Update Music Field 1
             </button>
           </p>
@@ -101,6 +104,8 @@ const CallBack = () => (
 const mapStateToProps = state => ({
   username: state.userReducer.username,
   musicSet: state.musicSetReducer.musicSet,
+  spotifyToken: state.musicSetReducer.spotifyToken,
+  spotifyPlaylists: state.musicSetReducer.spotifyPlaylists,
   count: state.count
 });
 
@@ -112,8 +117,10 @@ const mapDispatchToProps = dispatch => ({
         physiological: "Ramping Up"
       })
     ),
-  editMusicSetFieldValue: () =>
-    dispatch(editMusicSetCustomFieldValue("emotion", "excited")),
+  editMusicSetFieldValue: customValues =>
+    dispatch(editMusicSetCustomFieldValue(customValues, "emotion", "excited")),
+  setToken: spotifyToken => dispatch(setTokenToState(spotifyToken)),
+  getPlaylist: () => dispatch(loadMusicSetFromSpotify()),
   incr: () => dispatch(increment()),
   decr: () => dispatch(decrement())
 });

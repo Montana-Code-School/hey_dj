@@ -1,7 +1,11 @@
 const initialState = {
   musicSet: {
-    customValues: { emotion: "angry" }
-  }
+    customValues: {
+      emotion: "angry",
+      physiological: "basic"
+    }
+  },
+  spotifyPlaylists: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,10 +18,17 @@ const reducer = (state = initialState, action) => {
         }
       };
     case "Edit_Music_Set_Custom_Field_Value":
-      let thing2 = state.musicSet.customValues[action.newField.editField];
       return {
         ...state,
-        thing2: action.newField.newValue
+        musicSet: {
+          customValues: action.newCustomFields
+        }
+      };
+    case "Load_Music_Set_From_Spotify":
+      console.log("promise", action.promise);
+      return {
+        ...state,
+        spotifyPlaylists: action.promise
       };
     default:
       return state;

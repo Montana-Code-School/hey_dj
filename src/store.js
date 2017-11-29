@@ -2,11 +2,13 @@ import { createStore, combineReducers } from "redux";
 import exampleReducer from "./reducers/exampleReducer";
 import userReducer from "./reducers/userReducer";
 import musicSetReducer from "./reducers/musicSetReducers";
+import tokenReducer from "./reducers/tokenReducer";
 
 let rootReducer = combineReducers({
   userReducer,
   musicSetReducer,
-  exampleReducer
+  exampleReducer,
+  tokenReducer
 });
 
 export default createStore(
