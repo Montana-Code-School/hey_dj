@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 const passwordHash = require("password-hash");
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
+
+//Password must be 8 characters long with 1 number, 1 uppercase letter & 1 special character
+
 const userSchema = new Schema({
   username: {
     type: String,

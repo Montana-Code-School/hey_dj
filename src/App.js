@@ -24,9 +24,7 @@ class App extends Component {
     }
 
     if (!hashParams.access_token) {
-      const uri = `https://accounts.spotify.com/authorize?client_id=${
-        clientId
-      }&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
+      const uri = `https://accounts.spotify.com/authorize?client_id=${clientId}&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
 
       const encodedURI = encodeURIComponent(uri);
       console.log(encodedURI);
