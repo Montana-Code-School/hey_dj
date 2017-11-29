@@ -5,11 +5,11 @@ import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 import store from "./store";
 import { Provider } from "react-redux";
-import NewUser from "./components/newUser/newUser";
+import Login from "./components/login/login";
 
 ReactDOM.render(
   <Provider store={store}>
-    <NewUser />
+    <Login />
   </Provider>,
   document.getElementById("root")
 );
