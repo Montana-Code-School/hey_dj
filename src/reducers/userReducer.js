@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+const userReducer = (state, action) => {
   switch (action.type) {
     case "HeyDj Login":
       return {
