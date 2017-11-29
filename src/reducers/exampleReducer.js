@@ -1,4 +1,8 @@
-const reducer = (state, action) => {
+const initialState = {
+  count: 0
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "Increment":
       console.log("incrementing", state);

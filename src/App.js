@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { scope, redirectUri, clientId } from "./frontEndConfig";
-
 import logo from "./logo.svg";
 import "./App.css";
 import { connect } from "react-redux";
 import { increment, decrement } from "./actions/exampleActions";
+import {
+  editMusicSetCustomFields,
+  editMusicSetCustomFieldValue
+} from "./actions/musicSetActions";
 import Login from "./Login";
 
 class App extends Component {
@@ -24,9 +26,7 @@ class App extends Component {
     }
 
     if (!hashParams.access_token) {
-      const uri = `https://accounts.spotify.com/authorize?client_id=${
-        clientId
-      }&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
+      const uri = `https://accounts.spotify.com/authorize?client_id=${clientId}&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
 
       const encodedURI = encodeURIComponent(uri);
       console.log(encodedURI);
@@ -43,6 +43,10 @@ class App extends Component {
       <div>
         <Router>
           <div>
+            <div>
+              Music Set custom value 1 is{" "}
+              {this.props.musicSet.customValues.emotion}
+            </div>
             Your token is {this.state.token}
             <Route exact path="*" component={Home} />
             <Route
@@ -66,6 +70,12 @@ class App extends Component {
             {this.props.count}
             <button onClick={this.props.incr}>+1</button>
             <button onClick={this.props.decr}>-1</button>
+            <button onClick={this.props.updateMusicSetFields}>
+              Update Music Set
+            </button>
+            <button onClick={this.props.editMusicSetFieldValue}>
+              Update Music Field 1
+            </button>
           </p>
         </div>
       </div>
@@ -89,11 +99,21 @@ const CallBack = () => (
 //export default App;
 
 const mapStateToProps = state => ({
-  username: state.username,
+  username: state.userReducer.username,
+  musicSet: state.musicSetReducer.musicSet,
   count: state.count
 });
 
 const mapDispatchToProps = dispatch => ({
+  updateMusicSetFields: () =>
+    dispatch(
+      editMusicSetCustomFields({
+        emotion: "Chill",
+        physiological: "Ramping Up"
+      })
+    ),
+  editMusicSetFieldValue: () =>
+    dispatch(editMusicSetCustomFieldValue("emotion", "excited")),
   incr: () => dispatch(increment()),
   decr: () => dispatch(decrement())
 });
