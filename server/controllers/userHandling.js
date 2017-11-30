@@ -23,7 +23,11 @@ module.exports = {
       throw new Error("User not found");
     }
     user.success = true;
-    user.token = user.getToken(password);
+    try {
+      user.token = user.getToken(password);
+    } catch (e) {
+      throw new Error("Unable to login for this user");
+    }
     return user;
   }
 };

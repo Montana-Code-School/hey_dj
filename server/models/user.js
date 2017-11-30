@@ -36,6 +36,11 @@ userSchema.pre("save", function(next) {
 });
 
 userSchema.methods.getToken = function(password) {
+  console.log(
+    password,
+    this.password,
+    passwordHash.verify(password, this.password)
+  );
   if (passwordHash.verify(password, this.password)) {
     return jwt.sign(
       {
@@ -46,8 +51,9 @@ userSchema.methods.getToken = function(password) {
         expiresIn: 60 * 60 * 1140
       }
     );
+  } else {
+    throw new Error("Passwords don't match");
   }
-  throw new Error("Passwords don't match");
 };
 
 module.exports = mongoose.model("User", userSchema);

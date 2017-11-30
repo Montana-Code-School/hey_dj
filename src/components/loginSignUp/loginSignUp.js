@@ -9,6 +9,8 @@ import {
   PageHeader
 } from "react-bootstrap";
 
+let base64 = require("base-64");
+
 class LoginSignUp extends Component {
   constructor(props) {
     super(props);
@@ -40,19 +42,22 @@ class LoginSignUp extends Component {
       alert("Account Created Successfully!!");
     } else alert("Account Creation Failed"); //needs error handling improvement
     //after new account created needs to redirect to another page - maybe user page
+    console.log(user);
   }
 
   async loginUser() {
+    console.log("Login User did run!");
     const user = await fetch("/authenticate", {
-      method: "POST",
+      method: "post",
       headers: {
+        authorization:
+          "Basic " +
+          base64.encode(this.state.username + ":" + this.state.password),
+        Accept: "application/json",
         "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password
-      })
+      }
     });
+    console.log(user);
   }
 
   render() {
@@ -152,10 +157,7 @@ class LoginSignUp extends Component {
                 <Button
                   bsStyle="primary"
                   onClick={e => {
-                    this.validateLogin({
-                      username: this.state.username,
-                      password: this.state.password
-                    });
+                    this.loginUser();
                   }}
                 >
                   Login
