@@ -16,6 +16,11 @@ const userReducer = (state, action) => {
         ...state,
         spotifyToken: action.spotifyToken
       };
+    case "Error Message":
+      return {
+        ...state,
+        error: action.message
+      };
     default:
       return state;
   }

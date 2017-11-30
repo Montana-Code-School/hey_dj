@@ -19,7 +19,7 @@ class Error extends Component {
           {" "}
           <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
             <h4>Oh snap! You got an error!</h4>
-            <p>Change this and that and try again.</p>
+            <p>{this.props.error}</p>
             <p>
               <Button onClick={this.handleAlertDismiss}>Hide</Button>
             </p>
@@ -31,5 +31,9 @@ class Error extends Component {
     }
   }
 }
+
+const mapStateToProps = state => ({
+  error: state.error
+});
 
 export default Error;

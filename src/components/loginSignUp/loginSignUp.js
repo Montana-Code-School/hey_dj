@@ -9,10 +9,10 @@ import {
   PageHeader
 } from "react-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
+import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
-var base64 = require("base-64");
 
-let base64 = require("base-64");
+const base64 = require("base-64");
 
 class LoginSignUp extends Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class LoginSignUp extends Component {
         "Content-Type": "application/json"
       }
     });
-    console.log(user);
+    console.log(await user.json());
   }
 
   render() {
@@ -194,7 +194,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  heyDjLogin: e => dispatch(heyDjLogin(e))
+  heyDjLogin: e => dispatch(heyDjLogin(e)),
+  addErrorMessage: e => dispatch(addErrorMessage(e))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginSignUp);
