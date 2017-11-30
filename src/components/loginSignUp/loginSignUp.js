@@ -8,6 +8,9 @@ import {
   ControlLabel,
   PageHeader
 } from "react-bootstrap";
+import { heyDjLogin } from "../../actions/userActions";
+import { connect } from "react-redux";
+var base64 = require("base-64");
 
 let base64 = require("base-64");
 
@@ -40,7 +43,9 @@ class LoginSignUp extends Component {
     });
     if (user.status === 200) {
       alert("Account Created Successfully!!");
-    } else alert("Account Creation Failed"); //needs error handling improvement
+    } else alert("Account Creation Failed");
+    const userInfo = await user.json();
+    this.props.heyDjLogin(userInfo.username); //needs error handling improvement
     //after new account created needs to redirect to another page - maybe user page
     console.log(user);
   }
@@ -74,6 +79,9 @@ class LoginSignUp extends Component {
         <Button onClick={this.signUpToggle} block>
           Create New Account
         </Button>
+        <div>
+          <h3>{this.props.username}</h3>
+        </div>
 
         {this.state.signUpModal ? (
           <Modal
@@ -133,6 +141,9 @@ class LoginSignUp extends Component {
             </Modal.Footer>
           </Modal>
         ) : (
+          ""
+        )}
+        {this.state.loginModal ? (
           <Modal
             bsSize="small"
             show={this.state.loginModal}
@@ -157,6 +168,7 @@ class LoginSignUp extends Component {
                 <Button
                   bsStyle="primary"
                   onClick={e => {
+                    e.preventDefault();
                     this.loginUser();
                   }}
                 >
@@ -170,10 +182,19 @@ class LoginSignUp extends Component {
               </Button>
             </Modal.Footer>
           </Modal>
+        ) : (
+          ""
         )}
       </div>
     );
   }
 }
+const mapStateToProps = state => ({
+  username: state.username
+});
 
-export default LoginSignUp;
+const mapDispatchToProps = dispatch => ({
+  heyDjLogin: e => dispatch(heyDjLogin(e))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginSignUp);
