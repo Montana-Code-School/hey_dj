@@ -2,18 +2,13 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "./App.css";
 import { connect } from "react-redux";
+import SpotifyToken from "./components/spotifyTokenComponent/spotifyToken";
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <Router>
-        <div>
-          <Redirect />
-          <Route exact path="*" component={Home} />
-          <Switch>
-            <Route path="/musicSet" component={MusicSetComponent} />
-          </Switch>
-        </div>
+        <Route exact path="/" component={SpotifyToken} />
       </Router>
     );
   }
