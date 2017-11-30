@@ -63,7 +63,13 @@ class LoginSignUp extends Component {
       }
     })
       .then(res => res.json())
-      .then(res => bake_cookie("userKey", res.token));
+      .then(
+        res =>
+          bake_cookie(
+            "userKey",
+            res.token
+          ) /*if res.success then go to user page*/
+      );
   }
 
   render() {
