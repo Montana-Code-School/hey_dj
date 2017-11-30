@@ -42,6 +42,19 @@ class LoginSignUp extends Component {
     //after new account created needs to redirect to another page - maybe user page
   }
 
+  async loginUser() {
+    const user = await fetch("/authenticate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    });
+  }
+
   render() {
     return (
       <div>
