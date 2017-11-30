@@ -9,6 +9,7 @@ import {
   PageHeader
 } from "react-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
+import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
 
@@ -51,7 +52,6 @@ class LoginSignUp extends Component {
   }
 
   loginUser() {
-    console.log("Login User did run!");
     fetch("/authenticate", {
       method: "post",
       headers: {
@@ -63,7 +63,7 @@ class LoginSignUp extends Component {
       }
     })
       .then(res => res.json())
-      .then(res => console.log(res));
+      .then(res => bake_cookie("userKey", res.token));
   }
 
   render() {
