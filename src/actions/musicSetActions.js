@@ -25,20 +25,9 @@ export function editMusicSetCustomFieldValue(
   };
 }
 
-export function loadMusicSetFromSpotify() {
-  const request = new Request(`https://api.spotify.com/v1/me/playlists`, {
-    headers: new Headers({
-      Accept: "application/json",
-      Authorization:
-        "Bearer " +
-        "BQBaQxcSkqT6Yavj6GwonU04lHeyHR635nsFcV4GEVd--lvzygHBhc_Erai7ojDcNRzXOjrYPmlPWefwmZ3KssvJYEwcg9BOWkO5bnXEdnvMFhcn8cKymDO_iZ_SVDhNlfnggyaWSHwlXoAHaAt_pOBC7JUKheWSmQ"
-    })
-  });
-  let promise = fetch(request)
-    .then(res => res.json())
-    .then(res => res);
+export function loadMusicSetFromSpotify(spotifyPlaylists) {
   return {
     type: "Load_Music_Set_From_Spotify",
-    promise
+    spotifyPlaylists: spotifyPlaylists
   };
 }

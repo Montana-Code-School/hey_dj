@@ -1,9 +1,6 @@
 const initialState = {
   musicSet: {
-    customValues: {
-      emotion: "angry",
-      physiological: "basic"
-    }
+    customValues: {}
   },
   spotifyPlaylists: {}
 };
@@ -25,10 +22,9 @@ const reducer = (state = initialState, action) => {
         }
       };
     case "Load_Music_Set_From_Spotify":
-      console.log("promise", action.promise);
       return {
         ...state,
-        spotifyPlaylists: action.promise
+        spotifyPlaylists: action.spotifyPlaylists
       };
     default:
       return state;
