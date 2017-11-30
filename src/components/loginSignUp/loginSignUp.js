@@ -10,9 +10,8 @@ import {
 } from "react-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
 import { connect } from "react-redux";
-var base64 = require("base-64");
 
-let base64 = require("base-64");
+var base64 = require("base-64");
 
 class LoginSignUp extends Component {
   constructor(props) {
@@ -50,9 +49,9 @@ class LoginSignUp extends Component {
     console.log(user);
   }
 
-  async loginUser() {
+  loginUser() {
     console.log("Login User did run!");
-    const user = await fetch("/authenticate", {
+    fetch("/authenticate", {
       method: "post",
       headers: {
         authorization:
@@ -61,8 +60,9 @@ class LoginSignUp extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }
-    });
-    console.log(user);
+    })
+      .then(res => res.json())
+      .then(res => console.log(res));
   }
 
   render() {

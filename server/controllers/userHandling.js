@@ -18,16 +18,23 @@ module.exports = {
     const parseUserInfo = str =>
       new Buffer(str.split(" ")[1], "base64").toString().split(":");
     const [username, password] = parseUserInfo(req.headers["authorization"]);
-    const user = await Users.findOne({ username }).exec();
+    const user = await Users.findOne({ username });
     if (!user) {
       throw new Error("User not found");
     }
-    user.success = true;
+
+    console.log("checkpoint1");
     try {
-      user.token = user.getToken(password);
+      console.log("checkpoint2");
+      token = user.getToken(password);
+      const response = Object.assign(
+        { success: true, token: token },
+        user.toObject()
+      );
+      console.log("responsse", response);
+      return response;
     } catch (e) {
       throw new Error("Unable to login for this user");
     }
-    return user;
   }
 };
