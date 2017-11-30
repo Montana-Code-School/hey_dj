@@ -1,12 +1,7 @@
 import { createStore } from "redux";
-import reducer from "./reducers/exampleReducer";
+import reducer from "./reducers/userReducer";
 const defaultState = {
-  username: "",
-  count: 0
+  username: ""
 };
 
-export default createStore(
-  reducer,
-  defaultState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+export default createStore(reducer, defaultState);

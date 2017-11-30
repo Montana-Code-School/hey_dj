@@ -20,4 +20,4 @@ const userReducer = (state, action) => {
       return state;
   }
 };
-export default reducer;
+export default userReducer;
