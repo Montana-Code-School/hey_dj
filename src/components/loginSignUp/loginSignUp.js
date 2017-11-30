@@ -9,6 +9,7 @@ import {
   PageHeader
 } from "react-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
+import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
 
 var base64 = require("base-64");
@@ -194,7 +195,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  heyDjLogin: e => dispatch(heyDjLogin(e))
+  heyDjLogin: e => dispatch(heyDjLogin(e)),
+  addErrorMessage: e => dispatch(addErrorMessage(e))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginSignUp);
