@@ -1,30 +1,29 @@
 import React, { Component } from "react";
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button, Modal } from "react-bootstrap";
 import { connect } from "react-redux";
+import { addErrorMessage } from "../../actions/errorActions";
 
 class Error extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      alertVisible: true
-    };
-  }
-
-  handleAlertDismiss = () => this.setState({ alertVisible: false });
-
   render() {
-    if (this.state.alertVisible) {
+    if (this.props.error) {
       return (
-        <div>
-          {" "}
-          <Alert bsStyle="danger" onDismiss={this.handleAlertDismiss}>
-            <h4>Oh snap! You got an error!</h4>
-            <p>{this.props.error}</p>
-            <p>
-              <Button onClick={this.handleAlertDismiss}>Hide</Button>
-            </p>
-          </Alert>
-        </div>
+        <Modal show={true} onHide={() => this.props.addErrorMessage("")}>
+          <Modal.Body>
+            {" "}
+            <Alert
+              bsStyle="danger"
+              onDismiss={() => this.props.addErrorMessage("")}
+            >
+              <h4>Oh snap! You got an error!</h4>
+              <p>{this.props.error}</p>
+              <p>
+                <Button onClick={() => this.props.addErrorMessage("")}>
+                  Hide
+                </Button>
+              </p>
+            </Alert>
+          </Modal.Body>
+        </Modal>
       );
     } else {
       return <div />;
@@ -36,4 +35,8 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default connect(mapStateToProps)(Error);
+const mapDispatchToProps = dispatch => ({
+  addErrorMessage: e => dispatch(addErrorMessage(e))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Error);
