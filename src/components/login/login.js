@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewUser from "../newUser/newUser";
+import "./login.css";
 import {
   Button,
   Modal,
@@ -18,6 +19,7 @@ class Login extends Component {
       password: ""
     };
   }
+
   loginToggle = () => this.setState({ loginModal: !this.state.loginModal });
   signUpToggle = () => this.setState({ signUpModal: !this.state.signUpModal });
 
@@ -26,20 +28,21 @@ class Login extends Component {
       <div>
         <h4> Hey DJ </h4>
         <p>
-          {" "}
           Login or create and account to create your own music collections and
-          playlists{" "}
+          playlists
         </p>
-        <Button
-          onClick={this.loginToggle}
-          bsStyle="primary"
-          bsSize="large"
-          block
-        >
+        <Button onClick={this.loginToggle} block>
           Login
         </Button>
+        <Button onClick={this.signUpToggle} block>
+          Create New Account
+        </Button>
 
-        <Modal bsSize="small" show={this.state.loginModal}>
+        <Modal
+          bsSize="small"
+          show={this.state.loginModal}
+          onHide={this.loginToggle}
+        >
           <Modal.Body>
             <form>
               <FormGroup>
@@ -67,25 +70,19 @@ class Login extends Component {
               >
                 Login
               </Button>{" "}
-              <Button
-                onClick={e => {
-                  e.preventDefault();
-                  this.signUpToggle();
-                }}
-              >
-                Sign Up!
-              </Button>
             </form>
-            {this.state.signUpModal ? (
-              <NewUser signUpToggle={this.signUpToggle.bind(this)} />
-            ) : (
-              ""
-            )}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.loginToggle}>Close</Button>
+            <Button bsSize="xsmall" onClick={this.loginToggle}>
+              Close
+            </Button>
           </Modal.Footer>
         </Modal>
+        {this.state.signUpModal ? (
+          <NewUser signUpToggle={this.signUpToggle} />
+        ) : (
+          ""
+        )}
       </div>
     );
   }

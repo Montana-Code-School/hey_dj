@@ -22,7 +22,8 @@ const userSchema = new Schema({
       }
     },
     required: true
-  }
+  },
+  email: { type: String }
 });
 
 userSchema.pre("save", function(next) {

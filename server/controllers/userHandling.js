@@ -5,7 +5,8 @@ module.exports = {
     try {
       const user = await Users.create({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        email: req.body.email
       });
       user.success = true;
       return user;

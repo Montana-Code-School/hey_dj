@@ -12,12 +12,9 @@ class NewUser extends Component {
     super(props);
     this.state = {
       username: "",
-      phonenumber: "",
       password: "",
       email: "",
-      passwordConfirm: "",
-      showModal: true,
-      validPassword: ""
+      showModal: true
     };
   }
 
@@ -31,7 +28,8 @@ class NewUser extends Component {
       },
       body: JSON.stringify({
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
+        email: this.state.email
       })
     });
     if (user.status === 200) {
@@ -69,30 +67,10 @@ class NewUser extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <ControlLabel>Phone number</ControlLabel>
-
-                <FormControl
-                  onChange={e => this.setState({ phonenumber: e.target.value })}
-                  type="text"
-                />
-              </FormGroup>
-              <FormGroup>
                 <ControlLabel>Password</ControlLabel>
 
                 <FormControl
                   onChange={e => this.setState({ password: e.target.value })}
-                  type="password"
-                />
-              </FormGroup>
-              <FormGroup>
-                <ControlLabel>Confirm password</ControlLabel>
-
-                <FormControl
-                  onChange={e =>
-                    this.setState({
-                      passwordConfirm: e.target.value,
-                      validPassword: e.target.value
-                    })}
                   type="password"
                 />
               </FormGroup>
@@ -109,6 +87,7 @@ class NewUser extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button
+              bsSize="xsmall"
               onClick={() => {
                 this.setState({ showModal: false });
                 this.props.signUpToggle();
