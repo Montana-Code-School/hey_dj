@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Alert, Button } from "react-bootstrap";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 
 class Error extends Component {
   constructor(props) {
@@ -36,4 +36,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default Error;
+export default connect(mapStateToProps)(Error);
