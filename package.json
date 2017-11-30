@@ -7,6 +7,7 @@
     "react-scripts": "1.0.17"
   },
   "dependencies": {
+    "babel-preset-react": "^6.24.1",
     "base-64": "^0.1.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
@@ -16,12 +17,27 @@
     "password-hash": "^1.2.2",
     "path": "^0.12.7",
     "react": "^16.1.1",
+    "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.1",
-    "react-router-dom": "^4.2.2",
-    "save": "^2.3.1",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "save": "^2.3.1",
+    "sfcookies": "^1.0.2"
   },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "@ava/stage-4",
+      "react"
+    ]
+  },
+  "proxy": "http://localhost:3099",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
