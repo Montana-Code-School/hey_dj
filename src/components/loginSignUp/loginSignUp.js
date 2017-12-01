@@ -43,6 +43,18 @@ class LoginSignUp extends Component {
       })
     });
     if (user.status === 200) {
+
+      alert("Account Created Successfully!!");
+    } else alert("Account Creation Failed");
+    const userInfo = await user.json();
+    this.props.heyDjLogin(userInfo.username); //needs error handling improvement
+    //after new account created needs to redirect to another page - maybe user page
+    console.log(user);
+  }
+
+  loginUser() {
+    fetch("/authenticate", {
+
       const userInfo = await user.json();
       this.props.heyDjLogin(userInfo.username);
       this.props.history.push("/dummy");
@@ -55,6 +67,7 @@ class LoginSignUp extends Component {
 
   async loginUser() {
     const user = await fetch("/authenticate", {
+
       method: "post",
       headers: {
         authorization:
@@ -63,6 +76,11 @@ class LoginSignUp extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }
+
+    })
+      .then(res => res.json())
+      .then(res => bake_cookie("userKey", res.token));
+
     });
     const userInfo = await user.json();
     if (user.status === 200) {
@@ -75,6 +93,7 @@ class LoginSignUp extends Component {
     if (userInfo.success) {
       this.props.history.push("/dummy");
     }
+
   }
 
   render() {
@@ -91,6 +110,11 @@ class LoginSignUp extends Component {
         <Button onClick={this.signUpToggle} block>
           Create New Account
         </Button>
+
+        <div>
+          <h3>{this.props.username}</h3>
+        </div>
+
 
         {this.state.signUpModal ? (
           <Modal
