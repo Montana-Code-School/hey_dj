@@ -2,10 +2,11 @@
 // (Action) Logout
 // (Action) No user profile pages allowed!
 
-export function heyDjLogin(username) {
+export function heyDjLogin(username, userId) {
   return {
     type: "HeyDj Login",
-    username
+    username,
+    userId
   };
 }
 

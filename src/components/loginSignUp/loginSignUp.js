@@ -12,6 +12,7 @@ import { heyDjLogin } from "../../actions/userActions";
 import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
+require("typeface-allura");
 
 var base64 = require("base-64");
 
@@ -44,8 +45,8 @@ class LoginSignUp extends Component {
     });
     if (user.status === 200) {
       const userInfo = await user.json();
-      this.props.heyDjLogin(userInfo.username);
-      this.props.history.push("/dummy");
+      this.props.heyDjLogin(userInfo.username, userInfo._id);
+      this.props.history.push("/user");
     } else {
       this.props.addErrorMessage(
         "Account creation failed. Check username and/or password."
@@ -66,14 +67,14 @@ class LoginSignUp extends Component {
     });
     const userInfo = await user.json();
     if (user.status === 200) {
-      this.props.heyDjLogin(userInfo.username);
+      this.props.heyDjLogin(userInfo.username, userInfo._id);
     } else
       this.props.addErrorMessage(
         "Login failed. Check username and/or password."
       );
     bake_cookie("userKey", userInfo.token);
     if (userInfo.success) {
-      this.props.history.push("/dummy");
+      this.props.history.push("/user");
     }
   }
 
@@ -199,11 +200,12 @@ class LoginSignUp extends Component {
   }
 }
 const mapStateToProps = state => ({
-  username: state.username
+  username: state.username,
+  userId: state.userId
 });
 
 const mapDispatchToProps = dispatch => ({
-  heyDjLogin: e => dispatch(heyDjLogin(e)),
+  heyDjLogin: (e, a) => dispatch(heyDjLogin(e, a)),
   addErrorMessage: e => dispatch(addErrorMessage(e))
 });
 

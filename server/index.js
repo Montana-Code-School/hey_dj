@@ -17,7 +17,7 @@ const { postSong } = require("./controllers/songHandling");
 const { protectionRoute } = require("./controllers/protected");
 const path = require("path");
 const routifyPromise = require("./controllers/util").routifyPromise;
-
+const { getMusicSets } = require("./controllers/getMusicSets");
 app.set("key", config.key);
 
 var protectedRoute = express.Router();
@@ -35,6 +35,8 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 
 app.post("/musicSet", routifyPromise(createMusicSet));
+
+app.get("/username/:id", routifyPromise(getMusicSets));
 
 app.post("/user", routifyPromise(createUser));
 

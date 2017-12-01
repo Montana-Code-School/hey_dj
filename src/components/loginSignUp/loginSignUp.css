@@ -3,3 +3,12 @@ body {
   margin: auto;
   padding-top: 50px;
 }
+
+h1 {
+  font-family: "allura";
+}
+
+html {
+  background: #fff url("music.jpg") no-repeat bottom right fixed;
+  background-size: 50%;
+}

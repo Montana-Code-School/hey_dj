@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import loginSignUp from "./components/loginSignUp/loginSignUp";
-import dummyUser from "./components/loginSignUp/dummyUser";
+import userContent from "./components/userContent/userContent";
 import Error from "./components/error/error";
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
         <div>
           <Error />
           <Route exact path="/" component={loginSignUp} />
-          <Route path="/dummy" component={dummyUser} />
+          <Route path="/user" component={userContent} />
         </div>
       </Router>
     );
