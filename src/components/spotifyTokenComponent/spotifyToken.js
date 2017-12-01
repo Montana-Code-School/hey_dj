@@ -32,8 +32,7 @@ class SpotifyToken extends Component {
   }
 
   render() {
-    console.log("Spotify Token token", this.state.spotifyToken);
-    return <SpotifyMusicPlaylist spotifyToken={this.state.spotifyToken} />;
+    return <SpotifyMusicPlaylist />;
   }
 }
 

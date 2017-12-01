@@ -1,0 +1,14 @@
+ {
+  margin: 0;
+  padding: 0;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "header header" "songs songs";
+  grid-gap: 10px;
+}
+
+.header {
+  margin-right: 100px;
+}

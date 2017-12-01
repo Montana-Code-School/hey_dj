@@ -8,16 +8,22 @@ import {
 } from "../../actions/musicSetActions";
 import MusicSetComponent from "../musicSetComponent/component";
 import { setTokenToState } from "../../actions/tokenActions";
+import SpotifyPlaylistContainer from "../spotifyPlaylistContainer/spotifyPlaylistContainer";
+import SpotifyMusicTable from "../spotifyMusicTable/spotifyMusicTable";
+import "./spotifyMusicPlaylist.css";
 
 class SpotifyMusicPlaylist extends Component {
   constructor(props) {
     super(props);
-    this.state = { spotifyToken: this.props.spotifyToken };
+    this.state = {
+      hasReceivedPlaylists: false
+    };
   }
 
-  componentDidMount() {
-    console.log("Spotify Music Playlist token", this.state.spotifyToken);
-    this.getSpotifyPlaylists(this.state.spotifyToken);
+  componentWillReceiveProps() {
+    if (!this.state.hasReceivedPlaylists) {
+      this.getSpotifyPlaylists(this.props.spotifyToken);
+    }
   }
 
   async getSpotifyPlaylists(auth) {
@@ -32,13 +38,26 @@ class SpotifyMusicPlaylist extends Component {
     try {
       const playlists = await response.json();
       this.props.setPlaylists(playlists.items);
+      this.state.hasReceivedPlaylists = true;
     } catch (e) {
       throw new Error(e);
     }
   }
 
   render() {
-    return <div>This is the spotify music playlist component</div>;
+    let playlists = [];
+    if (this.props.spotifyPlaylists instanceof Array) {
+      this.props.spotifyPlaylists.map(index =>
+        playlists.push(<SpotifyPlaylistContainer playlistInformation={index} />)
+      );
+    }
+
+    return (
+      <div>
+        <div className="grid">{playlists}</div>
+        <SpotifyMusicTable />
+      </div>
+    );
   }
 }
 
@@ -47,7 +66,7 @@ const mapStateToProps = state => ({
   musicSet: state.musicSetReducer.musicSet,
   spotifyToken: state.tokenReducer.spotifyToken,
   spotifyPlaylists: state.musicSetReducer.spotifyPlaylists,
-  count: state.count
+  spotifySongs: state.spotifySongsReducer.spotifySongs
 });
 
 const mapDispatchToProps = dispatch => ({

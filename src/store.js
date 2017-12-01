@@ -3,12 +3,14 @@ import exampleReducer from "./reducers/exampleReducer";
 import userReducer from "./reducers/userReducer";
 import musicSetReducer from "./reducers/musicSetReducers";
 import tokenReducer from "./reducers/tokenReducer";
+import spotifySongsReducer from "./reducers/spotifySongsReducer";
 
 let rootReducer = combineReducers({
   userReducer,
   musicSetReducer,
   exampleReducer,
-  tokenReducer
+  tokenReducer,
+  spotifySongsReducer
 });
 
 export default createStore(
