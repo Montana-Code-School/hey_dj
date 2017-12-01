@@ -55,7 +55,7 @@ class userContent extends Component {
               </ul>
             </Col>
             <Col md={10}>
-              <Table responsive>
+              <Table striped responsive>
                 <thead>
                   <tr>
                     <th>#</th>

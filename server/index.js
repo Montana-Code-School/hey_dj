@@ -21,6 +21,9 @@ const { getMusicSets } = require("./controllers/getMusicSets");
 const { getSongs } = require("./controllers/getSongs");
 const { getUser } = require("./controllers/getUser");
 const { deleteUser } = require("./controllers/deleteUser");
+const { updateProfile } = require("./controllers/updateProfile");
+const { deleteMusicSet } = require("./controllers/deleteMusicSet.js");
+const { editMusicSet } = require("./controllers/editMusicSet");
 app.set("key", config.key);
 
 var protectedRoute = express.Router();
@@ -46,9 +49,10 @@ app.post("/user", routifyPromise(createUser));
 app.get("/getUser/:id", routifyPromise(getUser));
 app.delete("/delete/:id", routifyPromise(deleteUser));
 app.post("/authenticate", routifyPromise(loginUser(app)));
-
+app.put("/updateUser/:id", routifyPromise(updateProfile));
 app.post("/songs", routifyPromise(postSong));
-
+app.delete("/removeMusicSet/:id", routifyPromise(deleteMusicSet));
+app.put("/editMusicSet/:id", routifyPromise(editMusicSet));
 app.use(express.static("build"));
 app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));
 
