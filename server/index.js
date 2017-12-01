@@ -31,7 +31,6 @@ app.post("/playlist", routifyPromise(createPlaylist));
 app.put("/playlist", routifyPromise(addSongs));
 app.post("/editPlaylist", routifyPromise(editPlaylist));
 
-
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
@@ -39,7 +38,7 @@ app.post("/musicSet", routifyPromise(createMusicSet));
 
 app.post("/user", routifyPromise(createUser));
 
-app.post("/authenticate", loginUser(app));
+app.post("/authenticate", routifyPromise(loginUser(app)));
 
 app.post("/songs", routifyPromise(postSong));
 

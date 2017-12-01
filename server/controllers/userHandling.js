@@ -5,7 +5,8 @@ module.exports = {
     try {
       const user = await Users.create({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        email: req.body.email
       });
       user.success = true;
       return user;
@@ -17,12 +18,19 @@ module.exports = {
     const parseUserInfo = str =>
       new Buffer(str.split(" ")[1], "base64").toString().split(":");
     const [username, password] = parseUserInfo(req.headers["authorization"]);
-    const user = await Users.findOne({ username }).exec();
+    const user = await Users.findOne({ username });
     if (!user) {
       throw new Error("User not found");
     }
-    user.success = true;
-    user.token = user.getToken(password);
-    return user;
+    try {
+      token = user.getToken(password);
+      const response = Object.assign(
+        { success: true, token: token },
+        user.toObject()
+      );
+      return response;
+    } catch (e) {
+      throw new Error("Unable to login for this user");
+    }
   }
 };
