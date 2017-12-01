@@ -1,14 +1,17 @@
-body {
+.login {
   width: 50%;
   margin: auto;
-  padding-top: 50px;
+  padding-top: 40px;
 }
 
-h1 {
-  font-family: "allura";
+.page-header {
+  font-family: "shrikhand";
+  margin: auto;
+  position: center;
+  padding-bottom: 30px;
 }
 
 html {
   background: #fff url("music.jpg") no-repeat bottom right fixed;
-  background-size: 50%;
+  background-size: 40%;
 }

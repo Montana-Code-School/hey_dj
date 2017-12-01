@@ -8,11 +8,12 @@ import {
   ControlLabel,
   PageHeader
 } from "react-bootstrap";
+import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
 import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
-require("typeface-allura");
+require("typeface-shrikhand");
 
 var base64 = require("base-64");
 
@@ -80,10 +81,10 @@ class LoginSignUp extends Component {
 
   render() {
     return (
-      <div>
+      <div className="login">
         <PageHeader>
-          {" "}
-          Hey DJ <small>Customize your Spotify playlists</small>
+          Hey DJ<br />
+          <small>customize your spotify playlists</small>
         </PageHeader>
 
         <Button onClick={this.loginToggle} block>
