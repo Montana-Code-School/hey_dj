@@ -7,11 +7,17 @@ import {
   loadMusicSetFromSpotify
 } from "../../actions/musicSetActions";
 import MusicSetComponent from "../musicSetComponent/component";
+import { setTokenToState } from "../../actions/tokenActions";
 
 class SpotifyMusicPlaylist extends Component {
   constructor(props) {
     super(props);
-    this.getSpotifyPlaylists(this.props.spotifyToken);
+    this.state = { spotifyToken: this.props.spotifyToken };
+  }
+
+  componentDidMount() {
+    console.log("Spotify Music Playlist token", this.state.spotifyToken);
+    this.getSpotifyPlaylists(this.state.spotifyToken);
   }
 
   async getSpotifyPlaylists(auth) {
@@ -32,13 +38,14 @@ class SpotifyMusicPlaylist extends Component {
   }
 
   render() {
-    return <div />;
+    return <div>This is the spotify music playlist component</div>;
   }
 }
 
 const mapStateToProps = state => ({
   username: state.userReducer.username,
   musicSet: state.musicSetReducer.musicSet,
+  spotifyToken: state.tokenReducer.spotifyToken,
   spotifyPlaylists: state.musicSetReducer.spotifyPlaylists,
   count: state.count
 });
@@ -49,7 +56,8 @@ const mapDispatchToProps = dispatch => ({
   editMusicSetFieldValue: (customFields, field, newValue) =>
     dispatch(editMusicSetCustomFieldValue(customFields, field, newValue)),
   setPlaylists: playListArray =>
-    dispatch(loadMusicSetFromSpotify(playListArray))
+    dispatch(loadMusicSetFromSpotify(playListArray)),
+  setSpotifyToken: spotifyToken => dispatch(setTokenToState(spotifyToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

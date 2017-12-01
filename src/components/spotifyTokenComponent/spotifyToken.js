@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import { scope, redirectUri, clientId } from "../../frontEndConfig";
 import { connect } from "react-redux";
-import {
-  editMusicSetCustomFields,
-  editMusicSetCustomFieldValue,
-  loadMusicSetFromSpotify
-} from "../../actions/musicSetActions";
 import { setTokenToState } from "../../actions/tokenActions";
 import MusicSetComponent from "../musicSetComponent/component";
 import SpotifyMusicPlaylist from "../spotifyMusicPlaylist/spotifyMusicPlaylist";
@@ -13,6 +8,10 @@ import SpotifyMusicPlaylist from "../spotifyMusicPlaylist/spotifyMusicPlaylist";
 class SpotifyToken extends Component {
   constructor(props) {
     super(props);
+    this.state = { spotifyToken: "" };
+  }
+
+  componentDidMount() {
     let hashParams = {};
     let e,
       r = /([^&;=]+)=?([^&;]*)/g,
@@ -21,24 +20,20 @@ class SpotifyToken extends Component {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
     if (!hashParams.access_token) {
-      const uri = `https://accounts.spotify.com/authorize?client_id=${
-        clientId
-      }&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
+      const uri = `https://accounts.spotify.com/authorize?client_id=${clientId}&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
       const encodedURI = encodeURIComponent(uri);
       console.log(encodedURI);
       console.log(decodeURIComponent(encodedURI));
       window.location.href = uri;
     } else {
       this.props.setSpotifyToken(hashParams.access_token);
+      this.setState({ spotifyToken: hashParams.access_token });
     }
   }
 
   render() {
-    return (
-      <div>
-        <SpotifyMusicPlaylist />
-      </div>
-    );
+    console.log("Spotify Token token", this.state.spotifyToken);
+    return <SpotifyMusicPlaylist spotifyToken={this.state.spotifyToken} />;
   }
 }
 
