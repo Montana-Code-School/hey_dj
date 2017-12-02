@@ -83,7 +83,10 @@ class userProfile extends Component {
 
   deleteMusicSet = setId => {
     fetch("/removeMusicSet/" + setId, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
     fetch("/username/" + this.props.userId)
       .then(response => response.json())
@@ -135,15 +138,7 @@ class userProfile extends Component {
               <tbody>
                 {this.state.musicSets.map(musicSet => (
                   <tr>
-                    <td>
-                      <input
-                        className="inputTable"
-                        defaultValue={musicSet.title}
-                        onChange={e =>
-                          this.setState({ newTitle: e.target.value })
-                        }
-                      />
-                    </td>
+                    <td>{musicSet.title}</td>
                     <td>
                       <Button
                         onClick={() => {
