@@ -4,9 +4,14 @@ module.exports = {
   postSong: async (req, res) => {
     try {
       const song = await Song.create({
-        spotifyData: req.body.spotifyData,
-        customValues: req.body.customValues,
-        musicSetId: req.body._id
+        musicSetId: req.body._id,
+        spotifyId: req.body.spotifyId,
+        title: req.body.title,
+        artist: req.body.artist,
+        releaseDate: req.body.releaseDate,
+        genre: req.body.genre,
+        physiological: req.body.physiological,
+        emotion: req.body.emotion
       });
       song.success = true;
       return song;

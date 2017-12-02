@@ -13,6 +13,12 @@ import {
   Table
 } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
+
+const selectRowProp = {
+  mode: "checkbox"
+};
 
 class userContent extends Component {
   constructor(props) {
@@ -55,32 +61,29 @@ class userContent extends Component {
               </ul>
             </Col>
             <Col md={10}>
-              <Table striped responsive>
-                <thead>
-                  <tr>
-                    <th>#</th>
-
-                    <th>Song</th>
-                    <th>Artist</th>
-                    <th>Release Date</th>
-                    <th>Physiological</th>
-                    <th>Genre</th>
-                    <th>Emotion</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.songs.map(song => (
-                    <tr>
-                      <td>{song.spotifyData[0]}</td>
-                      <td>{song.spotifyData[1]}</td>
-                      <td>{song.customValues[0]}</td>
-                      <td>{song.customValues[1]}</td>
-                      <td>{song.customValues[2]}</td>
-                      <td>{song.customValues[3]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              <BootstrapTable
+                data={this.state.songs}
+                selectRow={selectRowProp}
+                hover
+                striped
+                condensed
+                search
+              >
+                <TableHeaderColumn dataField="title" isKey>
+                  Song
+                </TableHeaderColumn>
+                <TableHeaderColumn dataField="artist">Artist</TableHeaderColumn>
+                <TableHeaderColumn dataField="releaseDate">
+                  Release Date
+                </TableHeaderColumn>
+                <TableHeaderColumn dataField="genre">Genre</TableHeaderColumn>
+                <TableHeaderColumn dataField="physiological">
+                  Physiological
+                </TableHeaderColumn>
+                <TableHeaderColumn dataField="emotion">
+                  Emotion
+                </TableHeaderColumn>
+              </BootstrapTable>
             </Col>
             <Col md={1}>Make a new playlist</Col>
           </Row>

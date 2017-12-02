@@ -17,6 +17,23 @@ import {
 import { delete_cookie } from "sfcookies";
 import { Link } from "react-router-dom";
 
+var products = [
+  {
+    id: 1,
+    name: "Product1",
+    price: 120
+  },
+  {
+    id: 2,
+    name: "Product2",
+    price: 80
+  }
+];
+
+const cellEditProp = {
+  mode: "click"
+};
+
 class userProfile extends Component {
   constructor(props) {
     super(props);
@@ -133,24 +150,14 @@ class userProfile extends Component {
               </div>
             </div>
             <hr />
-            <h3>Your Music Collections</h3>
+            <h3>Music collections</h3>
+
             <Table hover responsive bordered condensed>
               <tbody>
                 {this.state.musicSets.map(musicSet => (
                   <tr>
                     <td>{musicSet.title}</td>
-                    <td>
-                      <Button
-                        onClick={() => {
-                          this.editMusicSet(musicSet._id);
-                          this.setState({ showUpdateModal: true });
-                        }}
-                        bsStyle="warning"
-                        bsSize="xs"
-                      >
-                        Edit Title
-                      </Button>
-                    </td>
+
                     <td>
                       <Button
                         bsStyle="danger"
