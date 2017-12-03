@@ -16,9 +16,9 @@
     "morgan": "^1.9.0",
     "password-hash": "^1.2.2",
     "path": "^0.12.7",
-    "pure-react-carousel": "^1.9.11",
     "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
+    "react-bootstrap-table": "^4.2.0",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
@@ -28,7 +28,9 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "save": "^2.3.1",
-    "sfcookies": "^1.0.2"
+    "sfcookies": "^1.0.2",
+    "typeface-allura": "0.0.44",
+    "typeface-shrikhand": "0.0.44"
   },
   "ava": {
     "require": ["babel-register"],
