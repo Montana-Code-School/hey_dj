@@ -70,6 +70,7 @@ class SpotifyMusicTable extends Component {
     return (
       <div>
         <div>
+          yo
           <Table>
             <div className="header">
               <thead>
