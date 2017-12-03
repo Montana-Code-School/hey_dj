@@ -8,10 +8,13 @@ import {
   ControlLabel,
   PageHeader
 } from "react-bootstrap";
+import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
 import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
+
+require("typeface-shrikhand");
 
 var base64 = require("base-64");
 
@@ -43,21 +46,9 @@ class LoginSignUp extends Component {
       })
     });
     if (user.status === 200) {
-
-      alert("Account Created Successfully!!");
-    } else alert("Account Creation Failed");
-    const userInfo = await user.json();
-    this.props.heyDjLogin(userInfo.username); //needs error handling improvement
-    //after new account created needs to redirect to another page - maybe user page
-    console.log(user);
-  }
-
-  loginUser() {
-    fetch("/authenticate", {
-
       const userInfo = await user.json();
-      this.props.heyDjLogin(userInfo.username);
-      this.props.history.push("/dummy");
+      this.props.heyDjLogin(userInfo.username, userInfo._id);
+      this.props.history.push("/user");
     } else {
       this.props.addErrorMessage(
         "Account creation failed. Check username and/or password."
@@ -67,7 +58,6 @@ class LoginSignUp extends Component {
 
   async loginUser() {
     const user = await fetch("/authenticate", {
-
       method: "post",
       headers: {
         authorization:
@@ -76,32 +66,26 @@ class LoginSignUp extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }
-
-    })
-      .then(res => res.json())
-      .then(res => bake_cookie("userKey", res.token));
-
     });
     const userInfo = await user.json();
     if (user.status === 200) {
-      this.props.heyDjLogin(userInfo.username);
+      this.props.heyDjLogin(userInfo.username, userInfo._id);
     } else
       this.props.addErrorMessage(
         "Login failed. Check username and/or password."
       );
     bake_cookie("userKey", userInfo.token);
     if (userInfo.success) {
-      this.props.history.push("/dummy");
+      this.props.history.push("/user");
     }
-
   }
 
   render() {
     return (
-      <div>
+      <div className="login">
         <PageHeader>
-          {" "}
-          Hey DJ <small>Customize your Spotify playlists</small>
+          Hey DJ<br />
+          <small>customize your spotify playlists</small>
         </PageHeader>
 
         <Button onClick={this.loginToggle} block>
@@ -110,11 +94,6 @@ class LoginSignUp extends Component {
         <Button onClick={this.signUpToggle} block>
           Create New Account
         </Button>
-
-        <div>
-          <h3>{this.props.username}</h3>
-        </div>
-
 
         {this.state.signUpModal ? (
           <Modal
@@ -223,11 +202,12 @@ class LoginSignUp extends Component {
   }
 }
 const mapStateToProps = state => ({
-  username: state.username
+  username: state.username,
+  userId: state.userId
 });
 
 const mapDispatchToProps = dispatch => ({
-  heyDjLogin: e => dispatch(heyDjLogin(e)),
+  heyDjLogin: (e, a) => dispatch(heyDjLogin(e, a)),
   addErrorMessage: e => dispatch(addErrorMessage(e))
 });
 
