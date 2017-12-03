@@ -13,6 +13,7 @@ import { heyDjLogin } from "../../actions/userActions";
 import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
+import BackgroundImage from "../backgroundImage/backgroundImage";
 
 require("typeface-shrikhand");
 
@@ -83,6 +84,9 @@ class LoginSignUp extends Component {
   render() {
     return (
       <div className="login">
+        <div className="backgroundImage">
+          <BackgroundImage />
+        </div>
         <PageHeader>
           Hey DJ<br />
           <small>customize your spotify playlists</small>

@@ -1,17 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Button,
-  Modal,
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  PageHeader,
-  Grid,
-  Row,
-  Col,
-  Table
-} from "react-bootstrap";
+import { PageHeader, Grid, Row, Col, Table } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
@@ -25,7 +14,8 @@ class userContent extends Component {
     super(props);
     this.state = {
       musicSets: [],
-      songs: []
+      songs: [],
+      newPlaylist: []
     };
   }
 
@@ -38,9 +28,30 @@ class userContent extends Component {
   getMusicSet = id =>
     fetch("/getSongs/" + id)
       .then(response => response.json())
-      .then(response => this.setState({ songs: response }));
+      .then(response => {
+        this.setState({ songs: response });
+        this.setState({ newPlaylist: [] });
+      });
+
+  handleRowSelect(row, isSelected, event) {
+    let playlist = this.state.newPlaylist;
+    if (isSelected) {
+      playlist.push(row);
+      this.setState({ newPlaylist: playlist });
+    } else {
+      const index = playlist.indexOf(row);
+      playlist.splice(index, 1);
+      this.setState({ newPlaylist: playlist });
+    }
+  }
 
   render() {
+    const selectRow = {
+      mode: "checkbox",
+      onSelect: this.handleRowSelect.bind(this),
+      clickToSelect: true
+    };
+
     return (
       <div>
         <PageHeader>
@@ -51,7 +62,7 @@ class userContent extends Component {
         </LinkContainer>
         <Grid>
           <Row className="show-grid">
-            <Col md={1}>
+            <Col md={3}>
               <ul>
                 {this.state.musicSets.map(musicSet => (
                   <li onClick={() => this.getMusicSet(musicSet._id)}>
@@ -60,10 +71,10 @@ class userContent extends Component {
                 ))}
               </ul>
             </Col>
-            <Col md={10}>
+            <Col md={9}>
               <BootstrapTable
                 data={this.state.songs}
-                selectRow={selectRowProp}
+                selectRow={selectRow}
                 hover
                 striped
                 condensed
@@ -84,8 +95,25 @@ class userContent extends Component {
                   Emotion
                 </TableHeaderColumn>
               </BootstrapTable>
+
+              {this.state.newPlaylist.length !== 0 ? (
+                <BootstrapTable
+                  data={this.state.newPlaylist}
+                  hover
+                  striped
+                  condensed
+                >
+                  <TableHeaderColumn dataField="title" isKey>
+                    Song
+                  </TableHeaderColumn>
+                  <TableHeaderColumn dataField="artist">
+                    Artist
+                  </TableHeaderColumn>
+                </BootstrapTable>
+              ) : (
+                ""
+              )}
             </Col>
-            <Col md={1}>Make a new playlist</Col>
           </Row>
         </Grid>
       </div>

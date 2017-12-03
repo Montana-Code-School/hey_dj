@@ -1,34 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./userProfile.css";
-import {
-  Button,
-  Modal,
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  PageHeader,
-  Grid,
-  Row,
-  Col,
-  Table,
-  Alert
-} from "react-bootstrap";
+import { Button, Modal, Table, Alert } from "react-bootstrap";
 import { delete_cookie } from "sfcookies";
 import { Link } from "react-router-dom";
-
-var products = [
-  {
-    id: 1,
-    name: "Product1",
-    price: 120
-  },
-  {
-    id: 2,
-    name: "Product2",
-    price: 80
-  }
-];
 
 const cellEditProp = {
   mode: "click"
