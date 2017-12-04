@@ -18,7 +18,6 @@ class SpotifyMusicTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
       songsWithCustom: []
     };
   }
@@ -69,7 +68,7 @@ class SpotifyMusicTable extends Component {
           genre: "",
           physiological: "",
           emotion: "",
-          musicSetTitle: this.state.title
+          musicSetTitle: this.props.spotifyTitle
         })
       );
     }
@@ -82,18 +81,9 @@ class SpotifyMusicTable extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
-
+    console.log(this.props.spotifyTitle);
     return (
       <div>
-        <form>
-          <FormGroup>
-            <FormControl
-              type="text"
-              placeholder="Choose a title for your new music set"
-              onChange={e => this.setState({ title: e.target.value })}
-            />
-          </FormGroup>
-        </form>
         <div>
           <BootstrapTable
             data={songs}
@@ -122,7 +112,7 @@ class SpotifyMusicTable extends Component {
             </TableHeaderColumn>
             <TableHeaderColumn dataField="emotion">Emotion</TableHeaderColumn>
 
-            <TableHeaderColumn dataField="musicSetTitle" hidden>
+            <TableHeaderColumn dataField="musicSetTitle">
               Music Set Title
             </TableHeaderColumn>
           </BootstrapTable>
@@ -134,7 +124,9 @@ class SpotifyMusicTable extends Component {
 }
 
 const mapStateToProps = state => ({
-  spotifySongs: state.spotifySongsReducer.spotifySongs
+  spotifySongs: state.spotifySongsReducer.spotifySongs,
+  spotifyPlaylists: state.musicSetReducer.spotifyPlaylists,
+  spotifyTitle: state.musicSetReducer.spotifyTitle
 });
 
 const mapDispatchToProps = dispatch => ({});

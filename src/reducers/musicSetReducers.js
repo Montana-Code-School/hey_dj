@@ -26,6 +26,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         spotifyPlaylists: action.spotifyPlaylists
       };
+    case "Update_Spotify_Title":
+      return {
+        ...state,
+        spotifyTitle: action.spotifyTitle
+      };
     default:
       return state;
   }

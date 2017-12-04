@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setTokenToState } from "../../actions/tokenActions";
 import { updateSpotifySongs } from "../../actions/spotifySongs";
+import { updateSpotifyTitle } from "../../actions/musicSetActions";
 import "./spotifyPlaylistContainer.css";
 
 class SpotifyPlaylistContainer extends Component {
@@ -36,7 +37,13 @@ class SpotifyPlaylistContainer extends Component {
         images.push(<img src={this.state.playlistInformation.images[1].url} />);
       }
       return (
-        <div className="main" onClick={() => this.fetchSongsFromSpotify()}>
+        <div
+          className="main"
+          onClick={() => {
+            this.fetchSongsFromSpotify();
+            this.props.setSpotifyTitle(this.state.playlistInformation.name);
+          }}
+        >
           <div>{this.state.playlistInformation.name}</div>
         </div>
       );
@@ -53,7 +60,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setSpotifyToken: spotifyToken => dispatch(setTokenToState(spotifyToken)),
-  setSpotifySongs: songsArray => dispatch(updateSpotifySongs(songsArray))
+  setSpotifySongs: songsArray => dispatch(updateSpotifySongs(songsArray)),
+  setSpotifyTitle: spotifyTitle => dispatch(updateSpotifyTitle(spotifyTitle))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
