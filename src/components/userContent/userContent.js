@@ -106,6 +106,10 @@ class userContent extends Component {
         <LinkContainer to="/profile">
           <a>{this.props.username}</a>
         </LinkContainer>
+        <hr />
+        <LinkContainer to="/spotifytoken">
+          <a>Make new music set</a>
+        </LinkContainer>
         <Grid>
           <Row className="show-grid">
             <Col md={3}>

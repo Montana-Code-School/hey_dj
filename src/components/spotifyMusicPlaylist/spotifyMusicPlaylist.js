@@ -11,6 +11,7 @@ import { setTokenToState } from "../../actions/tokenActions";
 import SpotifyPlaylistContainer from "../spotifyPlaylistContainer/spotifyPlaylistContainer";
 import SpotifyMusicTable from "../spotifyMusicTable/spotifyMusicTable";
 import "./spotifyMusicPlaylist.css";
+import { Button, PageHeader, Grid, Row, Col } from "react-bootstrap";
 
 class SpotifyMusicPlaylist extends Component {
   constructor(props) {
@@ -54,8 +55,17 @@ class SpotifyMusicPlaylist extends Component {
 
     return (
       <div>
-        <div className="grid">{playlists}</div>
-        <SpotifyMusicTable />
+        <PageHeader>
+          Hey DJ<br /> <small>{this.props.username}</small>
+        </PageHeader>
+        <Grid>
+          <Row>
+            <Col md={3}>{playlists}</Col>
+            <Col md={9}>
+              <SpotifyMusicTable />
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }

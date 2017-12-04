@@ -38,7 +38,6 @@ class SpotifyPlaylistContainer extends Component {
       return (
         <div className="main" onClick={() => this.fetchSongsFromSpotify()}>
           <div>{this.state.playlistInformation.name}</div>
-          <div>{images}</div>
         </div>
       );
     } else {

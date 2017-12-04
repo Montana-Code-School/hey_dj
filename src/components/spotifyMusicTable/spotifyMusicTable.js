@@ -12,99 +12,121 @@ import {
   Col,
   Table
 } from "react-bootstrap";
-import {
-  CarouselProvider,
-  Slider,
-  Slide,
-  ButtonBack,
-  ButtonNext
-} from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 
 class SpotifyMusicTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      NewField: "",
-      NewFieldValue: "",
-      ExistingFields: [<th>Song Title</th>, <th>Artist</th>],
-      ExistingFieldsValues: ["", ""]
+      title: "",
+      songsWithCustom: []
     };
   }
 
-  addToFields(field, fieldValue) {
-    let fields = this.state.ExistingFields;
-    let fieldsValues = this.state.ExistingFieldsValues;
-    fields.push(<th>{field}</th>);
-    fieldsValues.push(fieldValue);
-    this.setState({
-      ExistingFields: fields,
-      ExistingFieldsValues: fieldsValues
-    });
+  afterSaveCell(row, cellName, cellValue) {
+    const playlist = this.state.songsWithCustom;
+    const ids = [];
+    playlist.map(song => ids.push(song.id));
+    if (ids.indexOf(row.id) === -1) {
+      playlist.push(row);
+    } else {
+      playlist.splice(ids.indexOf(row.id), 1, row);
+    }
+    console.log(this.state.songsWithCustom);
   }
 
-  // <CarouselProvider
-  //   naturalSlideWidth={0.1}
-  //   naturalSlideHeight={0.1}
-  //   totalSlides={3}
-  // >
-  //   <Slider>
-  //     <Slide index={0}>I am the first Slide.</Slide>
-  //     <Slide index={1}>I am the second Slide.</Slide>
-  //     <Slide index={2}>I am the third Slide.</Slide>
-  //   </Slider>
-  // </CarouselProvider>
-
+  postSongsWithCustom = async () => {
+    const playlist = this.state.songsWithCustom;
+    for (let i = 0; i < playlist.length; i++) {
+      const song = await fetch("/songs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          musicSetId: playlist[i].musicSetId,
+          title: playlist[i].title,
+          artist: playlist[i].artist,
+          releaseDate: playlist[i].releaseDate,
+          genre: playlist[i].genre,
+          physiological: playlist[i].physiological,
+          emotion: playlist[i].emotion
+        })
+      });
+      const song1 = await song.json();
+      console.log(song1);
+    }
+  };
   render() {
     let songs = [];
     if (this.props.spotifySongs !== undefined) {
       this.props.spotifySongs.map(index =>
-        songs.push(
-          <tr>
-            {index.track.name}
-            {index.track.artists[0].name}
-          </tr>
-        )
+        songs.push({
+          name: index.track.name,
+          artist: index.track.artists[0].name,
+          id: index.track.id,
+          releaseDate: "",
+          genre: "",
+          physiological: "",
+          emotion: "",
+          musicSetTitle: this.state.title
+        })
       );
     }
+
+    const cellEditProp = {
+      mode: "dbclick"
+    };
+
+    const cellEdit = {
+      mode: "click",
+      afterSaveCell: this.afterSaveCell.bind(this)
+    };
+
     return (
       <div>
-        <div>
-          <Table>
-            <div className="header">
-              <thead>
-                <tr>{this.state.ExistingFields}</tr>
-                <tr>{this.state.ExistingFieldsValues}</tr>
-              </thead>
-            </div>
-            <div className="songs">
-              <tbody>{songs}</tbody>
-            </div>
-          </Table>
-        </div>
-        <div>
+        <form>
           <FormGroup>
-            <div>
-              <ControlLabel>Add a new field</ControlLabel>
-            </div>
             <FormControl
-              onChange={e => this.setState({ NewField: e.target.value })}
               type="text"
-            />
-            <div>
-              <ControlLabel>Set field value</ControlLabel>
-            </div>
-            <FormControl
-              onChange={e => this.setState({ NewFieldValue: e.target.value })}
-              type="text"
+              placeholder="Choose a title for your new music set"
+              onChange={e => this.setState({ title: e.target.value })}
             />
           </FormGroup>
-          <Button
-            onClick={() =>
-              this.addToFields(this.state.NewField, this.state.NewFieldValue)}
+        </form>
+        <div>
+          <BootstrapTable
+            data={songs}
+            cellEdit={cellEditProp}
+            cellEdit={cellEdit}
+            hover
+            striped
+            condensed
+            search
           >
-            Submit New Field
-          </Button>
+            <TableHeaderColumn dataField="name" isKey>
+              Song
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="artist" editable={false}>
+              artist
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="id" editable={false} hidden>
+              id
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="releaseDate">
+              Release Date
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="genre">Genre</TableHeaderColumn>
+            <TableHeaderColumn dataField="physiological">
+              Physiological
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="emotion">Emotion</TableHeaderColumn>
+
+            <TableHeaderColumn dataField="musicSetTitle" hidden>
+              Music Set Title
+            </TableHeaderColumn>
+          </BootstrapTable>
+          <Button>Save to Hey DJ database</Button>
         </div>
       </div>
     );
