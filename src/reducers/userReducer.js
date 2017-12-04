@@ -1,7 +1,7 @@
 const initialState = {
   username: "gabe",
   error: "",
-  userId: "5a205111477de213a0c7be43"
+  userId: "5a239facd255e8dabdb462e6"
 };
 
 const userReducer = (state = initialState, action) => {

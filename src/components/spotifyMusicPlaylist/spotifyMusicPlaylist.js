@@ -8,6 +8,7 @@ import {
 } from "../../actions/musicSetActions";
 import MusicSetComponent from "../musicSetComponent/component";
 import { setTokenToState } from "../../actions/tokenActions";
+import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import SpotifyPlaylistContainer from "../spotifyPlaylistContainer/spotifyPlaylistContainer";
 import SpotifyMusicTable from "../spotifyMusicTable/spotifyMusicTable";
 import "./spotifyMusicPlaylist.css";
@@ -56,7 +57,19 @@ class SpotifyMusicPlaylist extends Component {
     return (
       <div>
         <PageHeader>
-          Hey DJ<br /> <small>{this.props.username}</small>
+          <Col md={10}>Hey DJ</Col>
+          <Col md={2}>
+            <LinkContainer to="/profile">
+              <h3
+                className="headerName"
+                class="glyphicon glyphicon-user"
+                aria-hidden="true"
+              >
+                {this.props.username}
+              </h3>
+            </LinkContainer>
+          </Col>
+          <br />
         </PageHeader>
         <Grid>
           <Row>
