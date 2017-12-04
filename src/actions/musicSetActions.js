@@ -31,3 +31,10 @@ export function loadMusicSetFromSpotify(spotifyPlaylists) {
     spotifyPlaylists: spotifyPlaylists
   };
 }
+
+export function updateSpotifyTitle(spotifyTitle) {
+  return {
+    type: "Update_Spotify_Title",
+    spotifyTitle: spotifyTitle
+  };
+}
