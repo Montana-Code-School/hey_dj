@@ -4,7 +4,7 @@ import { Button, PageHeader, Grid, Row, Col, Table } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
-
+import "./userContent.css";
 const selectRowProp = {
   mode: "checkbox"
 };
@@ -26,13 +26,14 @@ class userContent extends Component {
       .then(response => this.setState({ musicSets: response }));
   }
 
-  getMusicSet = id =>
+  getMusicSet = id => {
     fetch("/getSongs/" + id)
       .then(response => response.json())
       .then(response => {
         this.setState({ songs: response });
         this.setState({ newPlaylist: [] });
       });
+  };
 
   handleRowSelect(row, isSelected) {
     const playlist = this.state.newPlaylist;
@@ -96,32 +97,54 @@ class userContent extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
-    console.log(this.props.username);
-
     return (
       <div>
         <PageHeader>
-          Hey DJ<br /> <small>{this.props.username}</small>
+          <Col md={10}>Hey DJ</Col>
+          <Col md={2}>
+            <LinkContainer to="/profile">
+              <h3
+                className="headerName"
+                class="glyphicon glyphicon-user"
+                aria-hidden="true"
+              >
+                {this.props.username}
+              </h3>
+            </LinkContainer>
+          </Col>
+          <br />
         </PageHeader>
-        <LinkContainer to="/profile">
-          <a>{this.props.username}</a>
-        </LinkContainer>
-        <hr />
-        <LinkContainer to="/spotifytoken">
-          <a>Make new music set</a>
-        </LinkContainer>
+
         <Grid>
           <Row className="show-grid">
             <Col md={3}>
-              <ul>
-                {this.state.musicSets.map(musicSet => (
-                  <li onClick={() => this.getMusicSet(musicSet._id)}>
-                    {musicSet.title}
-                  </li>
-                ))}
-              </ul>
+              <table>
+                <tr>
+                  <th>Music Collections</th>
+                </tr>
+                <tr>
+                  <ul className="list">
+                    {this.state.musicSets.map(musicSet => (
+                      <li
+                        onClick={() => {
+                          this.getMusicSet(musicSet._id);
+                        }}
+                      >
+                        {musicSet.title}
+                      </li>
+                    ))}
+                  </ul>
+                </tr>
+              </table>
+              <br />
+              <LinkContainer to="/spotifytoken">
+                <Button bsStyle="primary">Make New Music Collection</Button>
+              </LinkContainer>
+
               {this.state.newPlaylist.length !== 0 ? (
                 <div>
+                  <br />
+
                   <BootstrapTable
                     data={this.state.newPlaylist}
                     hover
@@ -135,6 +158,7 @@ class userContent extends Component {
                       Artist
                     </TableHeaderColumn>
                   </BootstrapTable>
+                  <br />
 
                   <Button>Export to Spotify</Button>
                 </div>
@@ -167,34 +191,6 @@ class userContent extends Component {
                   Emotion
                 </TableHeaderColumn>
               </BootstrapTable>
-              <BootstrapTable
-                data={this.state.songs}
-                selectRow={selectRow}
-                cellEdit={cellEditProp}
-                cellEdit={cellEdit}
-                hover
-                striped
-                condensed
-                search
-              >
-                <TableHeaderColumn dataField="title" isKey>
-                  Song
-                </TableHeaderColumn>
-                <TableHeaderColumn dataField="artist" editable={false}>
-                  Artist
-                </TableHeaderColumn>
-                <TableHeaderColumn dataField="releaseDate">
-                  Release Date
-                </TableHeaderColumn>
-                <TableHeaderColumn dataField="genre">Genre</TableHeaderColumn>
-                <TableHeaderColumn dataField="physiological">
-                  Physiological
-                </TableHeaderColumn>
-                <TableHeaderColumn dataField="emotion">
-                  Emotion
-                </TableHeaderColumn>
-              </BootstrapTable>
-              <Button onClick={this.postSongsWithCustom}>Save</Button>
             </Col>
           </Row>
         </Grid>

@@ -17,8 +17,6 @@ import BackgroundImage from "../backgroundImage/backgroundImage";
 
 require("typeface-shrikhand");
 
-require("typeface-shrikhand");
-
 var base64 = require("base-64");
 
 class LoginSignUp extends Component {

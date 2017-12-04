@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./userProfile.css";
-import { Button, Modal, Table, Alert } from "react-bootstrap";
+import { Button, Modal, Table, Alert, PageHeader, Col } from "react-bootstrap";
+import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { delete_cookie } from "sfcookies";
 import { Link } from "react-router-dom";
 
@@ -88,11 +89,27 @@ class userProfile extends Component {
   render() {
     return (
       <div>
+        <PageHeader>
+          <Col md={10}>
+            <LinkContainer to="/user">
+              <h1>Hey DJ</h1>
+            </LinkContainer>
+          </Col>
+          <Col md={2}>
+            <LinkContainer to="/profile">
+              <h3
+                className="headerName"
+                class="glyphicon glyphicon-user"
+                aria-hidden="true"
+              >
+                {this.props.username}
+              </h3>
+            </LinkContainer>
+          </Col>
+          <br />
+        </PageHeader>
         <div className="gridProfile">
           <div className="user">
-            <div>
-              <Link to="/user">back</Link>
-            </div>
             <div className="userInfo">
               <div>
                 <div>
@@ -105,6 +122,7 @@ class userProfile extends Component {
                     value={this.state.email}
                   />
                 </div>
+                <br />
                 <Button
                   bsStyle="warning"
                   bsSize="xs"
@@ -125,7 +143,7 @@ class userProfile extends Component {
               </div>
             </div>
             <hr />
-            <h3>Music collections</h3>
+            <h3>Music Collections</h3>
 
             <Table hover responsive bordered condensed>
               <tbody>
@@ -133,7 +151,7 @@ class userProfile extends Component {
                   <tr>
                     <td>{musicSet.title}</td>
 
-                    <td>
+                    <td className="delete">
                       <Button
                         bsStyle="danger"
                         bsSize="xs"
@@ -199,6 +217,7 @@ class userProfile extends Component {
 }
 
 const mapStateToProps = state => ({
+  username: state.userReducer.username,
   userId: state.userReducer.userId
 });
 

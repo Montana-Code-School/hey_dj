@@ -1,0 +1,21 @@
+.show-grid {
+  position: fixed;
+  width: auto;
+  left: 0%;
+  padding: 10px;
+}
+
+.list {
+  list-style-type: none;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th,
+td {
+  padding: 15px;
+}
