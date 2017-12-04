@@ -56,7 +56,59 @@ class SpotifyMusicTable extends Component {
       console.log(song1);
     }
   };
+
+  async createPlaylistOnSpotify() {
+    const userResp = await fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+      headers: new Headers({
+        Accept: "application/json",
+        Authorization: "Bearer " + this.props.spotifyToken
+      })
+    });
+    const userData = await userResp.json();
+    let response = await fetch(
+      new Request(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/json",
+          Authorization: "Bearer " + this.props.spotifyToken
+        }),
+        body: JSON.stringify({
+          name: "Broc's Playlist",
+          public: true
+        })
+      })
+    )
+      .then(res => res.json())
+      .then(res =>
+        this.addTrackToSpotifyPlaylist(
+          userData.id,
+          res.id,
+          "4iV5W9uYEdYUVa79Axb7Rh"
+        )
+      );
+  }
+
+  async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
+    console.log(playlistId);
+    let addTrack = await fetch(
+      new Request(
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
+        {
+          method: "POST",
+          headers: new Headers({
+            Accept: "application/json",
+            Authorization: "Bearer " + this.props.spotifyToken
+          })
+        }
+      )
+    );
+  }
+
   render() {
+    console.log(this.props);
     let songs = [];
     if (this.props.spotifySongs !== undefined) {
       this.props.spotifySongs.map(index =>
@@ -117,6 +169,9 @@ class SpotifyMusicTable extends Component {
             </TableHeaderColumn>
           </BootstrapTable>
           <Button>Save to Hey DJ database</Button>
+          <Button onClick={() => this.createPlaylistOnSpotify()}>
+            Export to Spotify
+          </Button>
         </div>
       </div>
     );
@@ -126,7 +181,9 @@ class SpotifyMusicTable extends Component {
 const mapStateToProps = state => ({
   spotifySongs: state.spotifySongsReducer.spotifySongs,
   spotifyPlaylists: state.musicSetReducer.spotifyPlaylists,
-  spotifyTitle: state.musicSetReducer.spotifyTitle
+  spotifyTitle: state.musicSetReducer.spotifyTitle,
+  userId: state.userReducer.userId,
+  spotifyToken: state.tokenReducer.spotifyToken
 });
 
 const mapDispatchToProps = dispatch => ({});
