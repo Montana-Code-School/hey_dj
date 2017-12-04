@@ -17,6 +17,8 @@ import BackgroundImage from "../backgroundImage/backgroundImage";
 
 require("typeface-shrikhand");
 
+require("typeface-shrikhand");
+
 var base64 = require("base-64");
 
 class LoginSignUp extends Component {
@@ -87,6 +89,7 @@ class LoginSignUp extends Component {
         <div className="backgroundImage">
           <BackgroundImage />
         </div>
+
         <PageHeader>
           Hey DJ<br />
           <small>customize your spotify playlists</small>

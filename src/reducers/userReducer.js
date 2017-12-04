@@ -1,4 +1,8 @@
-const userReducer = (state, action) => {
+const initialState = {
+  username: ""
+};
+
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case "HeyDj Login":
       return {
