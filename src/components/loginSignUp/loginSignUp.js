@@ -209,8 +209,8 @@ class LoginSignUp extends Component {
   }
 }
 const mapStateToProps = state => ({
-  username: state.username,
-  userId: state.userId
+  username: state.userReducer.username,
+  userId: state.userReducer.userId
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -199,7 +199,7 @@ class userProfile extends Component {
 }
 
 const mapStateToProps = state => ({
-  userId: state.userId
+  userId: state.userReducer.userId
 });
 
 export default connect(mapStateToProps)(userProfile);

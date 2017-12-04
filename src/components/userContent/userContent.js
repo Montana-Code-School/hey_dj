@@ -51,6 +51,7 @@ class userContent extends Component {
       onSelect: this.handleRowSelect.bind(this),
       clickToSelect: true
     };
+    console.log(this.props.username);
 
     return (
       <div>
@@ -122,8 +123,8 @@ class userContent extends Component {
 }
 
 const mapStateToProps = state => ({
-  username: state.username,
-  userId: state.userId
+  username: state.userReducer.username,
+  userId: state.userReducer.userId
 });
 
 export default connect(mapStateToProps)(userContent);
