@@ -22,16 +22,12 @@ module.exports = {
     if (!user) {
       throw new Error("User not found");
     }
-
-    console.log("checkpoint1");
     try {
-      console.log("checkpoint2");
       token = user.getToken(password);
       const response = Object.assign(
         { success: true, token: token },
         user.toObject()
       );
-      console.log("responsse", response);
       return response;
     } catch (e) {
       throw new Error("Unable to login for this user");

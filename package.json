@@ -16,11 +16,15 @@
     "morgan": "^1.9.0",
     "password-hash": "^1.2.2",
     "path": "^0.12.7",
+    "pure-react-carousel": "^1.9.11",
     "react": "^16.1.1",
     "react-bootstrap": "^0.31.5",
     "react-bootstrap-table": "^4.2.0",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "save": "^2.3.1",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
@@ -30,16 +34,11 @@
     "typeface-shrikhand": "0.0.44"
   },
   "ava": {
-    "require": [
-      "babel-register"
-    ],
+    "require": ["babel-register"],
     "babel": "inherit"
   },
   "babel": {
-    "presets": [
-      "@ava/stage-4",
-      "react"
-    ]
+    "presets": ["@ava/stage-4", "react"]
   },
   "proxy": "http://localhost:3099",
   "scripts": {
