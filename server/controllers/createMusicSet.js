@@ -13,7 +13,7 @@ module.exports = {
           emotion: req.body.emotion
         },
         title: req.body.title,
-        userId: req.body.userId
+        userId: req.body._id
       });
       return newMusicSet;
     } catch (e) {

@@ -7,6 +7,7 @@ const userReducer = (state = initialState, action) => {
     case "HeyDj Login":
       return {
         ...state,
+        userId: action.userId,
         username: action.username
       };
 
