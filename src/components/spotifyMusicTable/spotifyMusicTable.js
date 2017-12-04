@@ -18,7 +18,8 @@ class SpotifyMusicTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      songsWithCustom: []
+      songsWithCustom: [],
+      musicSetId: ""
     };
   }
 
@@ -34,6 +35,21 @@ class SpotifyMusicTable extends Component {
     console.log(this.state.songsWithCustom);
   }
 
+  createMusicSet = async () => {
+    const set = await fetch("/musicSet", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: this.props.spotifyTitle,
+        _id: this.props.userId
+      })
+    });
+    const set1 = await set.json();
+    this.setState({ musicSetId: set1._id });
+  };
+
   postSongsWithCustom = async () => {
     const playlist = this.state.songsWithCustom;
     for (let i = 0; i < playlist.length; i++) {
@@ -43,8 +59,9 @@ class SpotifyMusicTable extends Component {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          musicSetId: playlist[i].musicSetId,
-          title: playlist[i].title,
+          _id: this.state.musicSetId,
+          spotifyId: playlist[i].id,
+          title: playlist[i].name,
           artist: playlist[i].artist,
           releaseDate: playlist[i].releaseDate,
           genre: playlist[i].genre,
@@ -108,7 +125,7 @@ class SpotifyMusicTable extends Component {
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.state.musicSetId);
     let songs = [];
     if (this.props.spotifySongs !== undefined) {
       this.props.spotifySongs.map(index =>
@@ -120,7 +137,7 @@ class SpotifyMusicTable extends Component {
           genre: "",
           physiological: "",
           emotion: "",
-          musicSetTitle: this.props.spotifyTitle
+          musicSetId: this.state.musicSetId
         })
       );
     }
@@ -133,7 +150,7 @@ class SpotifyMusicTable extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
-    console.log(this.props.spotifyTitle);
+
     return (
       <div>
         <div>
@@ -164,11 +181,18 @@ class SpotifyMusicTable extends Component {
             </TableHeaderColumn>
             <TableHeaderColumn dataField="emotion">Emotion</TableHeaderColumn>
 
-            <TableHeaderColumn dataField="musicSetTitle">
-              Music Set Title
+            <TableHeaderColumn dataField="musicSetId">
+              Music Set Id
             </TableHeaderColumn>
           </BootstrapTable>
-          <Button>Save to Hey DJ database</Button>
+          <Button
+            onClick={() => {
+              this.createMusicSet();
+              this.postSongsWithCustom();
+            }}
+          >
+            Save to Hey DJ database
+          </Button>
           <Button onClick={() => this.createPlaylistOnSpotify()}>
             Export to Spotify
           </Button>
