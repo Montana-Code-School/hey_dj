@@ -35,7 +35,7 @@ class SpotifyMusicTable extends Component {
     console.log(this.state.songsWithCustom);
   }
 
-  createMusicSet = async () => {
+  createMusicSetAndPostSongs = async () => {
     const set = await fetch("/musicSet", {
       method: "POST",
       headers: {
@@ -48,6 +48,27 @@ class SpotifyMusicTable extends Component {
     });
     const set1 = await set.json();
     this.setState({ musicSetId: set1._id });
+    const playlist = this.state.songsWithCustom;
+    for (let i = 0; i < playlist.length; i++) {
+      const song = await fetch("/songs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          _id: this.state.musicSetId,
+          spotifyId: playlist[i].id,
+          title: playlist[i].name,
+          artist: playlist[i].artist,
+          releaseDate: playlist[i].releaseDate,
+          genre: playlist[i].genre,
+          physiological: playlist[i].physiological,
+          emotion: playlist[i].emotion
+        })
+      });
+      const song1 = await song.json();
+      console.log(song1);
+    }
   };
 
   postSongsWithCustom = async () => {
@@ -190,19 +211,18 @@ class SpotifyMusicTable extends Component {
           <Button
             bsStyle="success"
             onClick={() => {
-              this.createMusicSet();
-              this.postSongsWithCustom();
+              this.createMusicSetAndPostSongs();
             }}
           >
-            Save to Hey DJ database
+            Save music set and save songs
           </Button>
+
           <Button
             className="spotifyButton"
             bsStyle="info"
             onClick={() => this.createPlaylistOnSpotify()}
           >
-            Export to Spotify
-          </Button>
+
         </div>
       </div>
     );
