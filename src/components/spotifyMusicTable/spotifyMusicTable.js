@@ -157,7 +157,7 @@ class SpotifyMusicTable extends Component {
             </Button>
           </div>
         ) : (
-          <div>Choose a spotify playlist to add custom values</div>
+          <h3>Choose a spotify playlist to add custom values</h3>
         )}
       </div>
     );

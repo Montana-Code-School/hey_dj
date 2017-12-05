@@ -166,7 +166,11 @@ class userContent extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
-    console.log(this.props.username);
+
+    function indexN(cell, row, enumObject, index) {
+      return <div>{index + 1}</div>;
+    }
+
     return (
       <div>
         <PageHeader>
@@ -188,32 +192,50 @@ class userContent extends Component {
         <Grid>
           <Row className="show-grid">
             <Col md={3}>
-              <table>
-                <tr>
-                  <th>Music Collections</th>
-                </tr>
-                <tr>
-                  <ul className="list">
-                    {this.state.musicSets.map(musicSet => (
-                      <li
-                        onClick={() => {
-                          this.getMusicSet(musicSet._id);
-                        }}
-                      >
-                        {musicSet.title}
-                      </li>
-                    ))}
-                  </ul>
-                </tr>
-              </table>
-              <br />
-              <LinkContainer to="/createmusicset">
-                <Button bsStyle="primary">Make New Music Collection</Button>
-              </LinkContainer>
+              <div className="collectionsGrid">
+                <table>
+                  <tr>
+                    <th>Music Collections</th>
+                  </tr>
+                  <tr>
+                    <ul className="list">
+                      {this.state.musicSets.map(musicSet => (
+                        <li
+                          onClick={() => {
+                            this.getMusicSet(musicSet._id);
+                          }}
+                        >
+                          {musicSet.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </tr>
+                </table>
+                <br />
+                <LinkContainer
+                  className="newCollectionButton"
+                  to="/createmusicset"
+                >
+                  <Button bsStyle="primary">Make New Music Collection</Button>
+                </LinkContainer>
+              </div>
+              <div className="hiddenTable">
+                {this.state.newPlaylist.length !== 0 ? (
+                  <div>
+                    <br />
 
-              {this.state.newPlaylist.length !== 0 ? (
-                <div>
-                  <br />
+                    <form>
+                      <FormGroup>
+                        <ControlLabel>Title</ControlLabel>
+                        <FormControl
+                          type="text"
+                          placeholder="Enter title"
+                          onChange={e =>
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
+                        />
+                      </FormGroup>
+                    </form>
 
                   <form>
                     <FormGroup>
@@ -228,27 +250,25 @@ class userContent extends Component {
                     </FormGroup>
                   </form>
 
-                  <BootstrapTable
-                    data={this.state.newPlaylist}
-                    hover
-                    striped
-                    condensed
-                  >
-                    <TableHeaderColumn dataField="title" isKey>
-                      Song
-                    </TableHeaderColumn>
-                    <TableHeaderColumn dataField="artist">
-                      Artist
-                    </TableHeaderColumn>
-                  </BootstrapTable>
-                  <br />
-                  <Button onClick={() => this.createPlaylistOnSpotify()}>
-                    Export to Spotify
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
+                      <TableHeaderColumn dataField="title" isKey>
+                        Song
+                      </TableHeaderColumn>
+                      <TableHeaderColumn dataField="artist">
+                        Artist
+                      </TableHeaderColumn>
+                    </BootstrapTable>
+                    <br />
+                    <Button
+                      bsStyle="primary"
+                      onClick={() => this.createPlaylistOnSpotify()}
+                    >
+                      Export to Spotify
+                    </Button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </Col>
 
             <Col md={9}>
