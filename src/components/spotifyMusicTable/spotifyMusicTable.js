@@ -154,6 +154,7 @@ class SpotifyMusicTable extends Component {
     return (
       <div>
         <div>
+          <br />
           <BootstrapTable
             data={songs}
             cellEdit={cellEditProp}
@@ -185,7 +186,9 @@ class SpotifyMusicTable extends Component {
               Music Set Id
             </TableHeaderColumn>
           </BootstrapTable>
+          <br />
           <Button
+            bsStyle="success"
             onClick={() => {
               this.createMusicSet();
               this.postSongsWithCustom();
@@ -193,7 +196,11 @@ class SpotifyMusicTable extends Component {
           >
             Save to Hey DJ database
           </Button>
-          <Button onClick={() => this.createPlaylistOnSpotify()}>
+          <Button
+            className="spotifyButton"
+            bsStyle="info"
+            onClick={() => this.createPlaylistOnSpotify()}
+          >
             Export to Spotify
           </Button>
         </div>

@@ -57,7 +57,11 @@ class SpotifyMusicPlaylist extends Component {
     return (
       <div>
         <PageHeader>
-          <Col md={10}>Hey DJ</Col>
+          <Col md={10}>
+            <LinkContainer to="/user">
+              <h1>Hey DJ</h1>
+            </LinkContainer>
+          </Col>
           <Col md={2}>
             <LinkContainer to="/profile">
               <h3
@@ -73,7 +77,17 @@ class SpotifyMusicPlaylist extends Component {
         </PageHeader>
         <Grid>
           <Row>
-            <Col md={3}>{playlists}</Col>
+            <Col md={3}>
+              <br />
+              <table>
+                <tr>
+                  <th>Spotify Playlists</th>
+                </tr>
+                <tr>
+                  <td>{playlists}</td>
+                </tr>
+              </table>
+            </Col>
             <Col md={9}>
               <SpotifyMusicTable />
             </Col>

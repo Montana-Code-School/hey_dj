@@ -12,3 +12,7 @@
 .header {
   margin-right: 100px;
 }*/
+.spotifyButton {
+  position: absolute;
+  left: 220px;
+}
