@@ -95,56 +95,6 @@ class SpotifyMusicTable extends Component {
     }
   };
 
-  async createPlaylistOnSpotify() {
-    const userResp = await fetch("https://api.spotify.com/v1/me", {
-      method: "GET",
-      headers: new Headers({
-        Accept: "application/json",
-        Authorization: "Bearer " + this.props.spotifyToken
-      })
-    });
-    const userData = await userResp.json();
-    let response = await fetch(
-      new Request(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
-        method: "POST",
-        headers: new Headers({
-          Accept: "application/json",
-          Authorization: "Bearer " + this.props.spotifyToken
-        }),
-        body: JSON.stringify({
-          name: "Broc's Playlist",
-          public: true
-        })
-      })
-    )
-      .then(res => res.json())
-      .then(res =>
-        this.addTrackToSpotifyPlaylist(
-          userData.id,
-          res.id,
-          "4iV5W9uYEdYUVa79Axb7Rh"
-        )
-      );
-  }
-
-  async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
-    console.log(playlistId);
-    let addTrack = await fetch(
-      new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
-        {
-          method: "POST",
-          headers: new Headers({
-            Accept: "application/json",
-            Authorization: "Bearer " + this.props.spotifyToken
-          })
-        }
-      )
-    );
-  }
-
   render() {
     console.log(this.state.musicSetId);
     let songs = [];
@@ -212,10 +162,6 @@ class SpotifyMusicTable extends Component {
             }}
           >
             Save music set and save songs
-          </Button>
-
-          <Button onClick={() => this.createPlaylistOnSpotify()}>
-            Export to Spotify
           </Button>
         </div>
       </div>

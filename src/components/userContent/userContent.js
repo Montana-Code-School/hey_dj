@@ -82,6 +82,52 @@ class userContent extends Component {
     }
   };
 
+  async createPlaylistOnSpotify() {
+    const userResp = await fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+      headers: new Headers({
+        Accept: "application/json",
+        Authorization: "Bearer " + this.props.spotifyToken
+      })
+    });
+    const userData = await userResp.json();
+    let response = await fetch(
+      new Request(`https://api.spotify.com/v1/users/${userData.id}/playlists`, {
+        method: "POST",
+        headers: new Headers({
+          Accept: "application/json",
+          Authorization: "Bearer " + this.props.spotifyToken
+        }),
+        body: JSON.stringify({
+          name: this.state.newPlaylist,
+          public: true
+        })
+      })
+    )
+      .then(res => res.json())
+      .then(res =>
+        this.state.newPlaylist.map(index => {
+          this.addTrackToSpotifyPlaylist(userData.id, res.id, index.spotifyId);
+        })
+      );
+  }
+
+  async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
+    console.log(playlistId);
+    let addTrack = await fetch(
+      new Request(
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        {
+          method: "POST",
+          headers: new Headers({
+            Accept: "application/json",
+            Authorization: "Bearer " + this.props.spotifyToken
+          })
+        }
+      )
+    );
+  }
+
   render() {
     const selectRow = {
       mode: "checkbox",
@@ -144,7 +190,6 @@ class userContent extends Component {
               {this.state.newPlaylist.length !== 0 ? (
                 <div>
                   <br />
-
                   <BootstrapTable
                     data={this.state.newPlaylist}
                     hover
@@ -159,8 +204,9 @@ class userContent extends Component {
                     </TableHeaderColumn>
                   </BootstrapTable>
                   <br />
-
-                  <Button>Export to Spotify</Button>
+                  <Button onClick={() => this.createPlaylistOnSpotify()}>
+                    Export to Spotify
+                  </Button>
                 </div>
               ) : (
                 ""
@@ -201,7 +247,8 @@ class userContent extends Component {
 
 const mapStateToProps = state => ({
   username: state.userReducer.username,
-  userId: state.userReducer.userId
+  userId: state.userReducer.userId,
+  spotifyToken: state.tokenReducer.spotifyToken
 });
 
 export default connect(mapStateToProps)(userContent);
