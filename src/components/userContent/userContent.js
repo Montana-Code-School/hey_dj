@@ -10,10 +10,14 @@ import {
   FormControl,
   FormGroup,
   ControlGroup,
-  ControlLabel
+  ControlLabel,
+  Modal,
+  Alert
 } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import { Link } from "react-router-dom";
+import { addErrorMessage } from "../../actions/errorActions";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import "./userContent.css";
 
@@ -25,7 +29,8 @@ class userContent extends Component {
       songs: [],
       newPlaylist: [],
       songsWithCustom: [],
-      spotifyTitle: ""
+      spotifyTitle: "",
+      showModal: false
     };
   }
 
@@ -87,11 +92,13 @@ class userContent extends Component {
         })
       });
       const song1 = await song.json();
-      console.log(song1);
     }
   };
 
   async createPlaylistOnSpotify() {
+    if (this.state.spotifyTitle === "") {
+      return this.props.addErrorMessage("You need a title");
+    }
     const userResp = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: new Headers({
@@ -118,14 +125,17 @@ class userContent extends Component {
         this.state.newPlaylist.map(index => {
           this.addTrackToSpotifyPlaylist(userData.id, res.id, index.spotifyId);
         })
-      );
+      )
+      .then(() => this.setState({ showModal: true }));
   }
 
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -156,7 +166,11 @@ class userContent extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
-    console.log(this.props.username);
+
+    function indexN(cell, row, enumObject, index) {
+      return <div>{index + 1}</div>;
+    }
+
     return (
       <div>
         <PageHeader>
@@ -178,32 +192,50 @@ class userContent extends Component {
         <Grid>
           <Row className="show-grid">
             <Col md={3}>
-              <table>
-                <tr>
-                  <th>Music Collections</th>
-                </tr>
-                <tr>
-                  <ul className="list">
-                    {this.state.musicSets.map(musicSet => (
-                      <li
-                        onClick={() => {
-                          this.getMusicSet(musicSet._id);
-                        }}
-                      >
-                        {musicSet.title}
-                      </li>
-                    ))}
-                  </ul>
-                </tr>
-              </table>
-              <br />
-              <LinkContainer to="/createmusicset">
-                <Button bsStyle="primary">Make New Music Collection</Button>
-              </LinkContainer>
+              <div className="collectionsGrid">
+                <table>
+                  <tr>
+                    <th>Music Collections</th>
+                  </tr>
+                  <tr>
+                    <ul className="list">
+                      {this.state.musicSets.map(musicSet => (
+                        <li
+                          onClick={() => {
+                            this.getMusicSet(musicSet._id);
+                          }}
+                        >
+                          {musicSet.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </tr>
+                </table>
+                <br />
+                <LinkContainer
+                  className="newCollectionButton"
+                  to="/createmusicset"
+                >
+                  <Button bsStyle="primary">Make New Music Collection</Button>
+                </LinkContainer>
+              </div>
+              <div className="hiddenTable">
+                {this.state.newPlaylist.length !== 0 ? (
+                  <div>
+                    <br />
 
-              {this.state.newPlaylist.length !== 0 ? (
-                <div>
-                  <br />
+                    <form>
+                      <FormGroup>
+                        <ControlLabel>Title</ControlLabel>
+                        <FormControl
+                          type="text"
+                          placeholder="Enter title"
+                          onChange={e =>
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
+                        />
+                      </FormGroup>
+                    </form>
 
                   <form>
                     <FormGroup>
@@ -212,32 +244,31 @@ class userContent extends Component {
                         type="text"
                         placeholder="Enter title"
                         onChange={e =>
-                          this.setState({ spotifyTitle: e.target.value })}
+                          this.setState({ spotifyTitle: e.target.value })
+                        }
                       />
                     </FormGroup>
                   </form>
 
-                  <BootstrapTable
-                    data={this.state.newPlaylist}
-                    hover
-                    striped
-                    condensed
-                  >
-                    <TableHeaderColumn dataField="title" isKey>
-                      Song
-                    </TableHeaderColumn>
-                    <TableHeaderColumn dataField="artist">
-                      Artist
-                    </TableHeaderColumn>
-                  </BootstrapTable>
-                  <br />
-                  <Button onClick={() => this.createPlaylistOnSpotify()}>
-                    Export to Spotify
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
+                      <TableHeaderColumn dataField="title" isKey>
+                        Song
+                      </TableHeaderColumn>
+                      <TableHeaderColumn dataField="artist">
+                        Artist
+                      </TableHeaderColumn>
+                    </BootstrapTable>
+                    <br />
+                    <Button
+                      bsStyle="primary"
+                      onClick={() => this.createPlaylistOnSpotify()}
+                    >
+                      Export to Spotify
+                    </Button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </Col>
 
             <Col md={9}>
@@ -267,6 +298,33 @@ class userContent extends Component {
             </Col>
           </Row>
         </Grid>
+        <Modal
+          show={this.state.showModal}
+          onHide={() => this.setState({ showModal: false })}
+        >
+          <Modal.Body>
+            {" "}
+            <Alert
+              bsStyle="warning"
+              onDismiss={() => this.setState({ showModal: false })}
+            >
+              <h4>Success!</h4>
+              <p>{this.state.spotifyTitle}</p>
+              <p>
+                <Link
+                  to="chart"
+                  target="_blank"
+                  to="https://open.spotify.com/collection/playlists"
+                >
+                  <Button>See your playlist on Spotify!</Button>
+                </Link>
+              </p>
+              <Button onClick={() => this.setState({ showModal: false })}>
+                Close
+              </Button>
+            </Alert>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
@@ -278,4 +336,8 @@ const mapStateToProps = state => ({
   spotifyToken: state.tokenReducer.spotifyToken
 });
 
-export default connect(mapStateToProps)(userContent);
+const mapDispatchToProps = dispatch => ({
+  addErrorMessage: text => dispatch(addErrorMessage(text))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(userContent);
