@@ -32,7 +32,6 @@ class SpotifyMusicTable extends Component {
     } else {
       playlist.splice(ids.indexOf(row.id), 1, row);
     }
-    console.log(this.state.songsWithCustom);
   }
 
   createMusicSetAndPostSongs = async () => {
@@ -67,7 +66,6 @@ class SpotifyMusicTable extends Component {
         })
       });
       const song1 = await song.json();
-      console.log(song1);
     }
   };
 
@@ -91,12 +89,10 @@ class SpotifyMusicTable extends Component {
         })
       });
       const song1 = await song.json();
-      console.log(song1);
     }
   };
 
   render() {
-    console.log(this.state.musicSetId);
     let songs = [];
     if (this.props.spotifySongs !== undefined) {
       this.props.spotifySongs.map(index =>
@@ -120,6 +116,11 @@ class SpotifyMusicTable extends Component {
     const cellEdit = {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
+    };
+
+    const options = {
+      defaultSortName: "name",
+      defaultSortOrder: "desc"
     };
 
     return (
@@ -164,6 +165,52 @@ class SpotifyMusicTable extends Component {
             Save music set and save songs
           </Button>
         </div>
+        {this.props.spotifyTitle ? (
+          <div>
+            <BootstrapTable
+              data={songs}
+              options={options}
+              cellEdit={cellEditProp}
+              cellEdit={cellEdit}
+              hover
+              striped
+              condensed
+              search
+            >
+              <TableHeaderColumn dataField="name" editable={false} dataSort>
+                Song
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="artist" editable={false} dataSort>
+                artist
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="id" editable={false} hidden isKey>
+                id
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="releaseDate" dataSort>
+                Release Date
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="genre" dataSort>
+                Genre
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="physiological" dataSort>
+                Physiological
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="emotion" dataSort>
+                Emotion
+              </TableHeaderColumn>
+            </BootstrapTable>
+            <Button
+              bsStyle="primary"
+              onClick={() => {
+                this.createMusicSetAndPostSongs();
+              }}
+            >
+              Save
+            </Button>
+          </div>
+        ) : (
+          <div>Choose a spotify playlist to add custom values</div>
+        )}
       </div>
     );
   }
