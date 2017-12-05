@@ -144,6 +144,7 @@ class userContent extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
+    console.log(this.props.username);
     return (
       <div>
         <PageHeader>

@@ -72,29 +72,6 @@ class SpotifyMusicTable extends Component {
     }
   };
 
-  postSongsWithCustom = async () => {
-    const playlist = this.state.songsWithCustom;
-    for (let i = 0; i < playlist.length; i++) {
-      const song = await fetch("/songs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          _id: this.state.musicSetId,
-          spotifyId: playlist[i].id,
-          title: playlist[i].name,
-          artist: playlist[i].artist,
-          releaseDate: playlist[i].releaseDate,
-          genre: playlist[i].genre,
-          physiological: playlist[i].physiological,
-          emotion: playlist[i].emotion
-        })
-      });
-      const song1 = await song.json();
-    }
-  };
-
   render() {
     let songs = [];
     if (this.props.spotifySongs !== undefined) {
@@ -125,7 +102,7 @@ class SpotifyMusicTable extends Component {
       defaultSortName: "name",
       defaultSortOrder: "desc"
     };
-
+    console.log("here" + this.props.username);
     return (
       <div>
         {this.props.spotifyTitle ? (
@@ -186,7 +163,8 @@ const mapStateToProps = state => ({
   spotifyPlaylists: state.musicSetReducer.spotifyPlaylists,
   spotifyTitle: state.musicSetReducer.spotifyTitle,
   userId: state.userReducer.userId,
-  spotifyToken: state.tokenReducer.spotifyToken
+  spotifyToken: state.tokenReducer.spotifyToken,
+  username: state.userReducer.username
 });
 
 const mapDispatchToProps = dispatch => ({});

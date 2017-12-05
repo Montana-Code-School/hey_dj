@@ -78,10 +78,11 @@ class LoginSignUp extends Component {
     const userInfo = await user.json();
     if (user.status === 200) {
       this.props.heyDjLogin(userInfo.username, userInfo._id);
-    } else
+    } else {
       this.props.addErrorMessage(
         "Login failed. Check username and/or password."
       );
+    }
     bake_cookie("userKey", userInfo.token);
     if (userInfo.success) {
       this.props.history.push("/user");
@@ -89,6 +90,7 @@ class LoginSignUp extends Component {
   }
 
   render() {
+    console.log(this.props.error);
     return (
       <div className="login">
         <div className="backgroundImage">

@@ -7,7 +7,6 @@ import SpotifyMusicPlaylist from "./components/spotifyMusicPlaylist/spotifyMusic
 import loginSignUp from "./components/loginSignUp/loginSignUp";
 import userContent from "./components/userContent/userContent";
 import userProfile from "./components/userProfile/userProfile";
-
 import Error from "./components/error/error";
 
 export default class App extends Component {

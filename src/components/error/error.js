@@ -32,7 +32,7 @@ class Error extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.error
+  error: state.userReducer.error
 });
 
 const mapDispatchToProps = dispatch => ({

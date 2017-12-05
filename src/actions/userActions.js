@@ -1,7 +1,3 @@
-// (Action) Login
-// (Action) Logout
-// (Action) No user profile pages allowed!
-
 export function heyDjLogin(username, userId) {
   return {
     type: "HeyDj Login",
@@ -22,4 +18,3 @@ export function logout() {
     type: "Logout"
   };
 }
-//spotify logout not needed? at least for now
