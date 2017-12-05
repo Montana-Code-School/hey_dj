@@ -96,7 +96,7 @@ class userContent extends Component {
           Authorization: "Bearer " + this.props.spotifyToken
         }),
         body: JSON.stringify({
-          name: this.state.newPlaylist,
+          name: "sup",
           public: true
         })
       })
@@ -148,6 +148,7 @@ class userContent extends Component {
     function indexN(cell, row, enumObject, index) {
       return <div>{index + 1}</div>;
     }
+
     return (
       <div>
         <PageHeader>
@@ -191,13 +192,13 @@ class userContent extends Component {
                 <br />
                 <LinkContainer
                   className="newCollectionButton"
-                  to="/spotifytoken"
+                  to="/createmusicset"
                 >
                   <Button bsStyle="primary">Make New Music Collection</Button>
                 </LinkContainer>
               </div>
               {this.state.newPlaylist.length !== 0 ? (
-                <div>
+                <div className="hiddenTable">
                   <br />
                   <BootstrapTable
                     data={this.state.newPlaylist}
@@ -268,3 +269,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(userContent);
+

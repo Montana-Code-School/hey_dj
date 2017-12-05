@@ -22,10 +22,8 @@ class SpotifyMusicPlaylist extends Component {
     };
   }
 
-  componentWillReceiveProps() {
-    if (!this.state.hasReceivedPlaylists) {
-      this.getSpotifyPlaylists(this.props.spotifyToken);
-    }
+  componentDidMount() {
+    this.getSpotifyPlaylists(this.props.spotifyToken);
   }
 
   async getSpotifyPlaylists(auth) {

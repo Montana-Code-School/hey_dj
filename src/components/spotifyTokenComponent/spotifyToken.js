@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setTokenToState } from "../../actions/tokenActions";
 import MusicSetComponent from "../musicSetComponent/component";
 import SpotifyMusicPlaylist from "../spotifyMusicPlaylist/spotifyMusicPlaylist";
+import loginSignUp from "../loginSignUp/loginSignUp";
 
 class SpotifyToken extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class SpotifyToken extends Component {
   }
 
   render() {
-    return <SpotifyMusicPlaylist />;
+    return <loginSignUp />;
   }
 }
 

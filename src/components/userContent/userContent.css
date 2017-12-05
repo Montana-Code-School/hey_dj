@@ -29,3 +29,8 @@ td {
   position: absolute;
   right: -17%;
 }
+
+.hiddenTable {
+  position: relative;
+  bottom: 90%;
+}

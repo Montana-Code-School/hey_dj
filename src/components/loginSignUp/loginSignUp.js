@@ -14,6 +14,7 @@ import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
 import { connect } from "react-redux";
 import BackgroundImage from "../backgroundImage/backgroundImage";
+import { setTokenToState } from "../../actions/tokenActions";
 
 require("typeface-shrikhand");
 
@@ -29,6 +30,12 @@ class LoginSignUp extends Component {
       password: "",
       email: ""
     };
+  }
+
+  componentDidMount() {
+    this.props.setSpotifyToken(
+      this.props.location.hash.split("access_token=")[1].split("&")[0]
+    );
   }
 
   loginToggle = () => this.setState({ loginModal: !this.state.loginModal });
@@ -71,10 +78,11 @@ class LoginSignUp extends Component {
     const userInfo = await user.json();
     if (user.status === 200) {
       this.props.heyDjLogin(userInfo.username, userInfo._id);
-    } else
+    } else {
       this.props.addErrorMessage(
         "Login failed. Check username and/or password."
       );
+    }
     bake_cookie("userKey", userInfo.token);
     if (userInfo.success) {
       this.props.history.push("/user");
@@ -82,6 +90,7 @@ class LoginSignUp extends Component {
   }
 
   render() {
+    console.log(this.props.error);
     return (
       <div className="login">
         <div className="backgroundImage">
@@ -208,12 +217,14 @@ class LoginSignUp extends Component {
 }
 const mapStateToProps = state => ({
   username: state.userReducer.username,
-  userId: state.userReducer.userId
+  userId: state.userReducer.userId,
+  spotifyToken: state.tokenReducer.spotifyToken
 });
 
 const mapDispatchToProps = dispatch => ({
   heyDjLogin: (e, a) => dispatch(heyDjLogin(e, a)),
-  addErrorMessage: e => dispatch(addErrorMessage(e))
+  addErrorMessage: e => dispatch(addErrorMessage(e)),
+  setSpotifyToken: spotifyToken => dispatch(setTokenToState(spotifyToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginSignUp);
