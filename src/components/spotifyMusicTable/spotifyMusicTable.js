@@ -216,14 +216,6 @@ class SpotifyMusicTable extends Component {
           >
             Save music set and save songs
           </Button>
-
-          <Button
-            className="spotifyButton"
-            bsStyle="info"
-            onClick={() => this.createPlaylistOnSpotify()}
-          >
-            {" "}
-          </Button>
         </div>
       </div>
     );
