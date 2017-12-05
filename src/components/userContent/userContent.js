@@ -10,10 +10,14 @@ import {
   FormControl,
   FormGroup,
   ControlGroup,
-  ControlLabel
+  ControlLabel,
+  Modal,
+  Alert
 } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import { Link } from "react-router-dom";
+import { addErrorMessage } from "../../actions/errorActions";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import "./userContent.css";
 
@@ -25,7 +29,8 @@ class userContent extends Component {
       songs: [],
       newPlaylist: [],
       songsWithCustom: [],
-      spotifyTitle: ""
+      spotifyTitle: "",
+      showModal: false
     };
   }
 
@@ -87,11 +92,13 @@ class userContent extends Component {
         })
       });
       const song1 = await song.json();
-      console.log(song1);
     }
   };
 
   async createPlaylistOnSpotify() {
+    if (this.state.spotifyTitle === "") {
+      return this.props.addErrorMessage("You need a title");
+    }
     const userResp = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: new Headers({
@@ -118,14 +125,17 @@ class userContent extends Component {
         this.state.newPlaylist.map(index => {
           this.addTrackToSpotifyPlaylist(userData.id, res.id, index.spotifyId);
         })
-      );
+      )
+      .then(() => this.setState({ showModal: true }));
   }
 
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -212,7 +222,8 @@ class userContent extends Component {
                         type="text"
                         placeholder="Enter title"
                         onChange={e =>
-                          this.setState({ spotifyTitle: e.target.value })}
+                          this.setState({ spotifyTitle: e.target.value })
+                        }
                       />
                     </FormGroup>
                   </form>
@@ -267,6 +278,33 @@ class userContent extends Component {
             </Col>
           </Row>
         </Grid>
+        <Modal
+          show={this.state.showModal}
+          onHide={() => this.setState({ showModal: false })}
+        >
+          <Modal.Body>
+            {" "}
+            <Alert
+              bsStyle="warning"
+              onDismiss={() => this.setState({ showModal: false })}
+            >
+              <h4>Success!</h4>
+              <p>{this.state.spotifyTitle}</p>
+              <p>
+                <Link
+                  to="chart"
+                  target="_blank"
+                  to="https://open.spotify.com/collection/playlists"
+                >
+                  <Button>See your playlist on Spotify!</Button>
+                </Link>
+              </p>
+              <Button onClick={() => this.setState({ showModal: false })}>
+                Close
+              </Button>
+            </Alert>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
@@ -278,4 +316,8 @@ const mapStateToProps = state => ({
   spotifyToken: state.tokenReducer.spotifyToken
 });
 
-export default connect(mapStateToProps)(userContent);
+const mapDispatchToProps = dispatch => ({
+  addErrorMessage: text => dispatch(addErrorMessage(text))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(userContent);
