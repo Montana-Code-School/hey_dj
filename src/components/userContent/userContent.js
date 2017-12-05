@@ -133,9 +133,7 @@ class userContent extends Component {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -237,19 +235,12 @@ class userContent extends Component {
                       </FormGroup>
                     </form>
 
-                  <form>
-                    <FormGroup>
-                      <ControlLabel>Title</ControlLabel>
-                      <FormControl
-                        type="text"
-                        placeholder="Enter title"
-                        onChange={e =>
-                          this.setState({ spotifyTitle: e.target.value })
-                        }
-                      />
-                    </FormGroup>
-                  </form>
-
+                    <BootstrapTable
+                      data={this.state.newPlaylist}
+                      hover
+                      striped
+                      condensed
+                    >
                       <TableHeaderColumn dataField="title" isKey>
                         Song
                       </TableHeaderColumn>
