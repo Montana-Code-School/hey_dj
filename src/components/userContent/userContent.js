@@ -230,6 +230,8 @@ class userContent extends Component {
                     <BootstrapTable
                       data={this.state.newPlaylist}
                       hover
+                      responsive
+                      bordered
                       striped
                       condensed
                     >

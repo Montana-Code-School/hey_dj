@@ -21,7 +21,6 @@ class SpotifyMusicPlaylist extends Component {
       hasReceivedPlaylists: false
     };
   }
-
   componentDidMount() {
     this.getSpotifyPlaylists(this.props.spotifyToken);
   }
@@ -51,7 +50,6 @@ class SpotifyMusicPlaylist extends Component {
         playlists.push(<SpotifyPlaylistContainer playlistInformation={index} />)
       );
     }
-
     return (
       <div>
         <PageHeader>

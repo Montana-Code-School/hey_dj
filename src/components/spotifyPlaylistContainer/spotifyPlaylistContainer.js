@@ -33,8 +33,8 @@ class SpotifyPlaylistContainer extends Component {
   render() {
     if (this.state.playlistInformation !== undefined) {
       let images = [];
-      if (this.state.playlistInformation.images.length > 1) {
-        images.push(<img src={this.state.playlistInformation.images[1].url} />);
+      if (this.state.playlistInformation.images.length > 0) {
+        images.push(<img src={this.state.playlistInformation.images[0].url} />);
       }
       return (
         <div
