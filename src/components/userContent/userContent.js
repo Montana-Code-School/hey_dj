@@ -96,7 +96,7 @@ class userContent extends Component {
           Authorization: "Bearer " + this.props.spotifyToken
         }),
         body: JSON.stringify({
-          name: this.state.newPlaylist,
+          name: "sup",
           public: true
         })
       })
@@ -113,9 +113,7 @@ class userContent extends Component {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -186,7 +184,7 @@ class userContent extends Component {
                 </tr>
               </table>
               <br />
-              <LinkContainer to="/spotifytoken">
+              <LinkContainer to="/createmusicset">
                 <Button bsStyle="primary">Make New Music Collection</Button>
               </LinkContainer>
 

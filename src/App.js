@@ -15,9 +15,14 @@ export default class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/spotifytoken" component={SpotifyToken} />
+          <Route exact path="/" component={SpotifyToken} />
+          <Route
+            exact
+            path="/createmusicset"
+            component={SpotifyMusicPlaylist}
+          />
           <Error />
-          <Route exact path="/" component={loginSignUp} />
+          <Route exact path="/loginsignup" component={loginSignUp} />
           <Route path="/user" component={userContent} />
           <Route path="/profile" component={userProfile} />
         </div>

@@ -13,6 +13,7 @@ import {
   Table
 } from "react-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import { Link } from "react-router-dom";
 
 class SpotifyMusicTable extends Component {
   constructor(props) {
@@ -66,6 +67,8 @@ class SpotifyMusicTable extends Component {
         })
       });
       const song1 = await song.json();
+      console.log(this.props);
+      const redirect = await this.props.history.push("user");
     }
   };
 
