@@ -13,6 +13,7 @@ import {
   Table
 } from "react-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import { addErrorMessage } from "../../actions/errorActions";
 import { Link } from "react-router-dom";
 
 class SpotifyMusicTable extends Component {
@@ -47,9 +48,10 @@ class SpotifyMusicTable extends Component {
       })
     });
     const set1 = await set.json();
-    //I'm not sure if the conditional below works
+
     if (set.status !== 200) {
       this.props.addErrorMessage("Music set creation failed.");
+      return;
     }
     this.setState({ musicSetId: set1._id });
     const playlist = this.state.songsWithCustom;
@@ -71,7 +73,7 @@ class SpotifyMusicTable extends Component {
         })
       });
       const song1 = await song.json();
-      console.log(this.props);
+
       const redirect = await this.props.history.push("/user");
     }
   };
@@ -106,7 +108,7 @@ class SpotifyMusicTable extends Component {
       defaultSortName: "name",
       defaultSortOrder: "desc"
     };
-    console.log("here" + this.props.username);
+
     return (
       <div>
         {this.props.spotifyTitle ? (
@@ -171,6 +173,8 @@ const mapStateToProps = state => ({
   username: state.userReducer.username
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  addErrorMessage: text => dispatch(addErrorMessage(text))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpotifyMusicTable);
