@@ -68,7 +68,7 @@ class SpotifyMusicTable extends Component {
       });
       const song1 = await song.json();
       console.log(this.props);
-      const redirect = await this.props.history.push("user");
+      const redirect = await this.props.history.push("/user");
     }
   };
 
