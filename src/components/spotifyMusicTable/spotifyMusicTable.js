@@ -222,7 +222,8 @@ class SpotifyMusicTable extends Component {
             bsStyle="info"
             onClick={() => this.createPlaylistOnSpotify()}
           >
-
+            {" "}
+          </Button>
         </div>
       </div>
     );
