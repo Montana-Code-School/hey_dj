@@ -47,6 +47,10 @@ class SpotifyMusicTable extends Component {
       })
     });
     const set1 = await set.json();
+    //I'm not sure if the conditional below works
+    if (set.status !== 200) {
+      this.props.addErrorMessage("Music set creation failed.");
+    }
     this.setState({ musicSetId: set1._id });
     const playlist = this.state.songsWithCustom;
     for (let i = 0; i < playlist.length; i++) {
@@ -68,7 +72,7 @@ class SpotifyMusicTable extends Component {
       });
       const song1 = await song.json();
       console.log(this.props);
-      const redirect = await this.props.history.push("user");
+      const redirect = await this.props.history.push("/user");
     }
   };
 

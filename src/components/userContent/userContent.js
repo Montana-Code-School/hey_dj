@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Button, PageHeader, Grid, Row, Col, Table } from "react-bootstrap";
+import {
+  Button,
+  PageHeader,
+  Grid,
+  Row,
+  Col,
+  Table,
+  FormControl,
+  FormGroup,
+  ControlGroup,
+  ControlLabel
+} from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
@@ -13,7 +24,8 @@ class userContent extends Component {
       musicSets: [],
       songs: [],
       newPlaylist: [],
-      songsWithCustom: []
+      songsWithCustom: [],
+      spotifyTitle: ""
     };
   }
 
@@ -96,7 +108,7 @@ class userContent extends Component {
           Authorization: "Bearer " + this.props.spotifyToken
         }),
         body: JSON.stringify({
-          name: "sup",
+          name: this.state.spotifyTitle,
           public: true
         })
       })
@@ -197,37 +209,53 @@ class userContent extends Component {
                   <Button bsStyle="primary">Make New Music Collection</Button>
                 </LinkContainer>
               </div>
-              {this.state.newPlaylist.length !== 0 ? (
-                <div className="hiddenTable">
-                  <br />
-                  <BootstrapTable
-                    data={this.state.newPlaylist}
-                    hover
-                    striped
-                    condensed
-                  >
-                    <TableHeaderColumn dataField="any" dataFormat={indexN}>
-                      #{this.state.newPlaylist.length}
-                    </TableHeaderColumn>
+              <div className="hiddenTable">
+                {this.state.newPlaylist.length !== 0 ? (
+                  <div>
+                    <br />
 
-                    <TableHeaderColumn dataField="title" isKey>
-                      Song
-                    </TableHeaderColumn>
-                    <TableHeaderColumn dataField="artist">
-                      Artist
-                    </TableHeaderColumn>
-                  </BootstrapTable>
-                  <br />
-                  <Button
-                    bsStyle="primary"
-                    onClick={() => this.createPlaylistOnSpotify()}
-                  >
-                    Export to Spotify
-                  </Button>
-                </div>
-              ) : (
-                ""
-              )}
+                    <form>
+                      <FormGroup>
+                        <ControlLabel>Title</ControlLabel>
+                        <FormControl
+                          type="text"
+                          placeholder="Enter title"
+                          onChange={e =>
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
+                        />
+                      </FormGroup>
+                    </form>
+
+                    <BootstrapTable
+                      data={this.state.newPlaylist}
+                      hover
+                      striped
+                      condensed
+                    >
+                      <TableHeaderColumn dataField="any" dataFormat={indexN}>
+                        #{this.state.newPlaylist.length}
+                      </TableHeaderColumn>
+
+                      <TableHeaderColumn dataField="title" isKey>
+                        Song
+                      </TableHeaderColumn>
+                      <TableHeaderColumn dataField="artist">
+                        Artist
+                      </TableHeaderColumn>
+                    </BootstrapTable>
+                    <br />
+                    <Button
+                      bsStyle="primary"
+                      onClick={() => this.createPlaylistOnSpotify()}
+                    >
+                      Export to Spotify
+                    </Button>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
             </Col>
 
             <Col md={9}>
@@ -269,4 +297,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(userContent);
-

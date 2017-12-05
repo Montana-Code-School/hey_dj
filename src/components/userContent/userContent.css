@@ -31,6 +31,6 @@ td {
 }
 
 .hiddenTable {
-  position: relative;
-  bottom: 90%;
+  position: absolute;
+  top: 20000%;
 }
