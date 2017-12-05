@@ -66,7 +66,7 @@ class SpotifyMusicPlaylist extends Component {
             <LinkContainer to="/profile">
               <h3
                 className="headerName"
-                class="glyphicon glyphicon-user"
+                class="glyphicon glyphicon-headphones"
                 aria-hidden="true"
               >
                 {this.props.username}

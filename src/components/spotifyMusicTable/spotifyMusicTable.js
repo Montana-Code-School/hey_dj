@@ -125,48 +125,9 @@ class SpotifyMusicTable extends Component {
 
     return (
       <div>
-        <div>
-          <BootstrapTable
-            data={songs}
-            cellEdit={cellEditProp}
-            cellEdit={cellEdit}
-            hover
-            striped
-            condensed
-            search
-          >
-            <TableHeaderColumn dataField="name" isKey>
-              Song
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField="artist" editable={false}>
-              artist
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField="id" editable={false} hidden>
-              id
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField="releaseDate">
-              Release Date
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField="genre">Genre</TableHeaderColumn>
-            <TableHeaderColumn dataField="physiological">
-              Physiological
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField="emotion">Emotion</TableHeaderColumn>
-
-            <TableHeaderColumn dataField="musicSetId">
-              Music Set Id
-            </TableHeaderColumn>
-          </BootstrapTable>
-          <Button
-            onClick={() => {
-              this.createMusicSetAndPostSongs();
-            }}
-          >
-            Save music set and save songs
-          </Button>
-        </div>
         {this.props.spotifyTitle ? (
           <div>
+            <br />
             <BootstrapTable
               data={songs}
               options={options}
@@ -181,7 +142,7 @@ class SpotifyMusicTable extends Component {
                 Song
               </TableHeaderColumn>
               <TableHeaderColumn dataField="artist" editable={false} dataSort>
-                artist
+                Artist
               </TableHeaderColumn>
               <TableHeaderColumn dataField="id" editable={false} hidden isKey>
                 id
@@ -199,6 +160,7 @@ class SpotifyMusicTable extends Component {
                 Emotion
               </TableHeaderColumn>
             </BootstrapTable>
+            <br />
             <Button
               bsStyle="primary"
               onClick={() => {

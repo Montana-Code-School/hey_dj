@@ -5,9 +5,6 @@ import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import "./userContent.css";
-const selectRowProp = {
-  mode: "checkbox"
-};
 
 class userContent extends Component {
   constructor(props) {
@@ -116,7 +113,9 @@ class userContent extends Component {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -129,6 +128,10 @@ class userContent extends Component {
   }
 
   render() {
+    const selectRowProp = {
+      mode: "checkbox"
+    };
+
     const selectRow = {
       mode: "checkbox",
       onSelect: this.handleRowSelect.bind(this),
@@ -151,7 +154,7 @@ class userContent extends Component {
             <LinkContainer to="/profile">
               <h3
                 className="headerName"
-                class="glyphicon glyphicon-user"
+                class="glyphicon glyphicon-headphones"
                 aria-hidden="true"
               >
                 {this.props.username}
