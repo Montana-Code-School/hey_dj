@@ -7,7 +7,6 @@ import SpotifyMusicPlaylist from "./components/spotifyMusicPlaylist/spotifyMusic
 import loginSignUp from "./components/loginSignUp/loginSignUp";
 import userContent from "./components/userContent/userContent";
 import userProfile from "./components/userProfile/userProfile";
-
 import Error from "./components/error/error";
 
 export default class App extends Component {
@@ -15,9 +14,9 @@ export default class App extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/spotifytoken" component={SpotifyToken} />
           <Error />
-          <Route exact path="/" component={loginSignUp} />
+          <Route exact path="/" component={SpotifyToken} />
+          <Route exact path="/loginSignUp" component={loginSignUp} />
           <Route path="/user" component={userContent} />
           <Route path="/profile" component={userProfile} />
         </div>

@@ -146,6 +146,7 @@ class userContent extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
+    console.log(this.props.username);
     return (
       <div>
         <PageHeader>
@@ -187,7 +188,7 @@ class userContent extends Component {
               </table>
               <br />
               <LinkContainer to="/spotifytoken">
-                <Button bsStyle="primary">Make New Music Collection</Button>
+                <h3>Make New Music Collection</h3>
               </LinkContainer>
 
               {this.state.newPlaylist.length !== 0 ? (

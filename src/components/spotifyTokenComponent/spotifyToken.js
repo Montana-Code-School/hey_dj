@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setTokenToState } from "../../actions/tokenActions";
 import MusicSetComponent from "../musicSetComponent/component";
 import SpotifyMusicPlaylist from "../spotifyMusicPlaylist/spotifyMusicPlaylist";
+import loginSignUp from "../loginSignUp/loginSignUp";
 
 class SpotifyToken extends Component {
   constructor(props) {
@@ -20,7 +21,9 @@ class SpotifyToken extends Component {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
     if (!hashParams.access_token) {
-      const uri = `https://accounts.spotify.com/authorize?client_id=${clientId}&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
+      const uri = `https://accounts.spotify.com/authorize?client_id=${
+        clientId
+      }&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
       const encodedURI = encodeURIComponent(uri);
       console.log(encodedURI);
       console.log(decodeURIComponent(encodedURI));
@@ -32,7 +35,7 @@ class SpotifyToken extends Component {
   }
 
   render() {
-    return <SpotifyMusicPlaylist />;
+    return <div />;
   }
 }
 
