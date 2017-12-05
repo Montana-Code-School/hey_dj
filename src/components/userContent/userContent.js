@@ -113,9 +113,7 @@ class userContent extends Component {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -146,6 +144,10 @@ class userContent extends Component {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
     };
+
+    function indexN(cell, row, enumObject, index) {
+      return <div>{index + 1}</div>;
+    }
     return (
       <div>
         <PageHeader>
@@ -167,29 +169,33 @@ class userContent extends Component {
         <Grid>
           <Row className="show-grid">
             <Col md={3}>
-              <table>
-                <tr>
-                  <th>Music Collections</th>
-                </tr>
-                <tr>
-                  <ul className="list">
-                    {this.state.musicSets.map(musicSet => (
-                      <li
-                        onClick={() => {
-                          this.getMusicSet(musicSet._id);
-                        }}
-                      >
-                        {musicSet.title}
-                      </li>
-                    ))}
-                  </ul>
-                </tr>
-              </table>
-              <br />
-              <LinkContainer to="/spotifytoken">
-                <Button bsStyle="primary">Make New Music Collection</Button>
-              </LinkContainer>
-
+              <div className="collectionsGrid">
+                <table>
+                  <tr>
+                    <th>Music Collections</th>
+                  </tr>
+                  <tr>
+                    <ul className="list">
+                      {this.state.musicSets.map(musicSet => (
+                        <li
+                          onClick={() => {
+                            this.getMusicSet(musicSet._id);
+                          }}
+                        >
+                          {musicSet.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </tr>
+                </table>
+                <br />
+                <LinkContainer
+                  className="newCollectionButton"
+                  to="/spotifytoken"
+                >
+                  <Button bsStyle="primary">Make New Music Collection</Button>
+                </LinkContainer>
+              </div>
               {this.state.newPlaylist.length !== 0 ? (
                 <div>
                   <br />
@@ -199,6 +205,10 @@ class userContent extends Component {
                     striped
                     condensed
                   >
+                    <TableHeaderColumn dataField="any" dataFormat={indexN}>
+                      #{this.state.newPlaylist.length}
+                    </TableHeaderColumn>
+
                     <TableHeaderColumn dataField="title" isKey>
                       Song
                     </TableHeaderColumn>
@@ -207,7 +217,10 @@ class userContent extends Component {
                     </TableHeaderColumn>
                   </BootstrapTable>
                   <br />
-                  <Button onClick={() => this.createPlaylistOnSpotify()}>
+                  <Button
+                    bsStyle="primary"
+                    onClick={() => this.createPlaylistOnSpotify()}
+                  >
                     Export to Spotify
                   </Button>
                 </div>

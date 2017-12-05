@@ -19,3 +19,13 @@ th,
 td {
   padding: 15px;
 }
+
+.collectionsGrid {
+  position: absolute;
+  left: 30%;
+}
+
+.newCollectionButton {
+  position: absolute;
+  right: -17%;
+}
