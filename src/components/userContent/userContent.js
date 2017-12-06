@@ -128,7 +128,7 @@ class userContent extends Component {
 
   async createPlaylistOnSpotify() {
     if (this.state.spotifyTitle === "") {
-      return this.props.addErrorMessage("You need a title");
+      return this.props.addErrorMessage("New playlist title required.");
     }
     const userResp = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
@@ -263,10 +263,9 @@ class userContent extends Component {
 
                     <form>
                       <FormGroup>
-                        <ControlLabel>Title</ControlLabel>
                         <FormControl
                           type="text"
-                          placeholder="Enter title"
+                          placeholder="Enter new playlist title"
                           onChange={e =>
                             this.setState({ spotifyTitle: e.target.value })
                           }
@@ -281,6 +280,7 @@ class userContent extends Component {
                         }
                       />
                     </div>
+
                     <br />
                     <Button
                       bsStyle="primary"
