@@ -18,7 +18,7 @@ function intToRGB(i) {
 
 class Card extends React.Component {
   getDragHeight() {
-    return 50;
+    return 32;
   }
 
   iconClick() {
@@ -28,7 +28,7 @@ class Card extends React.Component {
 
   render() {
     const { item, itemSelected, dragHandle } = this.props;
-    const scale = itemSelected * 0.35 + 1;
+    const scale = itemSelected * 0.05 + 1;
     const shadow = itemSelected * 15 + 1;
     const dragged = itemSelected !== 0;
     return (

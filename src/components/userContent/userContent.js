@@ -83,6 +83,23 @@ class userContent extends Component {
     this.setState({ previewId: id });
   };
 
+  onSelectAll = (isSelected, rows) => {
+    const playlist = this.state.newPlaylist;
+    if (isSelected) {
+      rows.map(row =>
+        playlist.push({
+          _id: row._id,
+          title: row.title,
+          artist: row.artist,
+          spotifyId: row.spotifyId
+        })
+      );
+      this.setState({ newPlaylist: playlist });
+    } else {
+      this.setState({ newPlaylist: [] });
+    }
+  };
+
   afterSaveCell(row, cellName, cellValue) {
     const playlist = this.state.songsWithCustom;
     const ids = [];
@@ -173,7 +190,8 @@ class userContent extends Component {
     const selectRow = {
       mode: "checkbox",
       onSelect: this.handleRowSelect.bind(this),
-      clickToSelectAndEditCell: true
+      clickToSelectAndEditCell: true,
+      onSelectAll: this.onSelectAll
     };
 
     const cellEditProp = {
