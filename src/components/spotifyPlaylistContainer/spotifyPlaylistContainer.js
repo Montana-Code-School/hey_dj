@@ -40,8 +40,8 @@ class SpotifyPlaylistContainer extends Component {
         <li
           className={
             this.props.selected === this.state.playlistInformation.name
-              ? "selected"
-              : ""
+              ? "selected singlePlaylist"
+              : "singlePlaylist"
           }
           onClick={() => {
             this.fetchSongsFromSpotify();

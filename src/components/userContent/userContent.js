@@ -233,13 +233,12 @@ class userContent extends Component {
           <Row className="show-grid">
             <Col md={3}>
               <div className="collectionsGrid">
-                <table className="tabel">
-                  <tr>
-                    <th>Music Collections</th>
-                  </tr>
+                <div className="playlistHeader">Music Collections</div>
 
+                <div className="playlistBody">
                   {this.state.musicSets.map(musicSet => (
-                    <tr
+                    <div
+                      id="singlePlaylistofUserContent"
                       className={
                         this.state.activeTitle === musicSet.title
                           ? "selected"
@@ -251,9 +250,10 @@ class userContent extends Component {
                       }}
                     >
                       {musicSet.title}
-                    </tr>
+                    </div>
                   ))}
-                </table>
+                </div>
+
                 <br />
                 <LinkContainer
                   className="newCollectionButton"
@@ -268,8 +268,9 @@ class userContent extends Component {
                     <br />
                     {this.state.previewId !== "" ? (
                       <iframe
-                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
-                          .state.previewId}`}
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${
+                          this.state.previewId
+                        }`}
                         width="300"
                         height="225"
                         frameborder="0"
@@ -285,7 +286,8 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -293,7 +295,8 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
 
@@ -303,7 +306,7 @@ class userContent extends Component {
                         bsStyle="primary"
                         onClick={() => this.createPlaylistOnSpotify()}
                       >
-                        Export to Spotify
+                        Export Playlist to Spotify
                       </Button>
                     </div>
                   </div>

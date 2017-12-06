@@ -5,30 +5,12 @@
   padding: 10px;
 }
 
-.list {
-  list-style-type: none;
+#singlePlaylistofUserContent {
+  padding: 10px;
 }
 
-table,
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-th,
-td {
-  padding: 60px;
-  text-align: center;
-}
-
-.tabel {
-  margin: 15px;
-  border-radius: 25px;
-}
-
-.playlistsHeader {
+.playlistHeader {
+  margin-top: 30px;
   background: #f2f2f2;
   border-collapse: separate;
   border: solid black 1px;
@@ -37,35 +19,22 @@ td {
   padding: 15px;
 }
 
-.playlistsBody {
+.playlistBody {
   background: white;
   border-collapse: separate;
   border: solid black 1px;
   border-radius: 0px 0px 6px 6px;
   -moz-border-radius: 6px;
-  padding: 15px;
+  padding: 0px;
 }
 .collectionsGrid {
   position: absolute;
   left: 20%;
 }
 
-tr {
-  height: 30px;
-  text-indent: 10px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  color: rgb(0, 0, 0);
-}
 .newCollectionButton {
   position: absolute;
-  right: 40px;
+  right: -25px;
 }
 
 .hiddenButton {
@@ -77,4 +46,16 @@ th {
   position: absolute;
   left: 99px;
   top: 320px;
+}
+
+#singlePlaylistofUserContent:hover {
+  background-color: rgb(246, 243, 243);
+}
+
+#singlePlaylistofUserContent:active {
+  background-color: rgb(220, 220, 220);
+}
+
+.selected {
+  background-color: rgb(220, 220, 220);
 }
