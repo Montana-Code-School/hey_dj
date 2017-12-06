@@ -20,8 +20,8 @@
   width: 250px;
   height: 25px;
 }
-.item .dragHandle img {
-  width: 12%;
+.item .dragHandle img:hover {
+  cursor: pointer;
 }
 .item:hover .dragHandle,
 .item.dragged .dragHandle {
@@ -38,7 +38,6 @@
   margin-top: -12px;
   font-weight: bold;
 }
-
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
