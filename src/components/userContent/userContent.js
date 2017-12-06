@@ -170,7 +170,9 @@ class userContent extends Component {
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -209,21 +211,27 @@ class userContent extends Component {
 
     return (
       <div>
-        <PageHeader>
-          <Col md={10}>Hey DJ</Col>
-          <Col md={2}>
-            <LinkContainer to="/profile">
-              <h3
-                className="headerName"
-                class="glyphicon glyphicon-headphones"
-                aria-hidden="true"
-              >
-                {this.props.username}
-              </h3>
-            </LinkContainer>
+        <Row>
+          <Col md={8}>
+            <PageHeader>Hey DJ</PageHeader>
           </Col>
-          <br />
-        </PageHeader>
+
+          <Col md={4}>
+            <div className="upperRight">
+              <p>Welcome, {this.props.username}</p>
+              <LinkContainer
+                className="newCollectionButton"
+                to="/createmusicset"
+              >
+                <Button>Make New Music Collection</Button>
+              </LinkContainer>
+              <LinkContainer to="/profile">
+                <Button>My Account</Button>
+              </LinkContainer>
+            </div>
+          </Col>
+        </Row>
+        <br />
 
         <Grid>
           <Row className="show-grid">
@@ -254,12 +262,6 @@ class userContent extends Component {
                   </tr>
                 </table>
                 <br />
-                <LinkContainer
-                  className="newCollectionButton"
-                  to="/createmusicset"
-                >
-                  <Button bsStyle="primary">Make New Music Collection</Button>
-                </LinkContainer>
               </div>
               <div className="hiddenTable">
                 {this.state.newPlaylist.length !== 0 ? (
@@ -267,8 +269,9 @@ class userContent extends Component {
                     <br />
                     {this.state.previewId !== "" ? (
                       <iframe
-                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
-                          .state.previewId}`}
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${
+                          this.state.previewId
+                        }`}
                         width="300"
                         height="225"
                         frameborder="0"
@@ -280,11 +283,13 @@ class userContent extends Component {
                     )}
                     <form>
                       <FormGroup>
+                        <ControlLabel>Playlist</ControlLabel>
                         <FormControl
                           type="text"
                           placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -292,16 +297,18 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
 
                     <br />
                     <Button
                       bsStyle="primary"
+                      bsSize="xsmall"
                       onClick={() => this.createPlaylistOnSpotify()}
                     >
-                      Export to Spotify
+                      Export playlist to Spotify
                     </Button>
                   </div>
                 ) : (

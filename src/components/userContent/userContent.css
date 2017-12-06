@@ -34,3 +34,7 @@ td {
   position: absolute;
   top: 20000%;
 }
+
+.upperRight {
+  display: inline-block;
+}
