@@ -32,7 +32,8 @@ class userContent extends Component {
       newPlaylist: [],
       songsWithCustom: [],
       spotifyTitle: "",
-      showModal: false
+      showModal: false,
+      previewId: ""
     };
   }
 
@@ -58,7 +59,9 @@ class userContent extends Component {
         _id: row._id,
         title: row.title,
         artist: row.artist,
-        spotifyId: row.spotifyId
+        spotifyId: row.spotifyId,
+        emotion: row.emotion,
+        setPreviewId: this.setPreviewId
       });
       this.setState({ newPlaylist: playlist });
     } else {
@@ -75,6 +78,10 @@ class userContent extends Component {
   updateNewPlaylist(playlistArray) {
     this.setState({ newPlaylist: playlistArray });
   }
+
+  setPreviewId = id => {
+    this.setState({ previewId: id });
+  };
 
   onSelectAll = (isSelected, rows) => {
     const playlist = this.state.newPlaylist;
@@ -128,7 +135,7 @@ class userContent extends Component {
 
   async createPlaylistOnSpotify() {
     if (this.state.spotifyTitle === "") {
-      return this.props.addErrorMessage("You need a title");
+      return this.props.addErrorMessage("New playlist title required.");
     }
     const userResp = await fetch("https://api.spotify.com/v1/me", {
       method: "GET",
@@ -259,16 +266,26 @@ class userContent extends Component {
                 {this.state.newPlaylist.length !== 0 ? (
                   <div>
                     <br />
-
+                    {this.state.previewId !== "" ? (
+                      <iframe
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
+                          .state.previewId}`}
+                        width="300"
+                        height="225"
+                        frameborder="0"
+                        allowtransparency="true"
+                        style={{ marginBottom: "-125px", borderRadius: "5px" }}
+                      />
+                    ) : (
+                      ""
+                    )}
                     <form>
                       <FormGroup>
-                        <ControlLabel>Title</ControlLabel>
                         <FormControl
                           type="text"
-                          placeholder="Enter title"
+                          placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })
-                          }
+                            this.setState({ spotifyTitle: e.target.value })}
                         />
                       </FormGroup>
                     </form>
@@ -276,10 +293,10 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)
-                        }
+                          this.updateNewPlaylist(value)}
                       />
                     </div>
+
                     <br />
                     <div className="hiddenButton">
                       <Button
