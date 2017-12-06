@@ -1,17 +1,14 @@
-/*.main {
-  border: 1px solid black;
-  width: 300px;
-  height: 200px;
-  border-radius: 5px;
-  background: rgb(0, 0, 0);
-  opacity: 1;
+li {
+  list-style-type: none;
 }
-.main:hover {
-  opacity: 1;
-  background: rgb(0, 255, 0);
+
+li:hover {
+  background-color: rgb(246, 243, 243);
 }
-.main img {
-  width: 10%;
-  display: block;
-  margin: auto;
-}*/
+li:active {
+  background-color: rgb(220, 220, 220);
+}
+
+.selected {
+  background-color: rgb(220, 220, 220);
+}

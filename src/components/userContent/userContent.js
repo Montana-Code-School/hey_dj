@@ -27,6 +27,7 @@ class userContent extends Component {
     super(props);
     this.state = {
       musicSets: [],
+      activeTitle: "",
       songs: [],
       newPlaylist: [],
       songsWithCustom: [],
@@ -145,7 +146,9 @@ class userContent extends Component {
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -211,7 +214,13 @@ class userContent extends Component {
                     <ul className="list">
                       {this.state.musicSets.map(musicSet => (
                         <li
+                          className={
+                            this.state.activeTitle === musicSet.title
+                              ? "selected"
+                              : ""
+                          }
                           onClick={() => {
+                            this.setState({ activeTitle: musicSet.title });
                             this.getMusicSet(musicSet._id);
                           }}
                         >
@@ -241,7 +250,8 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -249,7 +259,8 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
                     <br />
@@ -303,20 +314,17 @@ class userContent extends Component {
               bsStyle="warning"
               onDismiss={() => this.setState({ showModal: false })}
             >
-              <h4>Success!</h4>
-              <p>{this.state.spotifyTitle}</p>
+              <h4>Success! {this.state.spotifyTitle} playlist is ready!</h4>
+
               <p>
                 <Link
                   to="chart"
                   target="_blank"
                   to="https://open.spotify.com/collection/playlists"
                 >
-                  <Button>See your playlist on Spotify!</Button>
+                  <Button>See your playlist on Spotify</Button>
                 </Link>
               </p>
-              <Button onClick={() => this.setState({ showModal: false })}>
-                Close
-              </Button>
             </Alert>
           </Modal.Body>
         </Modal>

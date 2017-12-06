@@ -26,7 +26,7 @@ class SpotifyPlaylistContainer extends Component {
       const songs = await response.json();
       this.props.setSpotifySongs(songs.items);
     } catch (e) {
-      throw new Error(e);
+      console.log("playlist error");
     }
   }
 
@@ -37,15 +37,19 @@ class SpotifyPlaylistContainer extends Component {
         images.push(<img src={this.state.playlistInformation.images[0].url} />);
       }
       return (
-        <div
-          className="main"
+        <li
+          className={
+            this.props.selected === this.state.playlistInformation.name
+              ? "selected"
+              : ""
+          }
           onClick={() => {
             this.fetchSongsFromSpotify();
             this.props.setSpotifyTitle(this.state.playlistInformation.name);
           }}
         >
-          <div>{this.state.playlistInformation.name}</div>
-        </div>
+          {this.state.playlistInformation.name}
+        </li>
       );
     } else {
       return <div />;
@@ -55,7 +59,8 @@ class SpotifyPlaylistContainer extends Component {
 
 const mapStateToProps = state => ({
   spotifyToken: state.tokenReducer.spotifyToken,
-  spotifySongs: state.spotifySongsReducer.spotifySongs
+  spotifySongs: state.spotifySongsReducer.spotifySongs,
+  selected: state.musicSetReducer.spotifyTitle
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -50,7 +50,9 @@ class SpotifyMusicTable extends Component {
     const set1 = await set.json();
 
     if (set.status !== 200) {
-      this.props.addErrorMessage("Music set creation failed.");
+      this.props.addErrorMessage(
+        "You have already created a collection with this name."
+      );
       return;
     }
     this.setState({ musicSetId: set1._id });

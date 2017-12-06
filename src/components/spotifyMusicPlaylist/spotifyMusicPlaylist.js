@@ -39,7 +39,9 @@ class SpotifyMusicPlaylist extends Component {
       this.props.setPlaylists(playlists.items);
       this.state.hasReceivedPlaylists = true;
     } catch (e) {
-      throw new Error(e);
+      setTimeout(() => {
+        this.getSpotifyPlaylists();
+      }, 3000);
     }
   }
 
