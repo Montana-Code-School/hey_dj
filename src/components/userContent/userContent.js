@@ -209,25 +209,27 @@ class userContent extends Component {
 
     return (
       <div>
-        <PageHeader>
-          <Col md={10}>
-            <LinkContainer to="/user">
-              <h1>Hey DJ</h1>
-            </LinkContainer>
+        <Row>
+          <Col md={8}>
+            <PageHeader>Hey DJ</PageHeader>
           </Col>
-          <Col md={2}>
-            <LinkContainer to="/profile">
-              <h3
-                className="headerName"
-                class="glyphicon glyphicon-headphones"
-                aria-hidden="true"
+
+          <Col md={4}>
+            <div className="upperRight">
+              <p>Welcome, {this.props.username}</p>
+              <LinkContainer
+                className="newCollectionButton"
+                to="/createmusicset"
               >
-                {this.props.username}
-              </h3>
-            </LinkContainer>
+                <Button>Make New Music Collection</Button>
+              </LinkContainer>
+              <LinkContainer to="/profile">
+                <Button>My Account</Button>
+              </LinkContainer>
+            </div>
           </Col>
-          <br />
-        </PageHeader>
+        </Row>
+        <br />
 
         <Grid>
           <Row className="show-grid">
@@ -255,12 +257,6 @@ class userContent extends Component {
                 </div>
 
                 <br />
-                <LinkContainer
-                  className="newCollectionButton"
-                  to="/createmusicset"
-                >
-                  <Button bsStyle="primary">Make New Music Collection</Button>
-                </LinkContainer>
               </div>
               <div className="hiddenTable">
                 {this.state.newPlaylist.length !== 0 ? (
@@ -272,16 +268,17 @@ class userContent extends Component {
                           this.state.previewId
                         }`}
                         width="300"
-                        height="225"
+                        height="100"
                         frameborder="0"
                         allowtransparency="true"
-                        style={{ marginBottom: "-125px", borderRadius: "5px" }}
+                        style={{ borderRadius: "5px" }}
                       />
                     ) : (
                       ""
                     )}
                     <form>
                       <FormGroup>
+                        <ControlLabel>Playlist</ControlLabel>
                         <FormControl
                           type="text"
                           placeholder="Enter new playlist title"
@@ -301,12 +298,14 @@ class userContent extends Component {
                     </div>
 
                     <br />
-                    <div className="hiddenButton">
+                    <div>
                       <Button
                         bsStyle="primary"
+                        bsSize="xsmall"
                         onClick={() => this.createPlaylistOnSpotify()}
                       >
-                        Export Playlist to Spotify
+                        {" "}
+                        Export playlist to Spotify
                       </Button>
                     </div>
                   </div>

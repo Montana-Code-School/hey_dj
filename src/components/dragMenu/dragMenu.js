@@ -23,7 +23,9 @@ class Card extends React.Component {
 
   iconClick() {
     console.log(this.props);
-    this.props.item.setPreviewId(this.props.item.spotifyId);
+    if (this.props.item.setPreviewId instanceof Function) {
+      this.props.item.setPreviewId(this.props.item.spotifyId);
+    }
   }
 
   render() {
@@ -48,7 +50,7 @@ class Card extends React.Component {
         <img
           style={{
             border: "0px solid #" + intToRGB(hashCode(item.emotion || "")),
-            width: "10%"
+            width: "12.5%"
           }}
           src={require("./icon.png")}
           onClick={() => this.iconClick()}

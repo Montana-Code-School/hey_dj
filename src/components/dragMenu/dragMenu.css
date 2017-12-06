@@ -12,8 +12,10 @@
   background: rgb(235, 235, 235);
   max-height: 100%;
 }
+
 .item .dragHandle {
   visibility: visible;
+  display: inline-block;
   top: 5;
   left: 0;
   cursor: move;

@@ -50,6 +50,7 @@
 
 #singlePlaylistofUserContent:hover {
   background-color: rgb(246, 243, 243);
+  cursor: pointer;
 }
 
 #singlePlaylistofUserContent:active {
@@ -58,4 +59,8 @@
 
 .selected {
   background-color: rgb(220, 220, 220);
+}
+
+.upperRight {
+  display: inline-block;
 }
