@@ -27,6 +27,7 @@ class userContent extends Component {
     super(props);
     this.state = {
       musicSets: [],
+      activeTitle: "",
       songs: [],
       newPlaylist: [],
       songsWithCustom: [],
@@ -213,7 +214,13 @@ class userContent extends Component {
                     <ul className="list">
                       {this.state.musicSets.map(musicSet => (
                         <li
+                          className={
+                            this.state.activeTitle === musicSet.title
+                              ? "selected"
+                              : ""
+                          }
                           onClick={() => {
+                            this.setState({ activeTitle: musicSet.title });
                             this.getMusicSet(musicSet._id);
                           }}
                         >
@@ -243,7 +250,8 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -251,7 +259,8 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
                     <br />
