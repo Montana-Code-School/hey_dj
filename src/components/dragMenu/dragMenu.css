@@ -4,12 +4,12 @@
   padding: 0px;
 }
 .item {
-  border: 1px solid black;
+  border: 1px solid rgb(192, 192, 192);
   border-radius: 5px;
   overflow: hidden;
   transform-origin: 30% 50% 0px;
   padding-left: 20px;
-  background: Silver;
+  background: rgb(220, 220, 220);
   max-height: 100%;
 }
 .item .dragHandle {
@@ -18,18 +18,23 @@
   left: 0;
   cursor: move;
   width: 250px;
-  height: 70px;
+  height: 25px;
+}
+.item .dragHandle img {
+  width: 12%;
 }
 .item:hover .dragHandle,
 .item.dragged .dragHandle {
   visibility: visible;
 }
 .item h2 {
-  font-size: 20px;
-  margin-top: 10px;
+  font-size: 12px;
+  margin-top: 5px;
 }
 .item .subtitle {
+  font-size: 10px;
   margin-left: 10px;
+  margin-top: -12px;
   font-weight: bold;
 }
 
