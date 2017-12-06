@@ -1,1 +1,6 @@
-
+.show-grid {
+  position: absolute;
+  width: auto;
+  left: 0%;
+  padding: 10px;
+}

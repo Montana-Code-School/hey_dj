@@ -79,23 +79,20 @@ class SpotifyMusicPlaylist extends Component {
           </Col>
           <br />
         </PageHeader>
-        <Grid>
-          <Row>
-            <Col md={3}>
-              <br />
-              <table>
-                <tr>
-                  <th>Spotify Playlists</th>
-                </tr>
 
-                <tr>{playlists}</tr>
-              </table>
-            </Col>
-            <Col md={9}>
-              <SpotifyMusicTable history={this.props.history} />
-            </Col>
-          </Row>
-        </Grid>
+        <Col md={3}>
+          <br />
+          <table className="tableMusicSet">
+            <tr>
+              <th>Spotify Playlists</th>
+            </tr>
+
+            <tr>{playlists}</tr>
+          </table>
+        </Col>
+        <Col md={9}>
+          <SpotifyMusicTable history={this.props.history} />
+        </Col>
       </div>
     );
   }

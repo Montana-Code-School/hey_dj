@@ -43,7 +43,6 @@ tr:nth-child(even) {
 th {
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: rgb(213, 220, 233);
   color: rgb(0, 0, 0);
 }
 .newCollectionButton {
@@ -58,6 +57,6 @@ th {
 
 .hiddenTable {
   position: absolute;
-  left: 60px;
+  left: 99px;
   top: 320px;
 }

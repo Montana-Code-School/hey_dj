@@ -34,3 +34,18 @@ td {
   padding: 60px;
   text-align: center;
 }
+
+.show-grid {
+  position: absolute;
+  width: auto;
+  left: 0%;
+  padding: 10px;
+}
+
+.tableMusicSet {
+  margin: 40px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
