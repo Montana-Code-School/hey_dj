@@ -23,7 +23,9 @@ class Card extends React.Component {
 
   iconClick() {
     console.log(this.props);
-    this.props.item.setPreviewId(this.props.item.spotifyId);
+    if (this.props.item.setPreviewId instanceof Function) {
+      this.props.item.setPreviewId(this.props.item.spotifyId);
+    }
   }
 
   render() {
