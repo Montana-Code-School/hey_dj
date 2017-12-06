@@ -22,12 +22,12 @@ td {
 
 .collectionsGrid {
   position: absolute;
-  left: 30%;
+  left: 5%;
 }
 
 .newCollectionButton {
-  position: absolute;
-  right: -17%;
+  position: left;
+  right: 0%;
 }
 
 .hiddenTable {
