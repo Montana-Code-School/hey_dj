@@ -145,9 +145,7 @@ class userContent extends Component {
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -186,7 +184,11 @@ class userContent extends Component {
     return (
       <div>
         <PageHeader>
-          <Col md={10}>Hey DJ</Col>
+          <Col md={10}>
+            <LinkContainer to="/user">
+              <h1>Hey DJ</h1>
+            </LinkContainer>
+          </Col>
           <Col md={2}>
             <LinkContainer to="/profile">
               <h3
@@ -205,23 +207,20 @@ class userContent extends Component {
           <Row className="show-grid">
             <Col md={3}>
               <div className="collectionsGrid">
-                <table>
+                <table className="tabel">
                   <tr>
                     <th>Music Collections</th>
                   </tr>
-                  <tr>
-                    <ul className="list">
-                      {this.state.musicSets.map(musicSet => (
-                        <li
-                          onClick={() => {
-                            this.getMusicSet(musicSet._id);
-                          }}
-                        >
-                          {musicSet.title}
-                        </li>
-                      ))}
-                    </ul>
-                  </tr>
+
+                  {this.state.musicSets.map(musicSet => (
+                    <tr
+                      onClick={() => {
+                        this.getMusicSet(musicSet._id);
+                      }}
+                    >
+                      {musicSet.title}
+                    </tr>
+                  ))}
                 </table>
                 <br />
                 <LinkContainer
@@ -243,7 +242,8 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -251,16 +251,19 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
                     <br />
-                    <Button
-                      bsStyle="primary"
-                      onClick={() => this.createPlaylistOnSpotify()}
-                    >
-                      Export to Spotify
-                    </Button>
+                    <div className="hiddenButton">
+                      <Button
+                        bsStyle="primary"
+                        onClick={() => this.createPlaylistOnSpotify()}
+                      >
+                        Export to Spotify
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   ""

@@ -12,25 +12,52 @@
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-spacing: 0;
   border-collapse: collapse;
 }
 th,
 td {
-  padding: 15px;
+  padding: 60px;
+  text-align: center;
+}
+
+.tabel {
+  margin: 15px;
 }
 
 .collectionsGrid {
   position: absolute;
-  left: 5%;
+  left: 20%;
 }
 
+tr {
+  height: 30px;
+  text-indent: 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: rgb(213, 220, 233);
+  color: rgb(0, 0, 0);
+}
 .newCollectionButton {
-  position: left;
-  right: 0%;
+  position: absolute;
+  right: 40px;
+}
+
+.hiddenButton {
+  position: absolute;
+  right: 70px;
 }
 
 .hiddenTable {
   position: absolute;
-  top: 20000%;
+  left: 60px;
+  top: 320px;
 }
