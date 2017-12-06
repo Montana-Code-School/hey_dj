@@ -37,15 +37,14 @@ class SpotifyPlaylistContainer extends Component {
         images.push(<img src={this.state.playlistInformation.images[0].url} />);
       }
       return (
-        <div
-          className="main"
+        <li
           onClick={() => {
             this.fetchSongsFromSpotify();
             this.props.setSpotifyTitle(this.state.playlistInformation.name);
           }}
         >
-          <div>{this.state.playlistInformation.name}</div>
-        </div>
+          <a>{this.state.playlistInformation.name}</a>
+        </li>
       );
     } else {
       return <div />;

@@ -133,7 +133,9 @@ class userContent extends Component {
     console.log(playlistId);
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -299,20 +301,17 @@ class userContent extends Component {
               bsStyle="warning"
               onDismiss={() => this.setState({ showModal: false })}
             >
-              <h4>Success!</h4>
-              <p>{this.state.spotifyTitle}</p>
+              <h4>Success! {this.state.spotifyTitle} playlist is ready!</h4>
+
               <p>
                 <Link
                   to="chart"
                   target="_blank"
                   to="https://open.spotify.com/collection/playlists"
                 >
-                  <Button>See your playlist on Spotify!</Button>
+                  <Button>See your playlist on Spotify</Button>
                 </Link>
               </p>
-              <Button onClick={() => this.setState({ showModal: false })}>
-                Close
-              </Button>
             </Alert>
           </Modal.Body>
         </Modal>
