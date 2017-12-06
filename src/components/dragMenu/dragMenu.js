@@ -3,9 +3,27 @@ import cx from "classnames";
 import DraggableList from "react-draggable-list";
 import "./dragMenu.css";
 
+function hashCode(str) {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return hash;
+}
+
+function intToRGB(i) {
+  var c = (i & 0x00ffffff).toString(16).toUpperCase();
+  return "00000".substring(0, 6 - c.length) + c;
+}
+
 class Card extends React.Component {
   getDragHeight() {
     return 50;
+  }
+
+  iconClick() {
+    console.log(this.props);
+    this.props.item.setPreviewId(this.props.item.spotifyId);
   }
 
   render() {
@@ -13,7 +31,6 @@ class Card extends React.Component {
     const scale = itemSelected * 0.35 + 1;
     const shadow = itemSelected * 15 + 1;
     const dragged = itemSelected !== 0;
-
     return (
       <div
         className={cx("item", { dragged })}
@@ -24,11 +41,18 @@ class Card extends React.Component {
       >
         {dragHandle(
           <div className="dragHandle">
-            <img src={require("./icon.png")} />
             <h2>{item.title}</h2>
             <div className="subtitle">{item.artist}</div>
           </div>
         )}
+        <img
+          style={{
+            border: "0px solid #" + intToRGB(hashCode(item.emotion || "")),
+            width: "10%"
+          }}
+          src={require("./icon.png")}
+          onClick={() => this.iconClick()}
+        />
       </div>
     );
   }
