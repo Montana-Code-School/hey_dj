@@ -82,13 +82,9 @@ class SpotifyMusicPlaylist extends Component {
 
         <Col md={3}>
           <br />
-          <table className="tableMusicSet">
-            <tr>
-              <th>Spotify Playlists</th>
-            </tr>
+          <div class="playlistsHeader">Spotify Playlists</div>
 
-            <tr>{playlists}</tr>
-          </table>
+          <div class="playlistsBody">{playlists}</div>
         </Col>
         <Col md={9}>
           <SpotifyMusicTable history={this.props.history} />
