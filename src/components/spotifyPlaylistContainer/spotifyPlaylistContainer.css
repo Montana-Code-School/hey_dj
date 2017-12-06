@@ -5,6 +5,7 @@ li {
 li:hover {
   background-color: rgb(246, 243, 243);
 }
+
 li:active {
   background-color: rgb(220, 220, 220);
 }
