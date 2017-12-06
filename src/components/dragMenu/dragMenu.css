@@ -15,6 +15,7 @@
 
 .item .dragHandle {
   visibility: visible;
+  display: inline-block;
   top: 5;
   left: 0;
   cursor: move;

@@ -273,10 +273,10 @@ class userContent extends Component {
                           this.state.previewId
                         }`}
                         width="300"
-                        height="225"
+                        height="100"
                         frameborder="0"
                         allowtransparency="true"
-                        style={{ marginBottom: "-125px", borderRadius: "5px" }}
+                        style={{ borderRadius: "5px" }}
                       />
                     ) : (
                       ""
