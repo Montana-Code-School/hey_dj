@@ -5,7 +5,7 @@ import "./dragMenu.css";
 
 class Card extends React.Component {
   getDragHeight() {
-    return 100;
+    return 50;
   }
 
   render() {
@@ -24,7 +24,7 @@ class Card extends React.Component {
       >
         {dragHandle(
           <div className="dragHandle">
-            <img src={require("./icon.png")} style={{ float: "left" }} />
+            <img src={require("./icon.png")} />
             <h2>{item.title}</h2>
             <div className="subtitle">{item.artist}</div>
           </div>
