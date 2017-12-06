@@ -18,6 +18,7 @@ import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { Link } from "react-router-dom";
 import { addErrorMessage } from "../../actions/errorActions";
+import DragMenu from "../dragMenu/dragMenu";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import "./userContent.css";
 
@@ -52,13 +53,26 @@ class userContent extends Component {
   handleRowSelect(row, isSelected) {
     const playlist = this.state.newPlaylist;
     if (isSelected) {
-      playlist.push(row);
+      playlist.push({
+        _id: row._id,
+        title: row.title,
+        artist: row.artist,
+        spotifyId: row.spotifyId
+      });
       this.setState({ newPlaylist: playlist });
     } else {
-      const index = playlist.indexOf(row);
-      playlist.splice(index, 1);
-      this.setState({ newPlaylist: playlist });
+      let temp = [];
+      this.state.newPlaylist.map(iterator => {
+        if (iterator._id !== row._id) {
+          temp.push(iterator);
+        }
+      });
+      this.setState({ newPlaylist: temp });
     }
+  }
+
+  updateNewPlaylist(playlistArray) {
+    this.setState({ newPlaylist: playlistArray });
   }
 
   afterSaveCell(row, cellName, cellValue) {
@@ -70,7 +84,6 @@ class userContent extends Component {
     } else {
       playlist.splice(ids.indexOf(row._id), 1, row);
     }
-    console.log(this.state.songsWithCustom);
   }
 
   postSongsWithCustom = async () => {
@@ -130,7 +143,6 @@ class userContent extends Component {
   }
 
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
-    console.log(playlistId);
     let addTrack = await fetch(
       new Request(
         `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
@@ -229,25 +241,17 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })
-                          }
+                            this.setState({ spotifyTitle: e.target.value })}
                         />
                       </FormGroup>
                     </form>
-
-                    <BootstrapTable
-                      data={this.state.newPlaylist}
-                      hover
-                      striped
-                      condensed
-                    >
-                      <TableHeaderColumn dataField="title" isKey>
-                        Song
-                      </TableHeaderColumn>
-                      <TableHeaderColumn dataField="artist">
-                        Artist
-                      </TableHeaderColumn>
-                    </BootstrapTable>
+                    <div>
+                      <DragMenu
+                        list={this.state.newPlaylist}
+                        updatePlaylistOrder={value =>
+                          this.updateNewPlaylist(value)}
+                      />
+                    </div>
                     <br />
                     <Button
                       bsStyle="primary"
