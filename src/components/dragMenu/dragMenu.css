@@ -26,6 +26,7 @@
 .item:hover .dragHandle,
 .item.dragged .dragHandle {
   visibility: visible;
+  margin: -10;
 }
 .item h2 {
   font-size: 12px;
