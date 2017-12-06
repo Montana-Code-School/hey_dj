@@ -5,10 +5,11 @@
 }
 .item {
   border: 1px solid black;
+  border-radius: 5px;
   overflow: hidden;
   transform-origin: 30% 50% 0px;
   padding-left: 20px;
-  background: SlateGray;
+  background: Silver;
   max-height: 100%;
 }
 .item .dragHandle {
@@ -24,9 +25,11 @@
   visibility: visible;
 }
 .item h2 {
-  margin: 0;
+  font-size: 20px;
+  margin-top: 10px;
 }
 .item .subtitle {
+  margin-left: 10px;
   font-weight: bold;
 }
 

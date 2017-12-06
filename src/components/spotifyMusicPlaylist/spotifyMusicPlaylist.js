@@ -39,7 +39,9 @@ class SpotifyMusicPlaylist extends Component {
       this.props.setPlaylists(playlists.items);
       this.state.hasReceivedPlaylists = true;
     } catch (e) {
-      throw new Error(e);
+      setTimeout(() => {
+        this.getSpotifyPlaylists();
+      }, 3000);
     }
   }
 
@@ -50,6 +52,12 @@ class SpotifyMusicPlaylist extends Component {
         playlists.push(<SpotifyPlaylistContainer playlistInformation={index} />)
       );
     }
+
+    const displayPlaylists = () => {
+      for (var i = 0; i < playlists.length; i++) {
+        <tr>playlists[i]</tr>;
+      }
+    };
     return (
       <div>
         <PageHeader>
@@ -79,9 +87,8 @@ class SpotifyMusicPlaylist extends Component {
                 <tr>
                   <th>Spotify Playlists</th>
                 </tr>
-                <tr>
-                  <td>{playlists}</td>
-                </tr>
+
+                <tr>{playlists}</tr>
               </table>
             </Col>
             <Col md={9}>

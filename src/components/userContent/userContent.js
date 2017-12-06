@@ -27,6 +27,7 @@ class userContent extends Component {
     super(props);
     this.state = {
       musicSets: [],
+      activeTitle: "",
       songs: [],
       newPlaylist: [],
       songsWithCustom: [],
@@ -214,7 +215,13 @@ class userContent extends Component {
 
                   {this.state.musicSets.map(musicSet => (
                     <tr
+                      className={
+                        this.state.activeTitle === musicSet.title
+                          ? "selected"
+                          : ""
+                      }
                       onClick={() => {
+                        this.setState({ activeTitle: musicSet.title });
                         this.getMusicSet(musicSet._id);
                       }}
                     >

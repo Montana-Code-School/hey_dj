@@ -24,7 +24,7 @@ class Card extends React.Component {
       >
         {dragHandle(
           <div className="dragHandle">
-            {" "}
+            <img src={require("./icon.png")} style={{ float: "left" }} />
             <h2>{item.title}</h2>
             <div className="subtitle">{item.artist}</div>
           </div>

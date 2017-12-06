@@ -1,5 +1,5 @@
 .show-grid {
-  position: fixed;
+  position: absolute;
   width: auto;
   left: 0%;
   padding: 10px;
