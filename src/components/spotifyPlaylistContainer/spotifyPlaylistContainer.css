@@ -2,16 +2,13 @@ li {
   list-style-type: none;
 }
 
-li:visited {
-  background: rgb(220, 220, 220);
-}
-
 li:hover {
-  background: rgb(246, 243, 243);
+  background-color: rgb(246, 243, 243);
 }
 li:active {
-  background: rgb(220, 220, 220);
+  background-color: rgb(220, 220, 220);
 }
-a.current {
-  background-color: #404d43;
+
+.selected {
+  background-color: rgb(220, 220, 220);
 }
