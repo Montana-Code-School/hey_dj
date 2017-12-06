@@ -48,7 +48,7 @@ class Card extends React.Component {
         <img
           style={{
             border: "0px solid #" + intToRGB(hashCode(item.emotion || "")),
-            width: "10%"
+            width: "12.5%"
           }}
           src={require("./icon.png")}
           onClick={() => this.iconClick()}
