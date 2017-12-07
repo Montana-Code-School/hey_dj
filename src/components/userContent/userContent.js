@@ -21,6 +21,7 @@ import { addErrorMessage } from "../../actions/errorActions";
 import DragMenu from "../dragMenu/dragMenu";
 import "../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 import "./userContent.css";
+import Header from "../header/header.js";
 
 class userContent extends Component {
   constructor(props) {
@@ -211,26 +212,8 @@ class userContent extends Component {
 
     return (
       <div>
-        <Row>
-          <Col md={8}>
-            <PageHeader>Hey DJ</PageHeader>
-          </Col>
+        {<Header />}
 
-          <Col md={4}>
-            <div className="upperRight">
-              <p>Welcome, {this.props.username}</p>
-              <LinkContainer
-                className="newCollectionButton"
-                to="/createmusicset"
-              >
-                <Button>Make New Music Collection</Button>
-              </LinkContainer>
-              <LinkContainer to="/profile">
-                <Button>My Account</Button>
-              </LinkContainer>
-            </div>
-          </Col>
-        </Row>
         <br />
 
         <Grid>

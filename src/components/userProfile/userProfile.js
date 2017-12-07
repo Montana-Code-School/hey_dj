@@ -5,6 +5,7 @@ import { Button, Modal, Table, Alert, PageHeader, Col } from "react-bootstrap";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { delete_cookie } from "sfcookies";
 import { Link } from "react-router-dom";
+import Header from "../header/header.js";
 
 const cellEditProp = {
   mode: "click"
@@ -89,25 +90,7 @@ class userProfile extends Component {
   render() {
     return (
       <div>
-        <PageHeader>
-          <Col md={10}>
-            <LinkContainer to="/user">
-              <h1>Hey DJ</h1>
-            </LinkContainer>
-          </Col>
-          <Col md={2}>
-            <LinkContainer to="/profile">
-              <h3
-                className="headerName"
-                class="glyphicon glyphicon-headphones"
-                aria-hidden="true"
-              >
-                {this.props.username}
-              </h3>
-            </LinkContainer>
-          </Col>
-          <br />
-        </PageHeader>
+        {<Header />}
         <div className="gridProfile">
           <div className="user">
             <div className="userInfo">
