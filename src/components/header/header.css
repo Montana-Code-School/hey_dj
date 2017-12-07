@@ -50,5 +50,5 @@ header .current a {
 }
 
 .current {
-  font-style: underline;
+  text-decoration: underline;
 }
