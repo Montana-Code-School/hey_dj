@@ -76,7 +76,6 @@ class userContent extends Component {
   }
 
   updateNewPlaylist(playlistArray) {
-    console.log(playlistArray);
     this.setState({ newPlaylist: playlistArray });
   }
 
@@ -92,7 +91,9 @@ class userContent extends Component {
           _id: row._id,
           title: row.title,
           artist: row.artist,
-          spotifyId: row.spotifyId
+          spotifyId: row.spotifyId,
+          emotion: row.emotion,
+          setPreviewId: this.setPreviewId
         })
       );
       this.setState({ newPlaylist: playlist });
@@ -160,16 +161,24 @@ class userContent extends Component {
       })
     )
       .then(res => res.json())
-      .then(res =>
-        this.state.newPlaylist.map(index => {
-          this.addTrackToSpotifyPlaylist(userData.id, res.id, index.spotifyId);
-        })
-      )
+      .then(res => {
+        this.recursiveAdd(this.state.newPlaylist, userData.id, res.id);
+      })
       .then(() => this.setState({ showModal: true }));
   }
 
-  async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
-    let addTrack = await fetch(
+  recursiveAdd(playlist, userId, resId) {
+    if (playlist.length > 0) {
+      this.addTrackToSpotifyPlaylist(
+        userId,
+        resId,
+        playlist[0].spotifyId
+      ).then(() => this.recursiveAdd(playlist.slice(1), userId, resId));
+    }
+  }
+
+  addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
+    return fetch(
       new Request(
         `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
