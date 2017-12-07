@@ -1,0 +1,54 @@
+h1 {
+  font-family: shrikhand;
+}
+.container {
+  width: 95%;
+  margin: auto;
+  overflow: hidden;
+  margin-bottom: 20;
+}
+
+header {
+  background: #494949;
+  color: #ffffff;
+  padding-top: 30px;
+  min-height: 90px;
+}
+
+header a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+header li {
+  float: left;
+  display: inline;
+  padding: 0 20px 0 20px;
+}
+
+header #branding {
+  float: left;
+}
+
+header #branding h1 {
+  margin: 0;
+}
+
+header nav {
+  float: right;
+  margin-top: 10px;
+}
+
+header .current a {
+  color: #ffffff;
+  font-style: underline;
+}
+
+.gabe:hover {
+  color: #494949;
+}
+
+.current {
+  font-style: underline;
+}

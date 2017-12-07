@@ -13,6 +13,7 @@ import SpotifyPlaylistContainer from "../spotifyPlaylistContainer/spotifyPlaylis
 import SpotifyMusicTable from "../spotifyMusicTable/spotifyMusicTable";
 import "./spotifyMusicPlaylist.css";
 import { Button, PageHeader, Grid, Row, Col } from "react-bootstrap";
+import Header from "../header/header.js";
 
 class SpotifyMusicPlaylist extends Component {
   constructor(props) {
@@ -46,6 +47,7 @@ class SpotifyMusicPlaylist extends Component {
   }
 
   render() {
+    console.log();
     let playlists = [];
     if (this.props.spotifyPlaylists instanceof Array) {
       this.props.spotifyPlaylists.map(index =>
@@ -60,25 +62,7 @@ class SpotifyMusicPlaylist extends Component {
     };
     return (
       <div>
-        <PageHeader>
-          <Col md={10}>
-            <LinkContainer to="/user">
-              <h1>Hey DJ</h1>
-            </LinkContainer>
-          </Col>
-          <Col md={2}>
-            <LinkContainer to="/profile">
-              <h3
-                className="headerName"
-                class="glyphicon glyphicon-headphones"
-                aria-hidden="true"
-              >
-                {this.props.username}
-              </h3>
-            </LinkContainer>
-          </Col>
-          <br />
-        </PageHeader>
+        {<Header />}
 
         <Col md={3}>
           <br />

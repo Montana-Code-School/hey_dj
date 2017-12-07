@@ -22,7 +22,7 @@
   width: 250px;
   height: 25px;
 }
-.item .dragHandle img:hover {
+.image {
   cursor: pointer;
 }
 .item:hover .dragHandle,

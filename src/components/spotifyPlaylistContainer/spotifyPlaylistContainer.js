@@ -13,18 +13,27 @@ class SpotifyPlaylistContainer extends Component {
     };
   }
 
-  async fetchSongsFromSpotify() {
+  async fetchSongsFromSpotify(index = 0, allSongs = []) {
     let response = await fetch(
-      new Request(this.state.playlistInformation.tracks.href, {
-        headers: new Headers({
-          Accept: "application/json",
-          Authorization: "Bearer " + this.props.spotifyToken
-        })
-      })
+      new Request(
+        `${this.state.playlistInformation.tracks.href}?offset=${index}`,
+        {
+          headers: new Headers({
+            Accept: "application/json",
+            Authorization: "Bearer " + this.props.spotifyToken
+          })
+        }
+      )
     );
     try {
-      const songs = await response.json();
-      this.props.setSpotifySongs(songs.items);
+      let songs = await response.json();
+      songs = songs.items;
+      let combined = songs.concat(allSongs);
+      if (songs.length > 99) {
+        index += 100;
+        return this.fetchSongsFromSpotify(index, combined);
+      }
+      this.props.setSpotifySongs(combined);
     } catch (e) {
       console.log("playlist error");
     }
