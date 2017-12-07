@@ -92,7 +92,9 @@ class userContent extends Component {
           _id: row._id,
           title: row.title,
           artist: row.artist,
-          spotifyId: row.spotifyId
+          spotifyId: row.spotifyId,
+          emotion: row.emotion,
+          setPreviewId: this.setPreviewId
         })
       );
       this.setState({ newPlaylist: playlist });
@@ -160,20 +162,26 @@ class userContent extends Component {
       })
     )
       .then(res => res.json())
-      .then(res =>
-        this.state.newPlaylist.map(index => {
-          this.addTrackToSpotifyPlaylist(userData.id, res.id, index.spotifyId);
-        })
-      )
+      .then(res => {
+        this.recursiveAdd(this.state.newPlaylist, userData.id, res.id);
+      })
       .then(() => this.setState({ showModal: true }));
   }
 
-  async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
-    let addTrack = await fetch(
+  recursiveAdd(playlist, userId, resId) {
+    if (playlist.length > 0) {
+      this.addTrackToSpotifyPlaylist(
+        userId,
+        resId,
+        playlist[0].spotifyId
+      ).then(() => this.recursiveAdd(playlist.slice(1), userId, resId));
+    }
+  }
+
+  addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
+    return fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -252,9 +260,8 @@ class userContent extends Component {
                     <br />
                     {this.state.previewId !== "" ? (
                       <iframe
-                        src={`https://open.spotify.com/embed?uri=spotify:track:${
-                          this.state.previewId
-                        }`}
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
+                          .state.previewId}`}
                         width="300"
                         height="100"
                         frameborder="0"
@@ -271,8 +278,7 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })
-                          }
+                            this.setState({ spotifyTitle: e.target.value })}
                         />
                       </FormGroup>
                     </form>
@@ -280,8 +286,7 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)
-                        }
+                          this.updateNewPlaylist(value)}
                       />
                     </div>
 
