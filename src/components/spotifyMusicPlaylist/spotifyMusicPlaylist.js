@@ -46,6 +46,7 @@ class SpotifyMusicPlaylist extends Component {
   }
 
   render() {
+    console.log();
     let playlists = [];
     if (this.props.spotifyPlaylists instanceof Array) {
       this.props.spotifyPlaylists.map(index =>
