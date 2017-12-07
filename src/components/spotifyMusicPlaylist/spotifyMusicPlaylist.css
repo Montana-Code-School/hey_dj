@@ -20,3 +20,49 @@
 .headerName {
   margin: 20px;
 }
+
+.singlePlaylist {
+  padding: 10px;
+}
+
+.playlistHeader {
+  background: #f2f2f2;
+  border-collapse: separate;
+  border: solid black 1px;
+  border-radius: 6px 6px 0px 0px;
+  -moz-border-radius: 6px;
+  padding: 15px;
+  font-weight: bolder;
+}
+
+.playlistBody {
+  background: white;
+  border-collapse: separate;
+  border: solid black 1px;
+  border-radius: 0px 0px 6px 6px;
+  -moz-border-radius: 6px;
+  padding: 0px;
+}
+
+.show-grid {
+  position: absolute;
+  width: auto;
+  left: 0%;
+  padding: 10px;
+}
+
+.tableMusicSet {
+  margin: 40px;
+}
+
+.singlePlaylist:hover {
+  background-color: rgb(246, 243, 243);
+}
+
+.singlePlaylist:active {
+  background-color: rgb(220, 220, 220);
+}
+
+.selected {
+  background-color: rgb(220, 220, 220);
+}

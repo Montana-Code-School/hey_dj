@@ -228,30 +228,27 @@ class userContent extends Component {
           <Row className="show-grid">
             <Col md={3}>
               <div className="collectionsGrid">
-                <table>
-                  <tr>
-                    <th>Music Collections</th>
-                  </tr>
-                  <tr>
-                    <ul className="list">
-                      {this.state.musicSets.map(musicSet => (
-                        <li
-                          className={
-                            this.state.activeTitle === musicSet.title
-                              ? "selected"
-                              : ""
-                          }
-                          onClick={() => {
-                            this.setState({ activeTitle: musicSet.title });
-                            this.getMusicSet(musicSet._id);
-                          }}
-                        >
-                          {musicSet.title}
-                        </li>
-                      ))}
-                    </ul>
-                  </tr>
-                </table>
+                <div className="playlistHeader">Music Collections</div>
+
+                <div className="playlistBody">
+                  {this.state.musicSets.map(musicSet => (
+                    <div
+                      id="singlePlaylistofUserContent"
+                      className={
+                        this.state.activeTitle === musicSet.title
+                          ? "selected"
+                          : ""
+                      }
+                      onClick={() => {
+                        this.setState({ activeTitle: musicSet.title });
+                        this.getMusicSet(musicSet._id);
+                      }}
+                    >
+                      {musicSet.title}
+                    </div>
+                  ))}
+                </div>
+
                 <br />
               </div>
               <div className="hiddenTable">
@@ -291,13 +288,16 @@ class userContent extends Component {
                     </div>
 
                     <br />
-                    <Button
-                      bsStyle="primary"
-                      bsSize="xsmall"
-                      onClick={() => this.createPlaylistOnSpotify()}
-                    >
-                      Export playlist to Spotify
-                    </Button>
+                    <div>
+                      <Button
+                        bsStyle="primary"
+                        bsSize="xsmall"
+                        onClick={() => this.createPlaylistOnSpotify()}
+                      >
+                        {" "}
+                        Export playlist to Spotify
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   ""

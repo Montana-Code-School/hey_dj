@@ -54,28 +54,29 @@ class SpotifyMusicPlaylist extends Component {
         playlists.push(<SpotifyPlaylistContainer playlistInformation={index} />)
       );
     }
+
+    const displayPlaylists = () => {
+      for (var i = 0; i < playlists.length; i++) {
+        <tr>playlists[i]</tr>;
+      }
+    };
     return (
       <div>
         {<Header />}
-        <br />
-        <Grid>
-          <Row>
-            <Col md={3}>
-              <br />
-              <table>
-                <tr>
-                  <th>Spotify Playlists</th>
-                </tr>
-                <tr>
-                  <td>{playlists}</td>
-                </tr>
-              </table>
-            </Col>
-            <Col md={9}>
-              <SpotifyMusicTable history={this.props.history} />
-            </Col>
-          </Row>
-        </Grid>
+
+        <Col md={3}>
+          <br />
+          <div className="playlistHeader">Spotify Playlists</div>
+
+          <div className="playlistBody">
+            {playlists.map(list => <div>{list}</div>)
+            /*playlists*/
+            }
+          </div>
+        </Col>
+        <Col md={9}>
+          <SpotifyMusicTable history={this.props.history} />
+        </Col>
       </div>
     );
   }

@@ -8,7 +8,6 @@ import {
   ControlLabel,
   PageHeader
 } from "react-bootstrap";
-import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
 import { heyDjLogin } from "../../actions/userActions";
 import { bake_cookie } from "sfcookies";
 import { addErrorMessage } from "../../actions/errorActions";
