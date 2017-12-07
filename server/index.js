@@ -54,6 +54,8 @@ app.post("/songs", routifyPromise(postSong));
 app.delete("/removeMusicSet/:id", routifyPromise(deleteMusicSet));
 app.put("/editMusicSet/:id", routifyPromise(editMusicSet));
 app.use(express.static("build"));
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, "../build")));
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "../build/index.html"))
+);
 
 app.listen(config.port);
