@@ -163,25 +163,34 @@ class userContent extends Component {
     )
       .then(res => res.json())
       .then(res => {
-        this.recursiveAdd(this.state.newPlaylist, userData.id, res.id);
+        try {
+          this.recursiveAdd(this.state.newPlaylist, userData.id, res.id);
+        } catch (e) {
+          setTimeout(
+            () =>
+              this.recursiveAdd(this.state.newPlaylist, userData.id, res.id),
+            3000
+          );
+        }
       })
-      .then(() => this.setState({ showModal: true }));
+      .then(() => this.setState({ showModal: true }))
+      .catch(() => setTimeout(this.createPlaylistOnSpotify(), 3000));
   }
 
   recursiveAdd(playlist, userId, resId) {
     if (playlist.length > 0) {
-      this.addTrackToSpotifyPlaylist(
-        userId,
-        resId,
-        playlist[0].spotifyId
-      ).then(() => this.recursiveAdd(playlist.slice(1), userId, resId));
+      this.addTrackToSpotifyPlaylist(userId, resId, playlist[0].spotifyId).then(
+        () => this.recursiveAdd(playlist.slice(1), userId, resId)
+      );
     }
   }
 
   addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     return fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -212,6 +221,11 @@ class userContent extends Component {
     const cellEdit = {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
+    };
+
+    const options = {
+      noDataText:
+        "Choose a music collection on the left to build a new playlist"
     };
 
     function indexN(cell, row, enumObject, index) {
@@ -257,8 +271,9 @@ class userContent extends Component {
                     <br />
                     {this.state.previewId !== "" ? (
                       <iframe
-                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
-                          .state.previewId}`}
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${
+                          this.state.previewId
+                        }`}
                         width="300"
                         height="100"
                         frameborder="0"
@@ -275,7 +290,8 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -283,7 +299,8 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
 
@@ -291,11 +308,10 @@ class userContent extends Component {
                     <div>
                       <Button
                         bsStyle="primary"
-                        bsSize="xsmall"
                         onClick={() => this.createPlaylistOnSpotify()}
                       >
                         {" "}
-                        Export playlist to Spotify
+                        Export Playlist to Spotify
                       </Button>
                     </div>
                   </div>
@@ -309,6 +325,7 @@ class userContent extends Component {
               <BootstrapTable
                 data={this.state.songs}
                 selectRow={selectRow}
+                options={options}
                 hover
                 striped
                 condensed
