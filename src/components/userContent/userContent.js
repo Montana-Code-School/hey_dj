@@ -170,11 +170,9 @@ class userContent extends Component {
 
   recursiveAdd(playlist, userId, resId) {
     if (playlist.length > 0) {
-      this.addTrackToSpotifyPlaylist(
-        userId,
-        resId,
-        playlist[0].spotifyId
-      ).then(() => this.recursiveAdd(playlist.slice(1), userId, resId));
+      this.addTrackToSpotifyPlaylist(userId, resId, playlist[0].spotifyId).then(
+        () => this.recursiveAdd(playlist.slice(1), userId, resId)
+      );
     }
   }
 
@@ -257,8 +255,9 @@ class userContent extends Component {
                     <br />
                     {this.state.previewId !== "" ? (
                       <iframe
-                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
-                          .state.previewId}`}
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${
+                          this.state.previewId
+                        }`}
                         width="300"
                         height="100"
                         frameborder="0"
@@ -275,7 +274,8 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })}
+                            this.setState({ spotifyTitle: e.target.value })
+                          }
                         />
                       </FormGroup>
                     </form>
@@ -283,7 +283,8 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)}
+                          this.updateNewPlaylist(value)
+                        }
                       />
                     </div>
 
@@ -295,7 +296,7 @@ class userContent extends Component {
                         onClick={() => this.createPlaylistOnSpotify()}
                       >
                         {" "}
-                        Export playlist to Spotify
+                        Export Playlist to Spotify
                       </Button>
                     </div>
                   </div>
