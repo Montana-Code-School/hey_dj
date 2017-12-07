@@ -163,9 +163,18 @@ class userContent extends Component {
     )
       .then(res => res.json())
       .then(res => {
-        this.recursiveAdd(this.state.newPlaylist, userData.id, res.id);
+        try {
+          this.recursiveAdd(this.state.newPlaylist, userData.id, res.id);
+        } catch (e) {
+          setTimeout(
+            () =>
+              this.recursiveAdd(this.state.newPlaylist, userData.id, res.id),
+            3000
+          );
+        }
       })
-      .then(() => this.setState({ showModal: true }));
+      .then(() => this.setState({ showModal: true }))
+      .catch(() => setTimeout(this.createPlaylistOnSpotify(), 3000));
   }
 
   recursiveAdd(playlist, userId, resId) {
@@ -179,7 +188,9 @@ class userContent extends Component {
   addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     return fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${
+          playlistId
+        }/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -210,6 +221,11 @@ class userContent extends Component {
     const cellEdit = {
       mode: "click",
       afterSaveCell: this.afterSaveCell.bind(this)
+    };
+
+    const options = {
+      noDataText:
+        "Choose a music collection on the left to build a new playlist"
     };
 
     function indexN(cell, row, enumObject, index) {
@@ -292,7 +308,6 @@ class userContent extends Component {
                     <div>
                       <Button
                         bsStyle="primary"
-                        bsSize="xsmall"
                         onClick={() => this.createPlaylistOnSpotify()}
                       >
                         {" "}
@@ -310,6 +325,7 @@ class userContent extends Component {
               <BootstrapTable
                 data={this.state.songs}
                 selectRow={selectRow}
+                options={options}
                 hover
                 striped
                 condensed

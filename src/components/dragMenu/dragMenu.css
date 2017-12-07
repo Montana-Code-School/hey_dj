@@ -20,9 +20,11 @@
   left: 0;
   cursor: move;
   width: 250px;
-  height: 25px;
+  height: 45px;
+  padding: 0px 65px 0px 0px;
 }
 .image {
+  padding: 0px 5px 10px 0px;
   cursor: pointer;
 }
 .item:hover .dragHandle,
@@ -36,7 +38,7 @@
 }
 .item .subtitle {
   font-size: 10px;
-  margin-left: 10px;
+  margin-left: 0px;
   margin-top: -12px;
   font-weight: bold;
 }

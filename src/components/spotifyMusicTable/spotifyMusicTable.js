@@ -10,7 +10,8 @@ import {
   Grid,
   Row,
   Col,
-  Table
+  Table,
+  Jumbotron
 } from "react-bootstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import { addErrorMessage } from "../../actions/errorActions";
@@ -108,59 +109,56 @@ class SpotifyMusicTable extends Component {
 
     const options = {
       defaultSortName: "name",
-      defaultSortOrder: "desc"
+      defaultSortOrder: "desc",
+      noDataText: "Choose a playlist from the table on the left to customize"
     };
 
     return (
       <div>
-        {this.props.spotifyTitle ? (
-          <div>
-            <br />
-            <BootstrapTable
-              data={songs}
-              options={options}
-              cellEdit={cellEditProp}
-              cellEdit={cellEdit}
-              hover
-              striped
-              condensed
-              search
-            >
-              <TableHeaderColumn dataField="name" editable={false} dataSort>
-                Song
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="artist" editable={false} dataSort>
-                Artist
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="id" editable={false} hidden isKey>
-                id
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="releaseDate" dataSort>
-                Release Date
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="genre" dataSort>
-                Genre
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="physiological" dataSort>
-                Physiological
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="emotion" dataSort>
-                Emotion
-              </TableHeaderColumn>
-            </BootstrapTable>
-            <br />
-            <Button
-              bsStyle="primary"
-              onClick={() => {
-                this.createMusicSetAndPostSongs();
-              }}
-            >
-              Save
-            </Button>
-          </div>
-        ) : (
-          <h3>Choose a spotify playlist to add custom values</h3>
-        )}
+        <div>
+          <br />
+          <BootstrapTable
+            data={songs}
+            options={options}
+            cellEdit={cellEditProp}
+            cellEdit={cellEdit}
+            hover
+            striped
+            condensed
+            search
+          >
+            <TableHeaderColumn dataField="name" editable={false} dataSort>
+              Song
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="artist" editable={false} dataSort>
+              Artist
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="id" editable={false} hidden isKey>
+              id
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="releaseDate" dataSort>
+              Release Date
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="genre" dataSort>
+              Genre
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="physiological" dataSort>
+              Physiological
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="emotion" dataSort>
+              Emotion
+            </TableHeaderColumn>
+          </BootstrapTable>
+          <br />
+          <Button
+            bsStyle="primary"
+            onClick={() => {
+              this.createMusicSetAndPostSongs();
+            }}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     );
   }
