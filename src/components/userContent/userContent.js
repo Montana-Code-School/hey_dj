@@ -76,6 +76,7 @@ class userContent extends Component {
   }
 
   updateNewPlaylist(playlistArray) {
+    console.log(playlistArray);
     this.setState({ newPlaylist: playlistArray });
   }
 
@@ -170,9 +171,7 @@ class userContent extends Component {
   async addTrackToSpotifyPlaylist(userId, playlistId, trackId) {
     let addTrack = await fetch(
       new Request(
-        `https://api.spotify.com/v1/users/${userId}/playlists/${
-          playlistId
-        }/tracks?uris=spotify:track:${trackId}`,
+        `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=spotify:track:${trackId}`,
         {
           method: "POST",
           headers: new Headers({
@@ -269,9 +268,8 @@ class userContent extends Component {
                     <br />
                     {this.state.previewId !== "" ? (
                       <iframe
-                        src={`https://open.spotify.com/embed?uri=spotify:track:${
-                          this.state.previewId
-                        }`}
+                        src={`https://open.spotify.com/embed?uri=spotify:track:${this
+                          .state.previewId}`}
                         width="300"
                         height="100"
                         frameborder="0"
@@ -288,8 +286,7 @@ class userContent extends Component {
                           type="text"
                           placeholder="Enter new playlist title"
                           onChange={e =>
-                            this.setState({ spotifyTitle: e.target.value })
-                          }
+                            this.setState({ spotifyTitle: e.target.value })}
                         />
                       </FormGroup>
                     </form>
@@ -297,8 +294,7 @@ class userContent extends Component {
                       <DragMenu
                         list={this.state.newPlaylist}
                         updatePlaylistOrder={value =>
-                          this.updateNewPlaylist(value)
-                        }
+                          this.updateNewPlaylist(value)}
                       />
                     </div>
 

@@ -48,6 +48,7 @@ class Card extends React.Component {
           </div>
         )}
         <img
+          className="image"
           style={{
             border: "0px solid #" + intToRGB(hashCode(item.emotion || "")),
             width: "12.5%"
