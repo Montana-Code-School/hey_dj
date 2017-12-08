@@ -5,13 +5,8 @@ import { connect } from "react-redux";
 import "./header.css";
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeLink: ""
-    };
-  }
   render() {
+    const { pathname } = this.props;
     return (
       <header>
         <div className="container">
@@ -22,36 +17,26 @@ class Header extends Component {
           </div>
           <nav>
             <ul>
-              <li
-                className={this.state.activeLink === 1 ? "current" : ""}
-                onClick={() => {
-                  this.setState({ activeLink: 1 });
-                }}
-              >
-                <Link to="user">
-                  <a className="gabe">New playlist</a>
-                </Link>
-              </li>
-              <li
-                className={this.state.activeLink === 2 ? "current" : ""}
-                onClick={() => {
-                  this.setState({ activeLink: 2 });
-                }}
-              >
-                <Link to="createmusicset">
-                  <a className="gabe">New music collection</a>
-                </Link>
-              </li>
-              <li
-                className={this.state.activeLink === 3 ? "current" : ""}
-                onClick={() => {
-                  this.setState({ activeLink: 3 });
-                }}
-              >
-                <LinkContainer to="profile">
-                  <a className="gabe">My account</a>
-                </LinkContainer>
-              </li>
+              {[
+                {
+                  link: "/user",
+                  text: "New playlist"
+                },
+                {
+                  link: "/createmusicset",
+                  text: "New music collection"
+                },
+                {
+                  link: "/profile",
+                  text: "My account"
+                }
+              ].map(link => (
+                <li className={pathname === link.link ? "current" : ""}>
+                  <Link to={link.link}>
+                    <a className="gabe">{link.text}</a>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
@@ -63,7 +48,8 @@ class Header extends Component {
 const mapStateToProps = state => ({
   username: state.userReducer.username,
   userId: state.userReducer.userId,
-  spotifyToken: state.tokenReducer.spotifyToken
+  spotifyToken: state.tokenReducer.spotifyToken,
+  pathname: state.router.location.pathname
 });
 
 export default connect(mapStateToProps)(Header);
