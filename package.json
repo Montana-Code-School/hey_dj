@@ -4,7 +4,10 @@
   "private": true,
   "devDependencies": {
     "ava": "^0.23.0",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "engines": {
+      "node": "v8.6.0"
+    }
   },
   "dependencies": {
     "babel-preset-react": "^6.24.1",
